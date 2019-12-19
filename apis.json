@@ -1,0 +1,98 @@
+{
+    "name": "Akeneo",
+    "description": "<p>Our team has been working in the e-commerce industry for over 10 years. As we were helping brands to grow their online businesses, we realized that they were all struggling with complex or archaic systems to manage product information. We founded Akeneo in 2013 with the idea that products are the most important assets in a company and that many merchants lack a tool to help them manage and leverage this crucial asset. Merchants needed a tool that was designed for marketers and flexible enough to be integrated with any third-party application.<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/akeneo-logo.png",
+    "tags": [
+        "commerce",
+        "have api",
+        "have swagger",
+        "relative data"
+    ],
+    "created": "2019-12-18",
+    "modified": "2019-12-18",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/akeneo\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Official Akeneo PIM API",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/akeneo-logo.png",
+            "humanURL": "http:\/\/www.akeneo.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/official-akeneo-pim-api-openapi.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/official-akeneo-pim-api.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/official-akeneo-pim-api-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Blog RSS",
+            "url": "https:\/\/www.akeneo.com\/feed\/"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/akeneo"
+        },
+        {
+            "type": "Marketplace",
+            "url": "https:\/\/marketplace.akeneo.com\/"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/akeneo.com"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/www.akeneo.com"
+        },
+        {
+            "type": "Blog",
+            "url": "https:\/\/www.akeneo.com\/blog\/"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/akeneo"
+        },
+        {
+            "type": "Documentation",
+            "url": "https:\/\/api.akeneo.com\/documentation\/introduction.html"
+        },
+        {
+            "type": "Email",
+            "url": "unsubscribe@akeneo.com"
+        },
+        {
+            "type": "Swagger",
+            "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-definitions\/swagger\/28823-2019-09-02-19-16-15.json"
+        },
+        {
+            "type": "Swagger",
+            "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-definitions\/swagger\/28823-2019-09-02-19-17-01.json"
+        },
+        {
+            "type": "Swagger",
+            "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-definitions\/swagger\/28823-2019-09-02-19-17-27.json"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/akeneopim"
+        },
+        {
+            "type": "Developers",
+            "url": "https:\/\/api.akeneo.com"
+        }
+    ]
+}
