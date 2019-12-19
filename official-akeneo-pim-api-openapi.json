@@ -1,0 +1,2098 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "",
+        "title": "Official Akeneo PIM API",
+        "description": "The Akeneo API brought to you!\n\nFind out how this Postman collection works by visiting http:\/\/api.akeneo.com",
+        "termsOfService": ""
+    },
+    "servers": [
+        "httpsexample.com\/api"
+    ],
+    "paths": {
+        "\/rest\/v1\/assets\/paint": {
+            "get": {
+                "summary": "asset (2.1 only)",
+                "description": "Assuming that the given code is the code of an existing asset",
+                "operationId": "RestV1AssetsPaintGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "asset (2.1 only)",
+                "description": "Asset (2.1 only).",
+                "operationId": "RestV1AssetsPaintPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/assets": {
+            "get": {
+                "summary": "assets (2.1 only)",
+                "description": "Assets (2.1 only).",
+                "operationId": "RestV1AssetsGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "with_count",
+                        "in": "query",
+                        "description": ""
+                    }
+                ]
+            },
+            "post": {
+                "summary": "asset (2.1 only)",
+                "description": "Assuming that there is no \"new_asset\" already existing",
+                "operationId": "RestV1AssetsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "assets (2.1 only)",
+                "description": "Assets (2.1 only).",
+                "operationId": "RestV1AssetsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/assets\/paint\/reference-files\/no-locale": {
+            "get": {
+                "summary": "asset reference file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintReferenceFilesNoLocaleGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "asset reference file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintReferenceFilesNoLocalePost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "file",
+                        "in": "formData",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/assets\/paint\/reference-files\/no-locale\/download": {
+            "get": {
+                "summary": "download asset reference file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintReferenceFilesNoLocaleDownloadGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/assets\/paint\/variation-files\/ecommerce\/no-locale": {
+            "get": {
+                "summary": "asset variation file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintVariationFilesEcommerceNoLocaleGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "asset variation file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintVariationFilesEcommerceNoLocalePost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "file",
+                        "in": "formData",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/assets\/paint\/variation-files\/ecommerce\/no-locale\/download": {
+            "get": {
+                "summary": "download asset variation file (2.1 only)",
+                "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+                "operationId": "RestV1AssetsPaintVariationFilesEcommerceNoLocaleDownloadGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/asset-categories\/asset_main_catalog": {
+            "get": {
+                "summary": "asset category (2.1 only)",
+                "description": "Assuming that the given code is the code of an existing asset category",
+                "operationId": "RestV1AssetCategoriesAssetMainCatalogGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/asset-categories": {
+            "get": {
+                "summary": "asset categories (2.1 only)",
+                "description": "Asset categories (2.1 only).",
+                "operationId": "RestV1AssetCategoriesGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "with_count",
+                        "in": "query",
+                        "description": ""
+                    }
+                ]
+            },
+            "post": {
+                "summary": "asset category (2.1 only)",
+                "description": "Assuming that there is no \"new_asset_category\" already existing",
+                "operationId": "RestV1AssetCategoriesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "asset categories (2.1 only)",
+                "description": "Asset categories (2.1 only).",
+                "operationId": "RestV1AssetCategoriesPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/asset-categories\/new_asset_category": {
+            "patch": {
+                "summary": "asset category (2.1 only)",
+                "description": "Asset category (2.1 only).",
+                "operationId": "RestV1AssetCategoriesNewAssetCategoryPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/asset-tags\/colored": {
+            "get": {
+                "summary": "asset tag (2.1 only)",
+                "description": "Assuming that the given code is the code of an existing asset tag",
+                "operationId": "RestV1AssetTagsColoredGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "asset tag (2.1 only)",
+                "description": "Asset tag (2.1 only).",
+                "operationId": "RestV1AssetTagsColoredPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/asset-tags": {
+            "get": {
+                "summary": "asset tags (2.1 only)",
+                "description": "Asset tags (2.1 only).",
+                "operationId": "RestV1AssetTagsGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "with_count",
+                        "in": "query",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/association-types\/upsell": {
+            "get": {
+                "summary": "association type (2.x only)",
+                "description": "Assuming that the given code is the code of an existing association type",
+                "operationId": "RestV1AssociationTypesUpsellGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "association type (2.x only)",
+                "description": "Association type (2.x only).",
+                "operationId": "RestV1AssociationTypesUpsellPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/association-types": {
+            "get": {
+                "summary": "association types (2.x only)",
+                "description": "Association types (2.x only).",
+                "operationId": "RestV1AssociationTypesGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "association type (2.x only)",
+                "description": "Assuming that there is no \"new_association_type\" already existing",
+                "operationId": "RestV1AssociationTypesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "association types (2.x only)",
+                "description": "Association types (2.x only).",
+                "operationId": "RestV1AssociationTypesPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attributes\/auto_exposure": {
+            "get": {
+                "summary": "attribute",
+                "description": "Assuming that the given code is the code of an existing attribute",
+                "operationId": "RestV1AttributesAutoExposureGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "attribute",
+                "description": "Attribute.",
+                "operationId": "RestV1AttributesAutoExposurePatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attributes": {
+            "get": {
+                "summary": "attributes",
+                "description": "Attributes.",
+                "operationId": "RestV1AttributesGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "attribute",
+                "description": "Assuming that there is no \"new_attribute\" already existing",
+                "operationId": "RestV1AttributesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "attributes",
+                "description": "Attributes.",
+                "operationId": "RestV1AttributesPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attributes\/main_color\/options\/white": {
+            "get": {
+                "summary": "attribute option",
+                "description": "Assuming that the given codes are respectively the code of an existing attribute and an existing option of this attribute",
+                "operationId": "RestV1AttributesMainColorOptionsWhiteGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "attribute option",
+                "description": "Assuming that the given code is the code of an existing attribute",
+                "operationId": "RestV1AttributesMainColorOptionsWhitePatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attributes\/main_color\/options": {
+            "get": {
+                "summary": "attribute options",
+                "description": "Attribute options.",
+                "operationId": "RestV1AttributesMainColorOptionsGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "attribute option",
+                "description": "Assuming that there is no \"yellow\" option already existing for the given attribute",
+                "operationId": "RestV1AttributesMainColorOptionsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "attribute options (2.1 only)",
+                "description": "Assuming that the given code is the code of an existing attribute",
+                "operationId": "RestV1AttributesMainColorOptionsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attribute-groups\/technical": {
+            "get": {
+                "summary": "attribute group (2.x only)",
+                "description": "Assuming that the given code is the code of an existing attribute group",
+                "operationId": "RestV1AttributeGroupsTechnicalGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "attribute group (2.x only)",
+                "description": "Attribute group (2.x only).",
+                "operationId": "RestV1AttributeGroupsTechnicalPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/attribute-groups": {
+            "get": {
+                "summary": "attribute groups (2.x only)",
+                "description": "Attribute groups (2.x only).",
+                "operationId": "RestV1AttributeGroupsGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "attribute group (2.x only)",
+                "description": "Assuming that there is no \"new_attribute_group\" already existing",
+                "operationId": "RestV1AttributeGroupsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "attribute groups (2.x only)",
+                "description": "Attribute groups (2.x only).",
+                "operationId": "RestV1AttributeGroupsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/categories\/master": {
+            "get": {
+                "summary": "category",
+                "description": "Assuming that the given code is the code of an existing category",
+                "operationId": "RestV1CategoriesMasterGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/categories": {
+            "get": {
+                "summary": "categories",
+                "description": "Categories.",
+                "operationId": "RestV1CategoriesGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "category",
+                "description": "Assuming that there is no \"new_category\" already existing",
+                "operationId": "RestV1CategoriesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "categories",
+                "description": "Categories.",
+                "operationId": "RestV1CategoriesPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/categories\/audio_video": {
+            "patch": {
+                "summary": "category",
+                "description": "Category.",
+                "operationId": "RestV1CategoriesAudioVideoPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/channels\/ecommerce": {
+            "get": {
+                "summary": "channel",
+                "description": "Assuming that the given code is the code of an existing channel",
+                "operationId": "RestV1ChannelsEcommerceGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/channels": {
+            "get": {
+                "summary": "channels",
+                "description": "Channels.",
+                "operationId": "RestV1ChannelsGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "channel (2.x only)",
+                "description": "Assuming that there is no \"new_channel\" already existing",
+                "operationId": "RestV1ChannelsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "channels (2.x only)",
+                "description": "Channels (2.x only).",
+                "operationId": "RestV1ChannelsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/channels\/my_new_channel_3": {
+            "patch": {
+                "summary": "channel (2.x only)",
+                "description": "Channel (2.x only).",
+                "operationId": "RestV1ChannelsMyNewChannel3Patch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/currencies\/USD": {
+            "get": {
+                "summary": "currency (2.x only)",
+                "description": "Assuming that the given code is the code of an existing currency",
+                "operationId": "RestV1CurrenciesUSDGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/currencies": {
+            "get": {
+                "summary": "currencies (2.x only)",
+                "description": "Currencies (2.x only).",
+                "operationId": "RestV1CurrenciesGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/families\/camcorders": {
+            "get": {
+                "summary": "family",
+                "description": "Assuming that the given code is the code of an existing family",
+                "operationId": "RestV1FamiliesCamcordersGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "family",
+                "description": "Family.",
+                "operationId": "RestV1FamiliesCamcordersPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/families": {
+            "get": {
+                "summary": "families",
+                "description": "Families.",
+                "operationId": "RestV1FamiliesGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "family",
+                "description": "Assuming that there is no \"new_family\" already existing",
+                "operationId": "RestV1FamiliesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "families",
+                "description": "Families.",
+                "operationId": "RestV1FamiliesPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/families\/clothing\/variants\/clothing_colorsize": {
+            "get": {
+                "summary": "family variant (2.x only)",
+                "description": "Assuming that the given codes are respectively the code of an existing family and an existing family variant",
+                "operationId": "RestV1FamiliesClothingVariantsClothingColorsizeGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "family variant (2.x only)",
+                "description": "Assuming that the given codes are respectively the code of an existing family and an existing family variant",
+                "operationId": "RestV1FamiliesClothingVariantsClothingColorsizePatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/families\/clothing\/variants": {
+            "get": {
+                "summary": "family variants (2.x only)",
+                "description": "Family variants (2.x only).",
+                "operationId": "RestV1FamiliesClothingVariantsGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "family variant (2.x only)",
+                "description": "Assuming that the given code is the code of an existing family",
+                "operationId": "RestV1FamiliesClothingVariantsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "family variants (2.x only)",
+                "description": "Assuming that the given code is the code of an existing family",
+                "operationId": "RestV1FamiliesClothingVariantsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/locales\/en_US": {
+            "get": {
+                "summary": "locale",
+                "description": "Assuming that the given code is the code of an existing locale",
+                "operationId": "RestV1LocalesEnUSGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/locales": {
+            "get": {
+                "summary": "locales",
+                "description": "Locales.",
+                "operationId": "RestV1LocalesGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/measure-families\/area": {
+            "get": {
+                "summary": "measure family (2.x only)",
+                "description": "Assuming that the given code is the code of an existing measure family",
+                "operationId": "RestV1MeasureFamiliesAreaGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/measure-families": {
+            "get": {
+                "summary": "measure families (2.x only)",
+                "description": "Measure families (2.x only).",
+                "operationId": "RestV1MeasureFamiliesGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/media-files\/d\/d\/b\/6\/ddb6ad393f81503b6be7380785e3b32bbd28cd08_test.png": {
+            "get": {
+                "summary": "media",
+                "description": "Assuming that the given code is the code of an existing media file",
+                "operationId": "RestV1MediaFilesDDB6Ddb6ad393f81503b6be7380785e3b32bbd28cd08TestPngGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/media-files": {
+            "get": {
+                "summary": "medias",
+                "description": "Medias.",
+                "operationId": "RestV1MediaFilesGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "post": {
+                "summary": "media",
+                "description": "Assuming that the given identifier is the identifier of an existing product and that the given attribute code exists",
+                "operationId": "RestV1MediaFilesPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "product",
+                        "in": "formData",
+                        "description": ""
+                    },
+                    {
+                        "name": "file",
+                        "in": "formData",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/products\/AKNSTK": {
+            "get": {
+                "summary": "product",
+                "description": "Assuming that the given identifier is the identifier of an existing product",
+                "operationId": "RestV1ProductsAKNSTKGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "product",
+                "description": "Product.",
+                "operationId": "RestV1ProductsAKNSTKPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/products": {
+            "get": {
+                "summary": "products",
+                "description": "Products.",
+                "operationId": "RestV1ProductsGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Cookie",
+                        "in": "header",
+                        "description": ""
+                    }
+                ]
+            },
+            "post": {
+                "summary": "product",
+                "description": "Assuming that there is no \"new_product\" already existing",
+                "operationId": "RestV1ProductsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "products",
+                "description": "Products.",
+                "operationId": "RestV1ProductsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/products\/AKNTS_BPXS": {
+            "delete": {
+                "summary": "product",
+                "description": "Assuming that the given identifier is the identifier of an existing product",
+                "operationId": "RestV1ProductsAKNTSBPXSDelete",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/products\/AKNTS_BPS\/draft": {
+            "get": {
+                "summary": "draft (2.x and EE only)",
+                "description": "Assuming that there is already a draft for the given product. The draft was created by the same user that using this request.\nThe user has only an edition permission through categories on the given product.",
+                "operationId": "RestV1ProductsAKNTSBPSDraftGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/products\/AKNTS_BPS\/proposal": {
+            "post": {
+                "summary": "proposal (2.x and EE only)",
+                "description": "Assuming that there is already a draft for the given product. The draft was created by the same user using this request.\nThe user has only an edition permission through categories on the given product.",
+                "operationId": "RestV1ProductsAKNTSBPSProposalPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/product-models\/amor": {
+            "get": {
+                "summary": "product model (2.x only)",
+                "description": "Assuming that the given code is the code of an existing product model",
+                "operationId": "RestV1ProductModelsAmorGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "patch": {
+                "summary": "product model (2.x only)",
+                "description": "Assuming that the given code is the code of an existing product model",
+                "operationId": "RestV1ProductModelsAmorPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/product-models": {
+            "get": {
+                "summary": "product models (2.x only)",
+                "description": "Product models (2.x only).",
+                "operationId": "RestV1ProductModelsGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    }
+                ]
+            },
+            "post": {
+                "summary": "product model (2.x only)",
+                "description": "Product model (2.x only).",
+                "operationId": "RestV1ProductModelsPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "product models (2.x only)",
+                "description": "Product models (2.x only).",
+                "operationId": "RestV1ProductModelsPatch",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/product-models\/amor\/draft": {
+            "get": {
+                "summary": "draft (2.3 and EE only)",
+                "description": "Assuming that there is already a draft for the given product model. The draft was created by the same user that is using this request.\nThe user has only an edition permission through categories on the given product model.",
+                "operationId": "RestV1ProductModelsAmorDraftGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/rest\/v1\/product-models\/amor\/proposal": {
+            "post": {
+                "summary": "proposal (2.3 and EE only)",
+                "description": "Assuming that there is already a draft for the given product model. The draft was created by the same user using this request.\nThe user has only an edition permission through categories on the given product model.",
+                "operationId": "RestV1ProductModelsAmorProposalPost",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/published-products\/13527420": {
+            "get": {
+                "summary": "published product (2.x and EE only)",
+                "description": "Assuming that the given identifier is the identifier of an existing product that is currently published",
+                "operationId": "RestV1PublishedProducts13527420Get",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/rest\/v1\/published-products": {
+            "get": {
+                "summary": "published products (2.x and EE only)",
+                "description": "Published products (2.x and ee only).",
+                "operationId": "RestV1PublishedProductsGet",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/oauth\/v1\/token": {
+            "post": {
+                "summary": "Authentification by refresh token",
+                "description": "Authentification by refresh token.",
+                "operationId": "OauthV1TokenPost2",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "Content",
+                        "in": "header",
+                        "description": ""
+                    },
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "description": ""
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Asset(2.1Only)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "localizable": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "end_of_use": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "tags": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "categories": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AssetCategory(2.1Only)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Labels": {
+                "type": "object",
+                "properties": {
+                    "de_DE": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "en_US": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "fr_FR": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AssetTag(2.1Only)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AssociationType(2.xOnly)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AssociationType(2.xOnly)request9": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Labels10": {
+                "type": "object",
+                "properties": {
+                    "en_US": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "fr_FR": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AttributeRequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "group": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "unique": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "useable_as_grid_filter": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "allowed_extensions": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "metric_family": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "default_metric_unit": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "reference_data_name": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "available_locales": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "max_characters": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "validation_rule": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "validation_regexp": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "wysiwyg_enabled": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "number_min": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "number_max": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "decimals_allowed": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "negative_allowed": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "date_min": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "date_max": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "max_file_size": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "minimum_input_length": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "sort_order": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "localizable": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scopable": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AttributeOptionrequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attribute": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "sort_order": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AttributeGroup(2.xOnly)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "sort_order": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "CategoryRequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "CategoryRequest25": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Labels26": {
+                "type": "object",
+                "properties": {
+                    "en_US": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Channel(2.xOnly)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "currencies": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "locales": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "category_tree": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ConversionUnits": {
+                "type": "object",
+                "properties": {
+                    "weight": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "FamilyRequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attribute_as_label": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attribute_as_image": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AttributeRequirements": {
+                "type": "object",
+                "properties": {
+                    "ecommerce": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "mobile": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "print": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "FamilyRequest36": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attribute_as_label": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "FamilyVariant(2.xOnly)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "variant_attribute_sets": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "VariantAttributeSet": {
+                "type": "object",
+                "properties": {
+                    "level": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "axes": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ProductRequest": {
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "family": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "groups": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "categories": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "enabled": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "created": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "updated": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Values": {
+                "type": "object",
+                "properties": {
+                    "clothing_size": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "main_color": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "secondary_color": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "tshirt_materials": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "tshirt_style": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "price": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ClothingSize": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Description": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "MainColor": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Name": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "SecondaryColor": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "TshirtMaterial": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "TshirtStyle": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Price": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Datum": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "currency": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Associations": {
+                "type": "object"
+            },
+            "SUBSTITUTION": {
+                "type": "object",
+                "properties": {
+                    "groups": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "products": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ProductModel(2.xOnly)request": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "family_variant": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "categories": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Values71": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "price": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "erp_name": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "supplier": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "collection": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "wash_temperature": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Price73": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Datum74": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "currency": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ErpName": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Supplier": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "Collection": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "WashTemperature": {
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "scope": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "data": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "ProductModel(2.xOnly)request80": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "family_variant": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "parent": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "categories": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "created": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "updated": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AuthentificationByPasswordrequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "password": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "grant_type": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            },
+            "AuthentificationByRefreshTokenrequest": {
+                "type": "object",
+                "properties": {
+                    "refresh_token": {
+                        "description": "",
+                        "type": "post"
+                    },
+                    "grant_type": {
+                        "description": "",
+                        "type": "post"
+                    }
+                }
+            }
+        }
+    }
+}
