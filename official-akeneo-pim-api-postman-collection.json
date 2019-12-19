@@ -1,0 +1,2735 @@
+{
+    "id": "6267974ad0c34efc0f1451cedab269ca",
+    "name": "Official Akeneo PIM API",
+    "description": null,
+    "auth": null,
+    "events": null,
+    "variables": [],
+    "order": [],
+    "folders_order": [],
+    "folders": [],
+    "requests": [
+        {
+            "id": "985e7f0b16437c18edc721464638a8e0",
+            "name": "asset (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint",
+            "description": "Assuming that the given code is the code of an existing asset",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "1a2ed6a73eb397c02b790ccb9227e51e",
+            "name": "asset (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint",
+            "description": "Asset (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "2ab52bd1e8be12c7231e9bc82b56cc19",
+            "name": "assets (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets",
+            "description": "Assets (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "limit",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "with_count",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "80f76355df0c2fca98efc464f6c5cbe8",
+            "name": "asset (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets",
+            "description": "Assuming that there is no \"new_asset\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "79c59efb1fbe09685e25a6b4b7659adb",
+            "name": "assets (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets",
+            "description": "Assets (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "6d9674b769ed459fea3ecbe7526ad32a",
+            "name": "asset reference file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/reference-files\/no-locale",
+            "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "ab3c8c97a8031531985fad5d1bf93990",
+            "name": "asset reference file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/reference-files\/no-locale",
+            "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "file",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "8c62e455bef636ba6d46a75ae2a54961",
+            "name": "download asset reference file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/reference-files\/no-locale\/download",
+            "description": "Assuming that the given codes are respectively the code of an existing asset and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "a45e4c85a3e6baf280ad22f3214e00c4",
+            "name": "asset variation file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/variation-files\/ecommerce\/no-locale",
+            "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "8a59309719f534da25ab64d9525f6565",
+            "name": "asset variation file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/variation-files\/ecommerce\/no-locale",
+            "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "file",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "67258a4a8e52545f33c2c04302c1bc21",
+            "name": "download asset variation file (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/assets\/paint\/variation-files\/ecommerce\/no-locale\/download",
+            "description": "Assuming that the given codes are respectively the code of an existing asset, an existing channel and an activated locale if the asset is localizable (it should be equal to \"no-locale\" otherwise)",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "bcaf83d2d72e452f4c1bb1ce75e5ae58",
+            "name": "asset category (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-categories\/asset_main_catalog",
+            "description": "Assuming that the given code is the code of an existing asset category",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "4f481e7857845df1f4126de3b7f4e92c",
+            "name": "asset categories (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-categories",
+            "description": "Asset categories (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "limit",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "with_count",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "cf3700d4dbe410c7fee2146520dc6376",
+            "name": "asset category (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-categories",
+            "description": "Assuming that there is no \"new_asset_category\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "962934d312dd20aa35083a32b479ffb3",
+            "name": "asset categories (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-categories",
+            "description": "Asset categories (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "141f4703770652d35f7fd41959fe15a1",
+            "name": "asset category (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-categories\/new_asset_category",
+            "description": "Asset category (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "717edefec62152d59916497e4f9828a8",
+            "name": "asset tag (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-tags\/colored",
+            "description": "Assuming that the given code is the code of an existing asset tag",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "a22e03fc12f69750f76a845a8ccdd64f",
+            "name": "asset tag (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-tags\/colored",
+            "description": "Asset tag (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "361dc7055d8fa04a65f30de9c51a07a4",
+            "name": "asset tags (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/asset-tags",
+            "description": "Asset tags (2.1 only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "limit",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "with_count",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "db946b4fd20ca4779e468e084f062423",
+            "name": "association type (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/association-types\/upsell",
+            "description": "Assuming that the given code is the code of an existing association type",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "0fe8d585977bdcb8ed2ed7ba53a4d18c",
+            "name": "association type (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/association-types\/upsell",
+            "description": "Association type (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "9cafe84bb3a942c1c14457c48126d8dc",
+            "name": "association types (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/association-types",
+            "description": "Association types (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "14c6b5f8406308897bacef00ffcb8b99",
+            "name": "association type (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/association-types",
+            "description": "Assuming that there is no \"new_association_type\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "29bfa7c1e9366403c184f1fcb8cf6198",
+            "name": "association types (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/association-types",
+            "description": "Association types (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "9664a805bf6cd992d61f24879bcf8e3d",
+            "name": "attribute",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/auto_exposure",
+            "description": "Assuming that the given code is the code of an existing attribute",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "4f471d09c9a5a841211c597059c85cba",
+            "name": "attribute",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/auto_exposure",
+            "description": "Attribute.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "1cace3b83757a08cd2e743b9e2027509",
+            "name": "attributes",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes",
+            "description": "Attributes.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "9b78e3036122d870c195b157349bcf6e",
+            "name": "attribute",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes",
+            "description": "Assuming that there is no \"new_attribute\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "b8c81d27ae18348769ff3632701873a7",
+            "name": "attributes",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes",
+            "description": "Attributes.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "87783afdc5c0e699cbaed279822bdc42",
+            "name": "attribute option",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/main_color\/options\/white",
+            "description": "Assuming that the given codes are respectively the code of an existing attribute and an existing option of this attribute",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "efbd3b377f4a1b07812040e08e6553fc",
+            "name": "attribute option",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/main_color\/options\/white",
+            "description": "Assuming that the given code is the code of an existing attribute",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "095092cb97257b510e67176af8bd03d1",
+            "name": "attribute options",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/main_color\/options",
+            "description": "Attribute options.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "158f91c6d9ab3445600201085c8d922a",
+            "name": "attribute option",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/main_color\/options",
+            "description": "Assuming that there is no \"yellow\" option already existing for the given attribute",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "43ac56607876f8a00e57e30ca5659da8",
+            "name": "attribute options (2.1 only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attributes\/main_color\/options",
+            "description": "Assuming that the given code is the code of an existing attribute",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "e6a0a717c01592d944e1e1e5f65acd9c",
+            "name": "attribute group (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attribute-groups\/technical",
+            "description": "Assuming that the given code is the code of an existing attribute group",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "0748f08dc480b669c39d4f3c1e020f44",
+            "name": "attribute group (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attribute-groups\/technical",
+            "description": "Attribute group (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "c8b5c10f16f0af91dd7aff211a4c4787",
+            "name": "attribute groups (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attribute-groups",
+            "description": "Attribute groups (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "4fbf7c12905653d08ec5032b7bd3f305",
+            "name": "attribute group (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attribute-groups",
+            "description": "Assuming that there is no \"new_attribute_group\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "cc16a0086ff3836da5b7bac4bb53c2f1",
+            "name": "attribute groups (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/attribute-groups",
+            "description": "Attribute groups (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "5211d4e14fdfe19d84781a9d2c05791b",
+            "name": "category",
+            "url": "httpsexample.com\/api\/rest\/v1\/categories\/master",
+            "description": "Assuming that the given code is the code of an existing category",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "9b4c21ba44b9115bc8b0b11724235669",
+            "name": "categories",
+            "url": "httpsexample.com\/api\/rest\/v1\/categories",
+            "description": "Categories.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "203bfa1bd1011c50648d5b8d930cb8d5",
+            "name": "category",
+            "url": "httpsexample.com\/api\/rest\/v1\/categories",
+            "description": "Assuming that there is no \"new_category\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "db4547291a70218135de6c70217c159f",
+            "name": "categories",
+            "url": "httpsexample.com\/api\/rest\/v1\/categories",
+            "description": "Categories.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "90624eca6865eb3444200df37b6d9a1d",
+            "name": "category",
+            "url": "httpsexample.com\/api\/rest\/v1\/categories\/audio_video",
+            "description": "Category.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "72e6623842b0630fe269a2d5b66e6a4c",
+            "name": "channel",
+            "url": "httpsexample.com\/api\/rest\/v1\/channels\/ecommerce",
+            "description": "Assuming that the given code is the code of an existing channel",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "0a1bf365143cf3186a86f78b02aa29f6",
+            "name": "channels",
+            "url": "httpsexample.com\/api\/rest\/v1\/channels",
+            "description": "Channels.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "d02ffd46f4f7d9a9360c157751e54f96",
+            "name": "channel (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/channels",
+            "description": "Assuming that there is no \"new_channel\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "1369d31838e180eb83a723ca1d96ff43",
+            "name": "channels (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/channels",
+            "description": "Channels (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "170456ff61a4039a0d06f77a2ea76086",
+            "name": "channel (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/channels\/my_new_channel_3",
+            "description": "Channel (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "b7b2dc80808ae36d8200744ca01547c8",
+            "name": "currency (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/currencies\/USD",
+            "description": "Assuming that the given code is the code of an existing currency",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "c52a969569c3221670a4ce88e4289fa4",
+            "name": "currencies (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/currencies",
+            "description": "Currencies (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "d9efa9d38194e04fd523ebd9dc0087fc",
+            "name": "family",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/camcorders",
+            "description": "Assuming that the given code is the code of an existing family",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "9e6d6ee57660ce39a7d5866b7e2e7bc2",
+            "name": "family",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/camcorders",
+            "description": "Family.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "2775e8501c95b5c4c17ee5bfb8436dab",
+            "name": "families",
+            "url": "httpsexample.com\/api\/rest\/v1\/families",
+            "description": "Families.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "a24f970d943b918dea94753de4c597f0",
+            "name": "family",
+            "url": "httpsexample.com\/api\/rest\/v1\/families",
+            "description": "Assuming that there is no \"new_family\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "5315953272307e08619b8b56fe582fe9",
+            "name": "families",
+            "url": "httpsexample.com\/api\/rest\/v1\/families",
+            "description": "Families.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "f8514efcfa66db0b272d85b6ad89c043",
+            "name": "family variant (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/clothing\/variants\/clothing_colorsize",
+            "description": "Assuming that the given codes are respectively the code of an existing family and an existing family variant",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "2618b22dfece1610bf3b95f00163b7b2",
+            "name": "family variant (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/clothing\/variants\/clothing_colorsize",
+            "description": "Assuming that the given codes are respectively the code of an existing family and an existing family variant",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "185f2a65d34edbd57cfd962c2d8f0252",
+            "name": "family variants (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/clothing\/variants",
+            "description": "Family variants (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "8796fe02df44795ae4559eee2f2aa502",
+            "name": "family variant (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/clothing\/variants",
+            "description": "Assuming that the given code is the code of an existing family",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "90b1c058567535ee118036a20efbc6ab",
+            "name": "family variants (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/families\/clothing\/variants",
+            "description": "Assuming that the given code is the code of an existing family",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "6683368e00f55be0a62d4e83ca3e6a31",
+            "name": "locale",
+            "url": "httpsexample.com\/api\/rest\/v1\/locales\/en_US",
+            "description": "Assuming that the given code is the code of an existing locale",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "3c21d493e67791af55072d73290b17f6",
+            "name": "locales",
+            "url": "httpsexample.com\/api\/rest\/v1\/locales",
+            "description": "Locales.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "ff433a7a7ba19105ed8fdf465c104702",
+            "name": "measure family (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/measure-families\/area",
+            "description": "Assuming that the given code is the code of an existing measure family",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "c940a9f914bb832c968e84dd7e62aaf1",
+            "name": "measure families (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/measure-families",
+            "description": "Measure families (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "d8e563212b4e72fc5defd4f345dacda2",
+            "name": "media",
+            "url": "httpsexample.com\/api\/rest\/v1\/media-files\/d\/d\/b\/6\/ddb6ad393f81503b6be7380785e3b32bbd28cd08_test.png",
+            "description": "Assuming that the given code is the code of an existing media file",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "7cd0e79c4fd11e4ba8876588fbc2e59e",
+            "name": "medias",
+            "url": "httpsexample.com\/api\/rest\/v1\/media-files",
+            "description": "Medias.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "8aea57b6f9b0bd72a1bb8009c5251884",
+            "name": "media",
+            "url": "httpsexample.com\/api\/rest\/v1\/media-files",
+            "description": "Assuming that the given identifier is the identifier of an existing product and that the given attribute code exists",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "product",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "file",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "0fa86b147abab6aec02505fa1b9f82e1",
+            "name": "product",
+            "url": "httpsexample.com\/api\/rest\/v1\/products\/AKNSTK",
+            "description": "Assuming that the given identifier is the identifier of an existing product",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "082102e8f54a993d5f543ef6e67dad4e",
+            "name": "product",
+            "url": "httpsexample.com\/api\/rest\/v1\/products\/AKNSTK",
+            "description": "Product.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "4401a83dd1abb5cab20a7ed0b37461d3",
+            "name": "products",
+            "url": "httpsexample.com\/api\/rest\/v1\/products",
+            "description": "Products.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Cookie",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "1eaa12b0b3bdaca67e8d0ea847db4826",
+            "name": "product",
+            "url": "httpsexample.com\/api\/rest\/v1\/products",
+            "description": "Assuming that there is no \"new_product\" already existing",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "2a6d7a7ab21d591825b150b27477aa3c",
+            "name": "products",
+            "url": "httpsexample.com\/api\/rest\/v1\/products",
+            "description": "Products.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "5512c615f9c81ffe73528dfdfbb8cdb5",
+            "name": "product",
+            "url": "httpsexample.com\/api\/rest\/v1\/products\/AKNTS_BPXS",
+            "description": "Assuming that the given identifier is the identifier of an existing product",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "delete",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "7daf84073e315df6a1a87ca751e8e2a7",
+            "name": "draft (2.x and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/products\/AKNTS_BPS\/draft",
+            "description": "Assuming that there is already a draft for the given product. The draft was created by the same user that using this request.\nThe user has only an edition permission through categories on the given product.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "d43ed38f0798d1fdd04572b5c778d5b0",
+            "name": "proposal (2.x and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/products\/AKNTS_BPS\/proposal",
+            "description": "Assuming that there is already a draft for the given product. The draft was created by the same user using this request.\nThe user has only an edition permission through categories on the given product.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "248381723a0de19fd914fb4ed49a2a1c",
+            "name": "product model (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models\/amor",
+            "description": "Assuming that the given code is the code of an existing product model",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "3b0b2278a4b7599c7993fb8922dd2880",
+            "name": "product model (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models\/amor",
+            "description": "Assuming that the given code is the code of an existing product model",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "7dfe7d55f8c076c1fde170c116996c6e",
+            "name": "product models (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models",
+            "description": "Product models (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "8ab736fe0f69a9af6f26ac55dfd3fd01",
+            "name": "product model (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models",
+            "description": "Product model (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "faa4cda31f4826dc096c8bec5f021f5b",
+            "name": "product models (2.x only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models",
+            "description": "Product models (2.x only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "patch",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "5a025b0f418a6fb9041bb41ed0e89bb0",
+            "name": "draft (2.3 and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models\/amor\/draft",
+            "description": "Assuming that there is already a draft for the given product model. The draft was created by the same user that is using this request.\nThe user has only an edition permission through categories on the given product model.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "30bfa32cbc39ef79ee212c9ea9da99e7",
+            "name": "proposal (2.3 and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/product-models\/amor\/proposal",
+            "description": "Assuming that there is already a draft for the given product model. The draft was created by the same user using this request.\nThe user has only an edition permission through categories on the given product model.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "db60296487712921de82f8e9c09f2afc",
+            "name": "published product (2.x and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/published-products\/13527420",
+            "description": "Assuming that the given identifier is the identifier of an existing product that is currently published",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "1bceace84c86095755a37ebf8007de84",
+            "name": "published products (2.x and EE only)",
+            "url": "httpsexample.com\/api\/rest\/v1\/published-products",
+            "description": "Published products (2.x and ee only).",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        },
+        {
+            "id": "dab7c47d8bba279bb0afc99447090d54",
+            "name": "Authentification by refresh token",
+            "url": "httpsexample.com\/api\/oauth\/v1\/token",
+            "description": "Authentification by refresh token.",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "Content",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "Body",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "6267974ad0c34efc0f1451cedab269ca",
+            "rawModeData": ""
+        }
+    ]
+}
