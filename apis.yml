@@ -45,6 +45,10 @@ apis:
       - type: GettingStarted
         url: https://api.akeneo.com/getting-started.html
 common:
+  - type: GitHubOrganization
+    url: https://github.com/akeneo
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/akeneo
   - type: Website
     url: https://www.akeneo.com
   - type: Documentation
