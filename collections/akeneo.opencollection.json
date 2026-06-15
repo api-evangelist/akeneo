@@ -1,0 +1,926 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Akeneo PIM REST API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request OAuth 2.0 access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/oauth/v1/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request OAuth 2.0 access token"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API entry point",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1"
+          },
+          "docs": "API entry point"
+        },
+        {
+          "info": {
+            "name": "System information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/system-information"
+          },
+          "docs": "System information"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List products"
+        },
+        {
+          "info": {
+            "name": "Create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products"
+          },
+          "docs": "Create a product"
+        },
+        {
+          "info": {
+            "name": "Update or create several products",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products"
+          },
+          "docs": "Update or create several products"
+        },
+        {
+          "info": {
+            "name": "Get a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product"
+        },
+        {
+          "info": {
+            "name": "Update or create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a product"
+        },
+        {
+          "info": {
+            "name": "Delete a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product"
+        },
+        {
+          "info": {
+            "name": "List products by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid"
+          },
+          "docs": "List products by UUID"
+        },
+        {
+          "info": {
+            "name": "Create a product by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid"
+          },
+          "docs": "Create a product by UUID"
+        },
+        {
+          "info": {
+            "name": "Bulk upsert products by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid"
+          },
+          "docs": "Bulk upsert products by UUID"
+        },
+        {
+          "info": {
+            "name": "Get a product by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product by UUID"
+        },
+        {
+          "info": {
+            "name": "Update or create a product by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a product by UUID"
+        },
+        {
+          "info": {
+            "name": "Delete a product by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/products-uuid/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product by UUID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Product Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List product models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "List product models"
+        },
+        {
+          "info": {
+            "name": "Create a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "Create a product model"
+        },
+        {
+          "info": {
+            "name": "Bulk upsert product models",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "Bulk upsert product models"
+        },
+        {
+          "info": {
+            "name": "Get a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product model"
+        },
+        {
+          "info": {
+            "name": "Update or create a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a product model"
+        },
+        {
+          "info": {
+            "name": "Delete a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product model"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Families",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List families",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/families"
+          },
+          "docs": "List families"
+        },
+        {
+          "info": {
+            "name": "Create a family",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/families"
+          },
+          "docs": "Create a family"
+        },
+        {
+          "info": {
+            "name": "Get a family",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/families/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a family"
+        },
+        {
+          "info": {
+            "name": "Update or create a family",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/families/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a family"
+        },
+        {
+          "info": {
+            "name": "Delete a family",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/families/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a family"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/attributes"
+          },
+          "docs": "List attributes"
+        },
+        {
+          "info": {
+            "name": "Create an attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/attributes"
+          },
+          "docs": "Create an attribute"
+        },
+        {
+          "info": {
+            "name": "Get an attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/attributes/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an attribute"
+        },
+        {
+          "info": {
+            "name": "Update or create an attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/attributes/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create an attribute"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/categories"
+          },
+          "docs": "List categories"
+        },
+        {
+          "info": {
+            "name": "Create a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/categories"
+          },
+          "docs": "Create a category"
+        },
+        {
+          "info": {
+            "name": "Get a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/categories/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a category"
+        },
+        {
+          "info": {
+            "name": "Update or create a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/categories/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a category"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/channels"
+          },
+          "docs": "List channels"
+        },
+        {
+          "info": {
+            "name": "Create a channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/channels"
+          },
+          "docs": "Create a channel"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locales",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List locales",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/locales"
+          },
+          "docs": "List locales"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Currencies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/currencies"
+          },
+          "docs": "List currencies"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Media Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List media files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/media-files"
+          },
+          "docs": "List media files"
+        },
+        {
+          "info": {
+            "name": "Upload a media file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/media-files"
+          },
+          "docs": "Upload a media file"
+        },
+        {
+          "info": {
+            "name": "Get a media file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/media-files/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a media file"
+        },
+        {
+          "info": {
+            "name": "Download a media file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/media-files/:code/download",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a media file"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reference Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reference entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities"
+          },
+          "docs": "List reference entities"
+        },
+        {
+          "info": {
+            "name": "Get a reference entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a reference entity"
+        },
+        {
+          "info": {
+            "name": "Update or create a reference entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a reference entity"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Asset Manager",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List asset families",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/asset-families"
+          },
+          "docs": "List asset families"
+        },
+        {
+          "info": {
+            "name": "Get an asset family",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/asset-families/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an asset family"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Catalogs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List catalogs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/catalogs"
+          },
+          "docs": "List catalogs"
+        },
+        {
+          "info": {
+            "name": "Create a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/catalogs"
+          },
+          "docs": "Create a catalog"
+        },
+        {
+          "info": {
+            "name": "Get a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/catalogs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a catalog"
+        },
+        {
+          "info": {
+            "name": "Update a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/catalogs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a catalog"
+        },
+        {
+          "info": {
+            "name": "Delete a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/catalogs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a catalog"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/workflows"
+          },
+          "docs": "List workflows"
+        },
+        {
+          "info": {
+            "name": "Get a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/workflows/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a workflow"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
