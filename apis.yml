@@ -9,7 +9,7 @@ description: >-
   for retail use cases. Authentication uses OAuth 2.0 client credentials with
   per-tenant base URLs in the cloud edition.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Product Information Management
 - PIM
