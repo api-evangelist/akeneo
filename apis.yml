@@ -55,11 +55,11 @@ common:
   url: https://www.akeneo.com
 - type: Documentation
   url: https://api.akeneo.com
-- type: Developer Portal
+- type: DeveloperPortal
   url: https://portal.akeneo.com
 - type: Pricing
   url: https://www.akeneo.com/pricing/
-- type: SignUp
+- type: Signup
   url: https://www.akeneo.com/request-a-demo/
 maintainers:
 - FN: Kin Lane
