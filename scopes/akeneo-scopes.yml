@@ -1,0 +1,156 @@
+generated: '2026-07-11'
+method: searched
+source: openapi/akeneo-openapi.yml
+docs: https://api.akeneo.com/apps/authentication-and-authorization.html
+schemes:
+- name: OAuth2ClientCredentials
+  source: openapi/akeneo-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
+scopes:
+- scope: read_products
+  description: Read products
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_products
+  description: Write products
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: delete_products
+  description: Remove products
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_catalog_structure
+  description: Read attributes, attribute groups, families and family variants
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_catalog_structure
+  description: Write attributes, attribute groups, families and family variants
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_attribute_options
+  description: Read attribute options
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_attribute_options
+  description: Write attribute options
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_categories
+  description: Read categories
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_categories
+  description: Write categories
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_channel_localization
+  description: Read locales and currencies
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_channel_settings
+  description: Read channels
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_channel_settings
+  description: Write channels
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_association_types
+  description: Read association types
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_association_types
+  description: Write association types
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_catalogs
+  description: Read app catalogs
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_catalogs
+  description: Write app catalogs
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: delete_catalogs
+  description: Remove app catalogs
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_asset_families
+  description: Read asset families
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_asset_families
+  description: Write assets families
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_assets
+  description: Read assets
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_assets
+  description: Write assets
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: delete_assets
+  description: Remove assets
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_reference_entities
+  description: Read reference entities
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_reference_entities
+  description: Write reference entities
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_reference_entity_records
+  description: Read reference entity records
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_reference_entity_records
+  description: Write reference entity records
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_workflows
+  description: Read workflows and their steps
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_workflow_step_assignees
+  description: Read assignees for workflow steps
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_workflow_tasks
+  description: Read workflow tasks
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: write_workflow_tasks
+  description: Write workflow tasks
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: create_suggestions
+  description: Create suggestions
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: read_suggestions
+  description: Read suggestions
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: manage_suggestions
+  description: Manage suggestions
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: openid
+  description: Read user id (authentication scope)
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: profile
+  description: Read user first name and last name (from PIM user profile) (authentication
+    scope)
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html
+- scope: email
+  description: Read user email (from PIM user profile) (authentication scope)
+  sources:
+  - https://api.akeneo.com/apps/authentication-and-authorization.html

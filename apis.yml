@@ -47,6 +47,8 @@ apis:
   - url: graphql/akeneo-graphql.md
     type: GraphQL
 common:
+- type: OAuthScopes
+  url: scopes/akeneo-scopes.yml
 - type: GitHubOrganization
   url: https://github.com/akeneo
 - type: LinkedIn
@@ -61,6 +63,8 @@ common:
   url: https://www.akeneo.com/pricing/
 - type: Signup
   url: https://www.akeneo.com/request-a-demo/
+- url: https://www.akeneo.com/feed/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
