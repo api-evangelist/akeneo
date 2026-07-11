@@ -47,6 +47,14 @@ apis:
   - url: graphql/akeneo-graphql.md
     type: GraphQL
 common:
+- type: TrustCenter
+  url: security/akeneo-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/akeneo-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/akeneo-domain-security.yml
+- type: Authentication
+  url: authentication/akeneo-authentication.yml
 - type: OAuthScopes
   url: scopes/akeneo-scopes.yml
 - type: GitHubOrganization
