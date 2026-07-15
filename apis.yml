@@ -47,6 +47,8 @@ apis:
   - url: graphql/akeneo-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/akeneo-agentic-access.yml
 - type: TrustCenter
   url: security/akeneo-trust-center.yml
 - type: VulnerabilityDisclosure
