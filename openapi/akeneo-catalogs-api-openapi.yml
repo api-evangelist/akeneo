@@ -1,0 +1,93 @@
+openapi: 3.1.0
+info:
+  title: Akeneo PIM REST Asset Manager Catalogs API
+  version: 1.0.0
+  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+
+    Manage products, product models, families, attributes, categories,
+
+    channels, locales, assets, reference entities, catalogs, workflows,
+
+    and more. Authentication uses OAuth 2.0 client credentials with
+
+    per-tenant base URLs in the SaaS edition.
+
+    '
+  contact:
+    name: Akeneo
+    url: https://api.akeneo.com
+  license:
+    name: Documentation Terms
+    url: https://api.akeneo.com
+servers:
+- url: https://{tenant}.cloud.akeneo.com
+  description: Akeneo PIM SaaS tenant
+  variables:
+    tenant:
+      default: demo
+      description: Tenant subdomain assigned by Akeneo.
+security:
+- BearerAuth: []
+tags:
+- name: Catalogs
+paths:
+  /api/rest/v1/catalogs:
+    get:
+      tags:
+      - Catalogs
+      operationId: listCatalogs
+      summary: List catalogs
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Catalogs
+      operationId: createCatalog
+      summary: Create a catalog
+      responses:
+        '201':
+          description: Created
+  /api/rest/v1/catalogs/{id}:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Catalogs
+      operationId: getCatalog
+      summary: Get a catalog
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+      - Catalogs
+      operationId: updateCatalog
+      summary: Update a catalog
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+      - Catalogs
+      operationId: deleteCatalog
+      summary: Delete a catalog
+      responses:
+        '204':
+          description: No content
+components:
+  securitySchemes:
+    OAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

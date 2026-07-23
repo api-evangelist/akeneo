@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Akeneo PIM REST Asset Manager Workflows API
+  version: 1.0.0
+  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+
+    Manage products, product models, families, attributes, categories,
+
+    channels, locales, assets, reference entities, catalogs, workflows,
+
+    and more. Authentication uses OAuth 2.0 client credentials with
+
+    per-tenant base URLs in the SaaS edition.
+
+    '
+  contact:
+    name: Akeneo
+    url: https://api.akeneo.com
+  license:
+    name: Documentation Terms
+    url: https://api.akeneo.com
+servers:
+- url: https://{tenant}.cloud.akeneo.com
+  description: Akeneo PIM SaaS tenant
+  variables:
+    tenant:
+      default: demo
+      description: Tenant subdomain assigned by Akeneo.
+security:
+- BearerAuth: []
+tags:
+- name: Workflows
+paths:
+  /api/rest/v1/workflows:
+    get:
+      tags:
+      - Workflows
+      operationId: listWorkflows
+      summary: List workflows
+      responses:
+        '200':
+          description: OK
+  /api/rest/v1/workflows/{uuid}:
+    parameters:
+    - in: path
+      name: uuid
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Workflows
+      operationId: getWorkflow
+      summary: Get a workflow
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    OAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

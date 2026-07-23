@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Akeneo PIM REST Asset Manager Attributes API
+  version: 1.0.0
+  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+
+    Manage products, product models, families, attributes, categories,
+
+    channels, locales, assets, reference entities, catalogs, workflows,
+
+    and more. Authentication uses OAuth 2.0 client credentials with
+
+    per-tenant base URLs in the SaaS edition.
+
+    '
+  contact:
+    name: Akeneo
+    url: https://api.akeneo.com
+  license:
+    name: Documentation Terms
+    url: https://api.akeneo.com
+servers:
+- url: https://{tenant}.cloud.akeneo.com
+  description: Akeneo PIM SaaS tenant
+  variables:
+    tenant:
+      default: demo
+      description: Tenant subdomain assigned by Akeneo.
+security:
+- BearerAuth: []
+tags:
+- name: Attributes
+paths:
+  /api/rest/v1/attributes:
+    get:
+      tags:
+      - Attributes
+      operationId: listAttributes
+      summary: List attributes
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Attributes
+      operationId: createAttribute
+      summary: Create an attribute
+      responses:
+        '201':
+          description: Created
+  /api/rest/v1/attributes/{code}:
+    parameters:
+    - in: path
+      name: code
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Attributes
+      operationId: getAttribute
+      summary: Get an attribute
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+      - Attributes
+      operationId: upsertAttribute
+      summary: Update or create an attribute
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    OAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

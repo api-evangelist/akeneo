@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: Akeneo PIM REST Asset Manager Product Models API
+  version: 1.0.0
+  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+
+    Manage products, product models, families, attributes, categories,
+
+    channels, locales, assets, reference entities, catalogs, workflows,
+
+    and more. Authentication uses OAuth 2.0 client credentials with
+
+    per-tenant base URLs in the SaaS edition.
+
+    '
+  contact:
+    name: Akeneo
+    url: https://api.akeneo.com
+  license:
+    name: Documentation Terms
+    url: https://api.akeneo.com
+servers:
+- url: https://{tenant}.cloud.akeneo.com
+  description: Akeneo PIM SaaS tenant
+  variables:
+    tenant:
+      default: demo
+      description: Tenant subdomain assigned by Akeneo.
+security:
+- BearerAuth: []
+tags:
+- name: Product Models
+paths:
+  /api/rest/v1/product-models:
+    get:
+      tags:
+      - Product Models
+      operationId: listProductModels
+      summary: List product models
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Product Models
+      operationId: createProductModel
+      summary: Create a product model
+      responses:
+        '201':
+          description: Created
+    patch:
+      tags:
+      - Product Models
+      operationId: bulkUpsertProductModels
+      summary: Bulk upsert product models
+      responses:
+        '200':
+          description: OK
+  /api/rest/v1/product-models/{code}:
+    parameters:
+    - in: path
+      name: code
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Product Models
+      operationId: getProductModel
+      summary: Get a product model
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+      - Product Models
+      operationId: upsertProductModel
+      summary: Update or create a product model
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+      - Product Models
+      operationId: deleteProductModel
+      summary: Delete a product model
+      responses:
+        '204':
+          description: No content
+components:
+  securitySchemes:
+    OAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
