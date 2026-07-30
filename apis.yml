@@ -9,7 +9,19 @@ description: >-
   for retail use cases. Authentication uses OAuth 2.0 client credentials with
   per-tenant base URLs in the cloud edition.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/akeneo.png
 tags:
 - Product Information Management
 - PIM
@@ -23,29 +35,246 @@ created: '2026-05-11'
 modified: '2026-05-11'
 specificationVersion: '0.19'
 apis:
-- aid: akeneo:pim-rest-api
-  name: Akeneo PIM REST API
-  description: >-
-    REST API for managing products, product models, families, attributes,
-    categories, channels, locales, assets, and reference entities in the
-    Akeneo PIM SaaS. Authentication uses OAuth 2.0 client credentials issued
-    from the Akeneo App Developer portal.
+- aid: akeneo:akeneo-asset-manager-api
+  name: Akeneo Asset Manager API
+  description: The Asset Manager API from Akeneo — 2 operation(s) for asset manager.
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
-  - Product Information Management
-  - PIM
-  - Product Data
-  - Catalog Management
+  - Asset Manager
   properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-manager-api-openapi.yml
   - type: Documentation
     url: https://api.akeneo.com/api-reference-index.html
-  - type: OpenAPI
-    url: https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - url: graphql/akeneo-graphql.md
-    type: GraphQL
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-attributes-api
+  name: Akeneo Attributes API
+  description: The Attributes API from Akeneo — 2 operation(s) for attributes.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-authentication-api
+  name: Akeneo Authentication API
+  description: The Authentication API from Akeneo — 1 operation(s) for authentication.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-catalogs-api
+  name: Akeneo Catalogs API
+  description: The Catalogs API from Akeneo — 2 operation(s) for catalogs.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Catalogs
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-catalogs-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-categories-api
+  name: Akeneo Categories API
+  description: The Categories API from Akeneo — 2 operation(s) for categories.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-categories-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-channels-api
+  name: Akeneo Channels API
+  description: The Channels API from Akeneo — 1 operation(s) for channels.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-channels-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-currencies-api
+  name: Akeneo Currencies API
+  description: The Currencies API from Akeneo — 1 operation(s) for currencies.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Currencies
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-currencies-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-families-api
+  name: Akeneo Families API
+  description: The Families API from Akeneo — 2 operation(s) for families.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Families
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-families-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-locales-api
+  name: Akeneo Locales API
+  description: The Locales API from Akeneo — 1 operation(s) for locales.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Locales
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-locales-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-media-files-api
+  name: Akeneo Media Files API
+  description: The Media Files API from Akeneo — 3 operation(s) for media files.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Media Files
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-media-files-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-product-models-api
+  name: Akeneo Product Models API
+  description: The Product Models API from Akeneo — 2 operation(s) for product models.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Product Models
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-product-models-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-products-api
+  name: Akeneo Products API
+  description: The Products API from Akeneo — 4 operation(s) for products.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-products-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-reference-entities-api
+  name: Akeneo Reference Entities API
+  description: The Reference Entities API from Akeneo — 2 operation(s) for reference entities.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entities-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-system-api
+  name: Akeneo System API
+  description: The System API from Akeneo — 2 operation(s) for system.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-system-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
+- aid: akeneo:akeneo-workflows-api
+  name: Akeneo Workflows API
+  description: The Workflows API from Akeneo — 2 operation(s) for workflows.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+  - type: GraphQL
+    url: graphql/akeneo-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/akeneo-agentic-access.yml
