@@ -1,0 +1,42 @@
+{
+  "provider": "akeneo",
+  "sources": [
+    "akeneo-asset-manager-api-openapi.yml",
+    "akeneo-attributes-api-openapi.yml",
+    "akeneo-authentication-api-openapi.yml",
+    "akeneo-catalogs-api-openapi.yml",
+    "akeneo-categories-api-openapi.yml",
+    "akeneo-channels-api-openapi.yml",
+    "akeneo-currencies-api-openapi.yml",
+    "akeneo-families-api-openapi.yml",
+    "akeneo-locales-api-openapi.yml",
+    "akeneo-media-files-api-openapi.yml",
+    "akeneo-product-models-api-openapi.yml",
+    "akeneo-products-api-openapi.yml",
+    "akeneo-reference-entities-api-openapi.yml",
+    "akeneo-system-api-openapi.yml",
+    "akeneo-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "akeneo-asset-manager-api-openapi.yml",
+    "akeneo-attributes-api-openapi.yml",
+    "akeneo-authentication-api-openapi.yml",
+    "akeneo-catalogs-api-openapi.yml",
+    "akeneo-categories-api-openapi.yml",
+    "akeneo-channels-api-openapi.yml",
+    "akeneo-currencies-api-openapi.yml",
+    "akeneo-families-api-openapi.yml",
+    "akeneo-locales-api-openapi.yml",
+    "akeneo-media-files-api-openapi.yml",
+    "akeneo-product-models-api-openapi.yml",
+    "akeneo-products-api-openapi.yml",
+    "akeneo-reference-entities-api-openapi.yml",
+    "akeneo-system-api-openapi.yml",
+    "akeneo-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
