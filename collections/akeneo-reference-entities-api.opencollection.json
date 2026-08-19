@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Akeneo PIM REST Asset Manager Reference Entities API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reference entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities"
+          },
+          "docs": "List reference entities"
+        },
+        {
+          "info": {
+            "name": "Get a reference entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a reference entity"
+        },
+        {
+          "info": {
+            "name": "Update or create a reference entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/reference-entities/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a reference entity"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

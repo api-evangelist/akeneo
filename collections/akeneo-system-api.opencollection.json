@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Akeneo PIM REST Asset Manager System API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API entry point",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1"
+          },
+          "docs": "API entry point"
+        },
+        {
+          "info": {
+            "name": "System information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/system-information"
+          },
+          "docs": "System information"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

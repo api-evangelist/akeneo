@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Akeneo PIM REST Asset Manager Product Models API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Product Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List product models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "List product models"
+        },
+        {
+          "info": {
+            "name": "Create a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "Create a product model"
+        },
+        {
+          "info": {
+            "name": "Bulk upsert product models",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models"
+          },
+          "docs": "Bulk upsert product models"
+        },
+        {
+          "info": {
+            "name": "Get a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product model"
+        },
+        {
+          "info": {
+            "name": "Update or create a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update or create a product model"
+        },
+        {
+          "info": {
+            "name": "Delete a product model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.cloud.akeneo.com/api/rest/v1/product-models/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product model"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
