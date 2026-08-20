@@ -137,6 +137,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Currency
+  tags_raw:
   - Currencies
   properties:
   - type: OpenAPI
@@ -217,6 +219,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
