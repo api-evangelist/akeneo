@@ -1,0 +1,73 @@
+slug: akeneo
+provider: Akeneo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Retail & Consumer Goods
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Products
+  spec_file: akeneo-products-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.92
+  evidence: POST /api/rest/v1/products  createProduct  Create a product; GET /api/rest/v1/products-uuid/{uuid}  getProductByUuid
+  reason: Core PIM product record CRUD — the canonical item master record with attributes and identifiers,
+    squarely Item Master Data Management.
+- tag: Attributes
+  spec_file: akeneo-attributes-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.85
+  evidence: POST /api/rest/v1/attributes  Create an attribute; 'REST API for the Akeneo Product Information
+    Management (PIM) platform. Manage products, product models, families, attributes...'
+  reason: CRUD over PIM product attributes - the definitional structures of the canonical item record
+    - which is item master data management within Product Information Management.
+- tag: Product Models
+  spec_file: akeneo-product-models-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.85
+  evidence: POST /api/rest/v1/product-models  createProductModel  Create a product model
+  reason: Product models are the variant-parent records in the Akeneo item master; CRUD over them is authoritative
+    product master data management.
+- tag: Categories
+  spec_file: akeneo-categories-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.75
+  evidence: POST /api/rest/v1/categories  createCategory  Create a category — "Manage products, product
+    models, families, attributes, categories"
+  reason: Product categories in a PIM are part of the item master taxonomy/hierarchy, which BC-2370.10
+    explicitly covers ("hierarchies, and taxonomy that form the canonical product record"). Not retail
+    Category Management (BC-2300.20), which is category-as-business-unit performance management.
+- tag: Families
+  spec_file: akeneo-families-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.7
+  evidence: POST /api/rest/v1/families  createFamily  Create a family
+  reason: Akeneo families define the attribute structure/templates for item records, part of item master
+    data attribute and taxonomy management. Slightly generic tag, so moderate confidence.
+- tag: Media Files
+  spec_file: akeneo-media-files-api-openapi.yml
+  capability_id: BC-2370.20
+  capability_id_l1: BC-2370
+  capability_name: Product Content Authoring Management
+  confidence: 0.7
+  evidence: POST /api/rest/v1/media-files  createMediaFile  Upload a media file
+  reason: Upload/download of product media files in a PIM supports product content authoring (photography,
+    rich media attached to item records). Could be read as generic file upload plumbing, hence moderate
+    confidence.

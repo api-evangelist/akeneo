@@ -292,6 +292,9 @@ apis:
   - type: GraphQL
     url: graphql/akeneo-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/akeneo-capability-edges.yml
+  name: Akeneo Business Capability Map
 - type: AgenticAccess
   url: agentic-access/akeneo-agentic-access.yml
 - type: TrustCenter
