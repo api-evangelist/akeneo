@@ -107,6 +107,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Catalog
+  tags_raw:
   - Catalogs
   properties:
   - type: OpenAPI
