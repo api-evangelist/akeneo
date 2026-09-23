@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Akeneo PIM REST Asset Manager Families API
+  title: Akeneo PIM REST Families API
   version: 1.0.0
   description: 'REST API for the Akeneo Product Information Management (PIM) platform.
 
@@ -10,9 +10,7 @@ info:
 
     and more. Authentication uses OAuth 2.0 client credentials with
 
-    per-tenant base URLs in the SaaS edition.
-
-    '
+    per-tenant base URLs in the SaaS edition.'
   contact:
     name: Akeneo
     url: https://api.akeneo.com

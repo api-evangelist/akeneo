@@ -1,21 +1,7 @@
 {
   "provider": "akeneo",
   "sources": [
-    "akeneo-asset-manager-api-openapi.yml",
-    "akeneo-attributes-api-openapi.yml",
-    "akeneo-authentication-api-openapi.yml",
-    "akeneo-catalogs-api-openapi.yml",
-    "akeneo-categories-api-openapi.yml",
-    "akeneo-channels-api-openapi.yml",
-    "akeneo-currencies-api-openapi.yml",
-    "akeneo-families-api-openapi.yml",
-    "akeneo-locales-api-openapi.yml",
-    "akeneo-media-files-api-openapi.yml",
-    "akeneo-product-models-api-openapi.yml",
-    "akeneo-products-api-openapi.yml",
-    "akeneo-reference-entities-api-openapi.yml",
-    "akeneo-system-api-openapi.yml",
-    "akeneo-workflows-api-openapi.yml"
+    "_original/akeneo-openapi.yml"
   ],
   "outputs": [
     "akeneo-asset-manager-api-openapi.yml",
@@ -37,6 +23,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "akeneo-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "akeneo-asset-manager-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-attributes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-catalogs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-currencies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-families-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-locales-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-media-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-product-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-reference-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-system-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "akeneo-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
