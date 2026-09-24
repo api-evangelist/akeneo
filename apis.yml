@@ -67,8 +67,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-attributes-api
   name: Akeneo Attributes API
   description: The Attributes API from Akeneo — 2 operation(s) for attributes.
@@ -83,8 +81,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-authentication-api
   name: Akeneo Authentication API
   description: The Authentication API from Akeneo — 1 operation(s) for authentication.
@@ -99,8 +95,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-catalogs-api
   name: Akeneo Catalogs API
   description: The Catalogs API from Akeneo — 2 operation(s) for catalogs.
@@ -117,8 +111,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-categories-api
   name: Akeneo Categories API
   description: The Categories API from Akeneo — 2 operation(s) for categories.
@@ -133,8 +125,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-channels-api
   name: Akeneo Channels API
   description: The Channels API from Akeneo — 1 operation(s) for channels.
@@ -149,8 +139,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-currencies-api
   name: Akeneo Currencies API
   description: The Currencies API from Akeneo — 1 operation(s) for currencies.
@@ -167,8 +155,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-families-api
   name: Akeneo Families API
   description: The Families API from Akeneo — 2 operation(s) for families.
@@ -183,8 +169,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-locales-api
   name: Akeneo Locales API
   description: The Locales API from Akeneo — 1 operation(s) for locales.
@@ -199,8 +183,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-media-files-api
   name: Akeneo Media Files API
   description: The Media Files API from Akeneo — 3 operation(s) for media files.
@@ -215,8 +197,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-product-models-api
   name: Akeneo Product Models API
   description: The Product Models API from Akeneo — 2 operation(s) for product models.
@@ -231,8 +211,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-products-api
   name: Akeneo Products API
   description: The Products API from Akeneo — 4 operation(s) for products.
@@ -249,8 +227,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-reference-entities-api
   name: Akeneo Reference Entities API
   description: The Reference Entities API from Akeneo — 2 operation(s) for reference entities.
@@ -265,8 +241,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-system-api
   name: Akeneo System API
   description: The System API from Akeneo — 2 operation(s) for system.
@@ -281,8 +255,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 - aid: akeneo:akeneo-workflows-api
   name: Akeneo Workflows API
   description: The Workflows API from Akeneo — 2 operation(s) for workflows.
@@ -297,8 +269,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-  - type: GraphQL
-    url: graphql/akeneo-graphql.md
 common:
 - type: CapabilityMap
   url: capabilities/akeneo-capability-edges.yml
