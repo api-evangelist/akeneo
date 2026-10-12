@@ -1,0 +1,22 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/akeneo/integrations
+checked:
+- https://composio.dev/toolkits/akeneo
+- https://monid.ai/tools/akeneo
+- https://n8n.io/integrations/akeneo/
+- https://zapier.com/apps/akeneo/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: akeneo
+  url: https://zapier.com/apps/akeneo/integrations
+  external_url: https://www.akeneo.com/
+  partner_tier: null
+  triggers: []
+  actions: []
+  searches: []
+edges: []
+templates: []
