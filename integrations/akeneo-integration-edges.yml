@@ -7,6 +7,7 @@ checked:
 - https://monid.ai/tools/akeneo
 - https://n8n.io/integrations/akeneo/
 - https://zapier.com/apps/akeneo/integrations
+- stripe/integrations/stripe-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -18,5 +19,22 @@ marketplace_apps:
   triggers: []
   actions: []
   searches: []
-edges: []
+edges:
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/akeneo-activation
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Akeneo Activation
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: commerce
 templates: []
