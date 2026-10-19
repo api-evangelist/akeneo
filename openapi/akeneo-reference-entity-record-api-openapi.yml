@@ -1,0 +1,1770 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Reference entity record API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Reference entity record
+  description: 'A reference entity record is a specific instance of a reference entity.
+
+    It contains the values for the attributes defined in the reference entity.
+
+    Reference entity records can be linked to products or product models, allowing you to associate additional information with them.'
+paths:
+  /api/rest/v1/reference-entities/records:
+    get:
+      operationId: get_all_reference_entity_records
+      x-visibility: public
+      summary: Get all records across all reference entities
+      description: 'This endpoint allows you to get a list of records across all reference entities.
+
+        Records are paginated and can be filtered.'
+      tags:
+      - Reference entity record
+      security:
+      - bearerToken: []
+      parameters:
+      - name: reference_entity
+        in: query
+        description: Filter records by a specific reference entity code
+        required: false
+        schema:
+          type: string
+      - name: search
+        in: query
+        description: 'Filter records,
+
+          for more details see the [Filters](https://api.akeneo.com/documentation/filter.html#filter-reference-entity-records)
+
+          '
+        required: false
+        schema:
+          type: string
+        examples:
+          getRecordsByRecordCode:
+            summary: Filter the records by their code
+            value: '{"code":[{"operator":"IN","value":["code1","code2"]}]}'
+          getRecordsByCompleteness:
+            summary: Filter the records to get only the completed ones on a given channel for given locales
+            value: '{"complete":{"operator":"=","value":true,"channel":"ecommerce","locales":["en_US"]}}'
+          getRecordsByUpdatedDate:
+            summary: Filter the records by their update date
+            value: '{"updated":[{"operator":">","value":"2018-07-04T10:00:00+00:00"}]}'
+          getRecordsByTextAttributeValue:
+            summary: Filter by a text attribute value
+            value: '{"description":{"operator":"CONTAINS","value":"furniture","locale":"en_US","channel":"ecommerce"}}'
+          getRecordsByNumberAttributeValue:
+            summary: Filter by a number attribute value
+            value: '{"creation_year":{"operator":">","value":"1950"}}'
+          getRecordsByOptionAttributeValue:
+            summary: Filter by an option (single or multiple)
+            value: '{"nationality":{"operator":"IN","value":["french","italian"]}}'
+          getRecordsByReferenceEntityLink:
+            summary: Filter by a reference entity link (single or multiple)
+            value: '{"designers":{"operator":"IN","value":["starck","dixon"]}}'
+      - name: channel
+        in: query
+        description: 'Filter record values to return scopable record attributes for the given channel as well as the non localizable/non scopable record attributes,
+
+          for more details see the [Filter record values by channel](https://api.akeneo.com/documentation/filter.html#record-values-by-channel) section.
+
+          '
+        required: false
+        schema:
+          type: string
+        example: ecommerce
+      - name: locales
+        in: query
+        description: 'Filter record values to return localizable record attributes for the given locales as well as the non localizable/non scopable record attributes,
+
+          for more details see the [Filter record values by locale](https://api.akeneo.com/documentation/filter.html#record-values-by-locale) section.
+
+          '
+        required: false
+        schema:
+          type: string
+        example: en_US,fr_FR
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      responses:
+        '200':
+          description: 'Return the records of the given reference entity paginated.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is use.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              required:
+                              - code
+                              properties:
+                                code:
+                                  type: string
+                                  description: Code of the record
+                                  example: kartell
+                                values:
+                                  type: object
+                                  description: Record attribute values
+                                  additionalProperties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      required:
+                                      - data
+                                      properties:
+                                        locale:
+                                          description: Locale code of the value
+                                          type:
+                                          - string
+                                          - 'null'
+                                        channel:
+                                          description: Channel code of the value
+                                          type:
+                                          - string
+                                          - 'null'
+                                        data:
+                                          description: 'Reference entity record value.
+
+                                            See [the `data` format](https://api.akeneo.com/concepts/reference-entities.html#the-data-format) section for more details.
+
+                                            '
+                                          oneOf:
+                                          - type: string
+                                          - type: array
+                                            items:
+                                              type: string
+                                          - type: object
+                                          - type: 'null'
+                                  x-validation-rules: Validation rules detailed in Reference entity record values section
+                                  example:
+                                    label:
+                                    - locale: en_US
+                                      channel: null
+                                      data: Kartell
+                                    image:
+                                    - locale: null
+                                      channel: null
+                                      data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                                    description:
+                                    - locale: en_US
+                                      channel: null
+                                      data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                                    - locale: fr_FR
+                                      channel: null
+                                      data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                                    country:
+                                    - locale: null
+                                      channel: null
+                                      data: italy
+                                    creation_year:
+                                    - locale: null
+                                      channel: null
+                                      data: '1949'
+                                created:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  readOnly: true
+                                  example: '2021-01-01T01:23:34+00:00'
+                                updated:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  readOnly: true
+                                  example: '2021-02-03T23:45:59+00:00'
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+                      example:
+                        items:
+                        - code: kartell
+                          values:
+                            label:
+                            - locale: en_US
+                              channel: null
+                              data: Kartell
+                          _links:
+                            self:
+                              href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records?search_after=ligneroset
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+                    code: kartell
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: The contemporary Italian furniture brand
+                      - locale: fr_FR
+                        channel: null
+                        data: L'éditeur de meubles comtemporain italien
+                      country:
+                      - locale: null
+                        channel: null
+                        data: italy
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/usm
+                    code: usm
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: USM
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 9/c/g/1/0cb0c0e115dedba76f8d1ad8343ec897abc43bv4_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Modular furniture from Switzerland for your home and office
+                      - locale: fr_FR
+                        channel: null
+                        data: L'éditeur de meubles modulaires suisse pour votre intérieur et pour les entreprises
+                      country:
+                      - locale: null
+                        channel: null
+                        data: switzerland
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/ligneroset
+                    code: ligneroset
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Ligne Roset
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 4/b/0/1/0cb0c0e115dedde78b8d1ad8343ec980cd5daa54_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Very well known French brand of modern and luxury furniture
+                      - locale: fr_FR
+                        channel: null
+                        data: La marque renommée des meubles de luxe à la française
+                      country:
+                      - locale: null
+                        channel: null
+                        data: france
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+  /api/rest/v1/reference-entities/{reference_entity_code}/records:
+    get:
+      operationId: get_reference_entity_records
+      x-visibility: public
+      summary: Get the list of the records of a reference entity
+      description: 'This endpoint allows you to get a list of records of a given reference entity.
+
+        Records are paginated and can be filtered.'
+      tags:
+      - Reference entity record
+      security:
+      - bearerToken: []
+      parameters:
+      - name: search
+        in: query
+        description: 'Filter records of the reference entity,
+
+          for more details see the [Filters](https://api.akeneo.com/documentation/filter.html#filter-reference-entity-records)
+
+          '
+        required: false
+        schema:
+          type: string
+        examples:
+          getRecordsByRecordCode:
+            summary: Filter the records by their code
+            value: '{"code":[{"operator":"IN","value":["code1","code2"]}]}'
+          getRecordsByCompleteness:
+            summary: Filter the records to get only the completed ones on a given channel for given locales
+            value: '{"complete":{"operator":"=","value":true,"channel":"ecommerce","locales":["en_US"]}}'
+          getRecordsByUpdatedDate:
+            summary: Filter the records by their update date
+            value: '{"updated":[{"operator":">","value":"2018-07-04T10:00:00+00:00"}]}'
+          getRecordsByTextAttributeValue:
+            summary: Filter by a text attribute value
+            value: '{"description":{"operator":"CONTAINS","value":"furniture","locale":"en_US","channel":"ecommerce"}}'
+          getRecordsByNumberAttributeValue:
+            summary: Filter by a number attribute value
+            value: '{"creation_year":{"operator":">","value":"1950"}}'
+          getRecordsByOptionAttributeValue:
+            summary: Filter by an option (single or multiple)
+            value: '{"nationality":{"operator":"IN","value":["french","italian"]}}'
+          getRecordsByReferenceEntityLink:
+            summary: Filter by a reference entity link (single or multiple)
+            value: '{"designers":{"operator":"IN","value":["starck","dixon"]}}'
+      - name: channel
+        in: query
+        description: 'Filter record values to return scopable record attributes for the given channel as well as the non localizable/non scopable record attributes,
+
+          for more details see the [Filter record values by channel](https://api.akeneo.com/documentation/filter.html#record-values-by-channel) section.
+
+          '
+        required: false
+        schema:
+          type: string
+        example: ecommerce
+      - name: locales
+        in: query
+        description: 'Filter record values to return localizable record attributes for the given locales as well as the non localizable/non scopable record attributes,
+
+          for more details see the [Filter record values by locale](https://api.akeneo.com/documentation/filter.html#record-values-by-locale) section.
+
+          '
+        required: false
+        schema:
+          type: string
+        example: en_US,fr_FR
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      responses:
+        '200':
+          description: 'Return the records of the given reference entity paginated.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is use.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              required:
+                              - code
+                              properties:
+                                code:
+                                  type: string
+                                  description: Code of the record
+                                  example: kartell
+                                values:
+                                  type: object
+                                  description: Record attribute values
+                                  additionalProperties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      required:
+                                      - data
+                                      properties:
+                                        locale:
+                                          description: Locale code of the value
+                                          type:
+                                          - string
+                                          - 'null'
+                                        channel:
+                                          description: Channel code of the value
+                                          type:
+                                          - string
+                                          - 'null'
+                                        data:
+                                          description: 'Reference entity record value.
+
+                                            See [the `data` format](https://api.akeneo.com/concepts/reference-entities.html#the-data-format) section for more details.
+
+                                            '
+                                          oneOf:
+                                          - type: string
+                                          - type: array
+                                            items:
+                                              type: string
+                                          - type: object
+                                          - type: 'null'
+                                  x-validation-rules: Validation rules detailed in Reference entity record values section
+                                  example:
+                                    label:
+                                    - locale: en_US
+                                      channel: null
+                                      data: Kartell
+                                    image:
+                                    - locale: null
+                                      channel: null
+                                      data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                                    description:
+                                    - locale: en_US
+                                      channel: null
+                                      data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                                    - locale: fr_FR
+                                      channel: null
+                                      data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                                    country:
+                                    - locale: null
+                                      channel: null
+                                      data: italy
+                                    creation_year:
+                                    - locale: null
+                                      channel: null
+                                      data: '1949'
+                                created:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  readOnly: true
+                                  example: '2021-01-01T01:23:34+00:00'
+                                updated:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  readOnly: true
+                                  example: '2021-02-03T23:45:59+00:00'
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+                      example:
+                        items:
+                        - code: kartell
+                          values:
+                            label:
+                            - locale: en_US
+                              channel: null
+                              data: Kartell
+                          _links:
+                            self:
+                              href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records?search_after=ligneroset
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/kartell
+                    code: kartell
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: The contemporary Italian furniture brand
+                      - locale: fr_FR
+                        channel: null
+                        data: L'éditeur de meubles comtemporain italien
+                      country:
+                      - locale: null
+                        channel: null
+                        data: italy
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/usm
+                    code: usm
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: USM
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 9/c/g/1/0cb0c0e115dedba76f8d1ad8343ec897abc43bv4_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Modular furniture from Switzerland for your home and office
+                      - locale: fr_FR
+                        channel: null
+                        data: L'éditeur de meubles modulaires suisse pour votre intérieur et pour les entreprises
+                      country:
+                      - locale: null
+                        channel: null
+                        data: switzerland
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/reference-entities/brands/records/ligneroset
+                    code: ligneroset
+                    values:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Ligne Roset
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 4/b/0/1/0cb0c0e115dedde78b8d1ad8343ec980cd5daa54_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Very well known French brand of modern and luxury furniture
+                      - locale: fr_FR
+                        channel: null
+                        data: La marque renommée des meubles de luxe à la française
+                      country:
+                      - locale: null
+                        channel: null
+                        data: france
+                    created: '2021-01-01T01:23:34+00:00'
+                    updated: '2021-02-03T23:45:59+00:00'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_reference_entity_records
+      x-visibility: public
+      summary: Update/create several reference entity records
+      description: 'This endpoint allows you to update and/or create several records of a reference entity.
+
+        Learn more about Update behavior.
+
+        If a record with the specified code does not already exist, it will be created.'
+      tags:
+      - Reference entity record
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      requestBody:
+        description: Payload containing one or more reference entity records to create or update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                - values
+                properties:
+                  code:
+                    type: string
+                    description: Code of the record. It can be omitted when a record code generator covers the reference entity, in which case the code is generated and returned in the response.
+                    example: kartell
+                  values:
+                    type: object
+                    description: Record attribute values
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                        - data
+                        properties:
+                          locale:
+                            description: Locale code of the value
+                            type:
+                            - string
+                            - 'null'
+                          channel:
+                            description: Channel code of the value
+                            type:
+                            - string
+                            - 'null'
+                          data:
+                            description: 'Reference entity record value.
+
+                              See [the `data` format](https://api.akeneo.com/concepts/reference-entities.html#the-data-format) section for more details.
+
+                              '
+                            oneOf:
+                            - type: string
+                            - type: array
+                              items:
+                                type: string
+                            - type: object
+                            - type: 'null'
+                    x-validation-rules: Validation rules detailed in Reference entity record values section
+                    example:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                      - locale: fr_FR
+                        channel: null
+                        data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                      country:
+                      - locale: null
+                        channel: null
+                        data: italy
+                      creation_year:
+                      - locale: null
+                        channel: null
+                        data: '1949'
+                  created:
+                    type:
+                    - string
+                    - 'null'
+                    description: Date of creation
+                    format: date-time
+                    readOnly: true
+                    example: '2021-01-01T01:23:34+00:00'
+                  updated:
+                    type:
+                    - string
+                    - 'null'
+                    description: Date of the last update
+                    format: date-time
+                    readOnly: true
+                    example: '2021-02-03T23:45:59+00:00'
+            example:
+            - code: kartell
+              values:
+                label:
+                - locale: en_US
+                  channel: null
+                  data: Kartell
+                image:
+                - locale: null
+                  channel: null
+                  data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                description:
+                - locale: en_US
+                  channel: null
+                  data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furnitures.
+                - locale: fr_FR
+                  channel: null
+                  data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belle pièces au design contemporain.
+                country:
+                - locale: null
+                  channel: null
+                  data: italy
+                collection_overview:
+                - locale: null
+                  channel: null
+                  data: 5/1/d/8/51d81dc778ba1501a8f998f3ab5797569f3b9e25_img.png
+                creation_year:
+                - locale: null
+                  channel: null
+                  data: '1949'
+            - code: ligneroset
+              values:
+                label:
+                - locale: en_US
+                  channel: null
+                  data: Ligne Roset
+                description:
+                - locale: en_US
+                  channel: null
+                  data: Very well known French brand of modern and luxury furniture
+                - locale: fr_FR
+                  channel: null
+                  data: La marque renommée des meubles de luxe à la française
+                country:
+                - locale: null
+                  channel: null
+                  data: france
+                creation_year:
+                - locale: null
+                  channel: null
+                  data: '1860'
+            - code: usm
+              values:
+                label:
+                - locale: en_US
+                  channel: null
+                  data: USM
+                description:
+                - locale: en_US
+                  channel: null
+                  data: Modular furniture from Switzerland for your home and office
+                - locale: fr_FR
+                  channel: null
+                  data: L'éditeur de meubles modulaires suisse pour votre intérieur et pour les entreprises
+                country:
+                - locale: null
+                  channel: null
+                  data: switzerland
+                creation_year:
+                - locale: null
+                  channel: null
+                  data: '1885'
+      responses:
+        '200':
+          description: Returns an JSON array in which each object gives you the status of each record creation or update
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                    status_code:
+                      type: integer
+                    message:
+                      type: string
+                    errors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          property:
+                            type: string
+                          message:
+                            type: string
+              example:
+              - code: a_new_brand
+                status_code: 201
+              - code: existing_brand_successfully_updated
+                status_code: 204
+              - code: brand_with_a_wrong_payload_resulting_in_an_error
+                status_code: 422
+                message: The record has an invalid format.
+                errors:
+                - property: values.label[0]
+                  message: 'Additional object properties are not allowed: typo'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '413':
+          description: 'This response indicates that the request entity is larger than the server is willing or able to process.
+
+            It can occur when the number of resources in a batch request exceeds the maximum allowed limit.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 413
+                message: Too many resources to process, 100 is the maximum allowed.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+  /api/rest/v1/reference-entities/{reference_entity_code}/records/{code}:
+    get:
+      operationId: get_reference_entity_record_by_code
+      x-visibility: public
+      summary: Get a record of a given reference entity
+      description: Retrieve a specific record of a reference entity
+      tags:
+      - Reference entity record
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Record retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                properties:
+                  code:
+                    type: string
+                    description: Code of the record
+                    example: kartell
+                  values:
+                    type: object
+                    description: Record attribute values
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                        - data
+                        properties:
+                          locale:
+                            description: Locale code of the value
+                            type:
+                            - string
+                            - 'null'
+                          channel:
+                            description: Channel code of the value
+                            type:
+                            - string
+                            - 'null'
+                          data:
+                            description: 'Reference entity record value.
+
+                              See [the `data` format](https://api.akeneo.com/concepts/reference-entities.html#the-data-format) section for more details.
+
+                              '
+                            oneOf:
+                            - type: string
+                            - type: array
+                              items:
+                                type: string
+                            - type: object
+                            - type: 'null'
+                    x-validation-rules: Validation rules detailed in Reference entity record values section
+                    example:
+                      label:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell
+                      image:
+                      - locale: null
+                        channel: null
+                        data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                      description:
+                      - locale: en_US
+                        channel: null
+                        data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                      - locale: fr_FR
+                        channel: null
+                        data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                      country:
+                      - locale: null
+                        channel: null
+                        data: italy
+                      creation_year:
+                      - locale: null
+                        channel: null
+                        data: '1949'
+                  created:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    readOnly: true
+                    example: '2021-01-01T01:23:34+00:00'
+                  updated:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    readOnly: true
+                    example: '2021-02-03T23:45:59+00:00'
+              example:
+                code: kartell
+                values:
+                  label:
+                  - locale: en_US
+                    channel: null
+                    data: Kartell
+                  image:
+                  - locale: null
+                    channel: null
+                    data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                  description:
+                  - locale: en_US
+                    channel: null
+                    data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                  - locale: fr_FR
+                    channel: null
+                    data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                  country:
+                  - locale: null
+                    channel: null
+                    data: italy
+                  collection_overview:
+                  - locale: null
+                    channel: null
+                    data: 5/1/d/8/51d81dc778ba1501a8f998f3ab5797569f3b9e25_img.png
+                  creation_year:
+                  - locale: null
+                    channel: null
+                    data: '1949'
+                created: '2021-01-01T01:23:34+00:00'
+                updated: '2021-02-03T23:45:59+00:00'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_reference_entity_record_by_code
+      x-visibility: public
+      summary: Update or create a record of a given reference entity
+      description: 'This endpoint allows you to update a given record of a given reference entity.
+
+        Learn more about Update behavior.
+
+        Note that if the record does not already exist for the given reference entity, it creates it.'
+      tags:
+      - Reference entity record
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      requestBody:
+        description: Reference entity record to create or update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - code
+              properties:
+                code:
+                  type: string
+                  description: Code of the record
+                  example: kartell
+                values:
+                  type: object
+                  description: Record attribute values
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - data
+                      properties:
+                        locale:
+                          description: Locale code of the value
+                          type:
+                          - string
+                          - 'null'
+                        channel:
+                          description: Channel code of the value
+                          type:
+                          - string
+                          - 'null'
+                        data:
+                          description: 'Reference entity record value.
+
+                            See [the `data` format](https://api.akeneo.com/concepts/reference-entities.html#the-data-format) section for more details.
+
+                            '
+                          oneOf:
+                          - type: string
+                          - type: array
+                            items:
+                              type: string
+                          - type: object
+                          - type: 'null'
+                  x-validation-rules: Validation rules detailed in Reference entity record values section
+                  example:
+                    label:
+                    - locale: en_US
+                      channel: null
+                      data: Kartell
+                    image:
+                    - locale: null
+                      channel: null
+                      data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                    description:
+                    - locale: en_US
+                      channel: null
+                      data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                    - locale: fr_FR
+                      channel: null
+                      data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                    country:
+                    - locale: null
+                      channel: null
+                      data: italy
+                    creation_year:
+                    - locale: null
+                      channel: null
+                      data: '1949'
+                created:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                  readOnly: true
+                  example: '2021-01-01T01:23:34+00:00'
+                updated:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                  readOnly: true
+                  example: '2021-02-03T23:45:59+00:00'
+            example:
+              code: kartell
+              values:
+                label:
+                - locale: en_US
+                  channel: null
+                  data: Kartell
+                image:
+                - locale: null
+                  channel: null
+                  data: 0/c/b/0/0cb0c0e115dedba676f8d1ad8343ec207ab54c7b_image.jpg
+                description:
+                - locale: en_US
+                  channel: null
+                  data: Kartell, the Italian furniture company that sells modern and remarkable pieces of furniture.
+                - locale: fr_FR
+                  channel: null
+                  data: Kartell, l'éditeur de meuble italien spécialisé dans la signature de belles pièces au design contemporain.
+                country:
+                - locale: null
+                  channel: null
+                  data: italy
+                collection_overview:
+                - locale: null
+                  channel: null
+                  data: 5/1/d/8/51d81dc778ba1501a8f998f3ab5797569f3b9e25_img.png
+                creation_year:
+                - locale: null
+                  channel: null
+                  data: '1949'
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

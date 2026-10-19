@@ -1,0 +1,751 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Workflow tasks API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Workflow tasks
+  description: 'The Tasks endpoints allow you to retrieve the tasks for each workflow steps, products and product models.
+
+    It also allows you to manage the tasks by approving, rejecting or completing them.'
+paths:
+  /api/rest/v1/workflows/tasks:
+    get:
+      operationId: get_workflow_tasks
+      x-visibility: public
+      summary: Get list of workflow tasks
+      description: Retrieves a paginated list of tasks for a specified workflow step
+      tags:
+      - Workflow tasks
+      security:
+      - bearerToken: []
+      parameters:
+      - name: search
+        in: query
+        description: 'Stringified JSON to filter tasks.
+
+          For more details see the [Filters](https://api.akeneo.com/documentation/filter.html#filter-on-workflow-tasks) section.
+
+          '
+        required: true
+        schema:
+          type: string
+        examples:
+          getTasksByStepUuid:
+            summary: Search by step UUID
+            value: '{"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}'
+          getTasksByProductUuid:
+            summary: Search by product UUID
+            value: '{"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}],"product_uuid":[{"operator":"IN","value":["123e4567-e89b-12d3-a456-426614174000"]}]}'
+          getTasksByProductModelCode:
+            summary: Search by product model code
+            value: '{"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}],"product_model_code":[{"operator":"IN","value":["amor", "apollon]}]}'
+      - name: with_attributes
+        in: query
+        description: Whether to include task attributes in the response
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: page
+        description: 'Specify which page of results to retrieve when using pagination.
+
+          It is useful for navigating through large datasets by breaking them into smaller, manageable pages.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+        example: 1
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+        example: 100
+      responses:
+        '200':
+          description: 'Paginated list of tasks for a specified workflow step.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Workflow Tasks
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    current_page:
+                      type: integer
+                      description: Current page number
+                      example: 1
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          format: uri
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                                    edit:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          format: uri
+                                          description: URL to access the task in Akeneo
+                                          example: https://demo.akeneo.com/public/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07/edit
+                            - type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                  description: Task UUID
+                                  format: uuid
+                                  example: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                                status:
+                                  type: string
+                                  description: Task status
+                                  example: in_progress
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                  description: Task creation date
+                                  example: '2024-02-22T17:31:00Z'
+                                product:
+                                  type: object
+                                  properties:
+                                    uuid:
+                                      type: string
+                                      format: uuid
+                                      description: Product UUID
+                                      example: 7108ee60-a1ea-4fe1-baca-b39909e23d24
+                                product_model:
+                                  type: object
+                                  properties:
+                                    code:
+                                      type: string
+                                      description: Product model code
+                                      example: a-product-model-code
+                                due_date:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Due date
+                                  example: '2024-03-31T18:00:00Z'
+                                rejected:
+                                  type: boolean
+                                  description: Whether the task is rejected
+                                  example: true
+                                pending_attributes:
+                                  type: object
+                                  description: 'Object of attributes for the task that are awaiting completion or require user input.
+
+                                    Each key is an attribute code and each value is an array of objects with information on locale, scope, rejection status and comment.
+
+                                    This field is only included when `with_attributes=true`.
+
+                                    '
+                                  additionalProperties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      required:
+                                      - rejected
+                                      properties:
+                                        locale:
+                                          type:
+                                          - string
+                                          - 'null'
+                                          description: The locale code for the attribute value, null if the attribute is not localizable
+                                          example: en_US
+                                        scope:
+                                          type:
+                                          - string
+                                          - 'null'
+                                          description: The scope (channel) code for the attribute value, null if the attribute is not scopable
+                                          example: ecommerce
+                                        rejected:
+                                          type: boolean
+                                          description: Whether this attribute value has been rejected
+                                          example: true
+                                        comment:
+                                          type: string
+                                          description: Optional comment explaining why the attribute value was rejected.
+                                          example: This attribute value needs improvement
+                                  example:
+                                    name:
+                                    - locale: null
+                                      scope: null
+                                      rejected: true
+                                      comment: This needs improvement
+                                    description:
+                                    - locale: en_US
+                                      scope: ecommerce
+                                      rejected: false
+                                    - locale: fr_FR
+                                      scope: ecommerce
+                                      rejected: true
+              examples:
+                paginatedTasks:
+                  summary: Example of a paginated list of workflow step tasks
+                  value:
+                    _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&page=1&limit=10
+                      first:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&page=1&limit=10
+                      next:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&page=2&limit=10
+                    current_page: 1
+                    _embedded:
+                      items:
+                      - _links:
+                          self:
+                            href: https://demo.akeneo.com/api/rest/v1/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                          edit:
+                            href: https://demo.akeneo.com/public/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07/edit
+                        uuid: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                        status: in_progress
+                        created_at: '2024-02-22T17:31:00Z'
+                        product:
+                          uuid: 7108ee60-a1ea-4fe1-baca-b39909e23d24
+                        due_date: '2024-03-31T18:00:00Z'
+                        rejected: true
+                      - _links:
+                          self:
+                            href: https://demo.akeneo.com/api/rest/v1/workflows/tasks/782dd26a-b58d-40d3-a8e2-c41bb342f20f
+                          edit:
+                            href: https://demo.akeneo.com/public/workflows/tasks/782dd26a-b58d-40d3-a8e2-c41bb342f20f/edit
+                        uuid: 782dd26a-b58d-40d3-a8e2-c41bb342f20f
+                        status: in_progress
+                        created_at: '2024-02-22T17:31:00Z'
+                        product_model:
+                          code: a-product-model-code
+                        due_date: '2024-03-28T18:00:00Z'
+                        rejected: false
+                paginatedTasksWithPendingAttributes:
+                  summary: Example of a paginated list of workflow step tasks with pending attributes
+                  value:
+                    _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&with_attributes=true&page=1&limit=10
+                      first:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&with_attributes=true&page=1&limit=10
+                      next:
+                        href: https://demo.akeneo.com/api/rest/v1/workflows/tasks?search={"step_uuid":[{"operator":"=","value":"0a2c9f49-2b4f-42a5-b7f9-6c50f6bce8e9"}]}&with_attributes=true&page=2&limit=10
+                    current_page: 1
+                    _embedded:
+                      items:
+                      - _links:
+                          self:
+                            href: https://demo.akeneo.com/api/rest/v1/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                          edit:
+                            href: https://demo.akeneo.com/public/workflows/tasks/8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07/edit
+                        uuid: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                        status: in_progress
+                        created_at: '2024-02-22T17:31:00Z'
+                        product:
+                          uuid: 7108ee60-a1ea-4fe1-baca-b39909e23d24
+                        due_date: '2024-03-31T18:00:00Z'
+                        rejected: true
+                        pending_attributes:
+                          name:
+                          - locale: null
+                            scope: null
+                            rejected: true
+                            comment: This attribute name needs to be more descriptive
+                          description:
+                          - locale: en_US
+                            scope: ecommerce
+                            rejected: false
+                          - locale: fr_FR
+                            scope: ecommerce
+                            rejected: true
+                      - _links:
+                          self:
+                            href: https://demo.akeneo.com/api/rest/v1/workflows/tasks/782dd26a-b58d-40d3-a8e2-c41bb342f20f
+                          edit:
+                            href: https://demo.akeneo.com/public/workflows/tasks/782dd26a-b58d-40d3-a8e2-c41bb342f20f/edit
+                        uuid: 782dd26a-b58d-40d3-a8e2-c41bb342f20f
+                        status: in_progress
+                        created_at: '2024-02-22T17:31:00Z'
+                        product_model:
+                          code: a-product-model-code
+                        due_date: '2024-03-28T18:00:00Z'
+                        rejected: false
+                        pending_attributes:
+                          name:
+                          - locale: null
+                            scope: null
+                            rejected: false
+                          size:
+                          - locale: null
+                            scope: null
+                            rejected: true
+                            comment: Size information is incomplete
+                          color:
+                          - locale: en_US
+                            scope: null
+                            rejected: true
+                          - locale: fr_FR
+                            scope: null
+                            rejected: false
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+  /api/rest/v1/workflows/tasks/{uuid}:
+    patch:
+      operationId: patch_workflow_tasks_by_uuid
+      x-visibility: public
+      summary: Update a Workflow Task's Status (Approve, Reject, Complete)
+      description: 'Completes or approves/rejects a task.
+
+        The request body''s structure depends on the action being performed.
+
+
+        - To **approve** a ''review'' task, set status to `approved`.
+
+        - To **complete** an ''enrichment'' task, set status to `completed`.
+
+        - To **reject** a ''review'' task, set status to `rejected`, provide `send_back_to_step_uuid`, and optionally provide `rejected_attributes` to specify details about rejected attributes.'
+      tags:
+      - Workflow tasks
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      requestBody:
+        description: The action to perform on the task, determined by the payload
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                required:
+                - status
+                - send_back_to_step_uuid
+                description: Payload for rejecting a review task
+                properties:
+                  status:
+                    type: string
+                    description: Must be 'rejected' for this action
+                    enum:
+                    - rejected
+                  send_back_to_step_uuid:
+                    type: string
+                    format: uuid
+                    description: The UUID of the workflow step to which the task should be returned
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                  rejected_attributes:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                        - comment
+                        - locale
+                        - scope
+                        properties:
+                          comment:
+                            type: string
+                            description: Comment about the rejection reason for this attribute.
+                          locale:
+                            type:
+                            - string
+                            - 'null'
+                            description: Locale code, or null if not applicable.
+                          scope:
+                            type:
+                            - string
+                            - 'null'
+                            description: Scope code, or null if not applicable.
+                    description: 'Optionally provides details about which attributes were rejected.
+
+                      For each attribute name you can specify a comment, the locale, and the scope for the rejection.
+
+                      '
+              - type: object
+                required:
+                - status
+                description: Payload for completing an enrichment task
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - completed
+              - type: object
+                required:
+                - status
+                description: Payload for approving a review task
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - approved
+            examples:
+              rejectTask:
+                summary: Example for Rejecting a Task
+                value:
+                  status: rejected
+                  send_back_to_step_uuid: 123e4567-e89b-12d3-a456-426614174000
+                  rejected_attributes:
+                    name:
+                    - comment: ''
+                      locale: null
+                      scope: null
+                    description:
+                    - comment: Wrong description
+                      locale: en_US
+                      scope: ecommerce
+                    - comment: ''
+                      locale: fr_FR
+                      scope: mobile
+              completeTask:
+                summary: Example for Completing a Task
+                value:
+                  status: completed
+              approveTask:
+                summary: Example for Approving a Task
+                value:
+                  status: approved
+      responses:
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Description of the validation error
+                    example: Cannot update task, provided status is not supported.
+              examples:
+                statusNotSupported:
+                  summary: Provided status is not supported
+                  value:
+                    code: 422
+                    message: Cannot update task, provided status is not supported.
+                sendBackToStepNotProvided:
+                  summary: send_back_to_step not provided
+                  value:
+                    code: 422
+                    message: Cannot reject task, send_back_to_step_uuid is not provided.
+                rejectedAttributeNotAssigned:
+                  summary: A rejected attribute is not assigned to the task
+                  value:
+                    code: 422
+                    message: Attribute "description" on channel "ecommerce" and locale "en_US" is not assigned to the task.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

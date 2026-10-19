@@ -1,0 +1,1523 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Asset family API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Asset family
+  description: 'An asset family is a set of attributes that are shared by assets belonging to this family.
+
+    In other words, an asset family can be considered as a template for assets.'
+paths:
+  /api/rest/v1/asset-families:
+    get:
+      operationId: get_asset_families
+      x-visibility: public
+      summary: Get list of asset families
+      description: 'This endpoint allows you to get a list of asset families.
+
+        Asset families are paginated.'
+      tags:
+      - Asset family
+      security:
+      - bearerToken: []
+      parameters:
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      responses:
+        '200':
+          description: 'Return asset families paginated.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Asset families
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/asset-families/packshots
+                            - type: object
+                              required:
+                              - code
+                              properties:
+                                code:
+                                  type: string
+                                  description: Asset family code
+                                  x-immutable: true
+                                  example: model_pictures
+                                labels:
+                                  type: object
+                                  description: 'Asset family labels for each locale.
+
+                                    The `localeCode` must be the code of an existing and activated locale.
+
+                                    '
+                                  default: {}
+                                  patternProperties:
+                                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                                      description: Asset family label for the specified locale
+                                      type:
+                                      - string
+                                      - 'null'
+                                      example: Model pictures
+                                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                                  example:
+                                    en_US: Model pictures
+                                    fr_FR: Photographies en pied
+                                attribute_as_main_media:
+                                  type: string
+                                  minLength: 1
+                                  description: Attribute code that is used as the main media of the asset family
+                                  default: First media file or media link attribute that was created
+                                  x-validation-rules: It should be the code of an attribute that belongs to this family, and it must be a media file or a media link attribute type
+                                  example: main_image
+                                naming_convention:
+                                  type: object
+                                  description: 'The naming convention run over the asset code or the main media filename upon each asset creation, in order to automatically set several values in asset attributes.
+
+                                    To learn more and see the format of this property, take a look at [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-naming-convention).
+
+                                    '
+                                  default: {}
+                                  properties:
+                                    source:
+                                      type: object
+                                      description: 'The string on which the naming convention should be applied.
+
+                                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-source-string).
+
+                                        '
+                                    pattern:
+                                      type: string
+                                      description: 'The regular expression that should be applied on the source.
+
+                                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-split-pattern).
+
+                                        '
+                                    abort_asset_creation_on_error:
+                                      type: boolean
+                                      description: 'Whether the asset should be created if the naming convention failed to apply.
+
+                                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#abortion-on-error).
+
+                                        '
+                                  x-validation-rules: To know more about the validation of this property, take a look at our naming convention format
+                                  example:
+                                    source:
+                                      property: code
+                                    pattern: /(?P<product_ref>.*)-.*/
+                                    abort_asset_creation_on_error: true
+                                product_link_rules:
+                                  type: array
+                                  description: 'The rules that will be run after the asset creation, in order to automatically link the assets of this family to a set of products.
+
+                                    To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-product-link-rule).
+
+                                    '
+                                  default: []
+                                  items:
+                                    type: object
+                                    properties:
+                                      product_selections:
+                                        type: array
+                                        description: 'The product selection to which the assets of the asset family to be automatically linked.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-selection).
+
+                                          '
+                                        items:
+                                          type: object
+                                          required:
+                                          - field
+                                          - operator
+                                          - value
+                                          properties:
+                                            field:
+                                              type: string
+                                            operator:
+                                              type: string
+                                            value:
+                                              type:
+                                              - string
+                                              - array
+                                              - boolean
+                                            locale:
+                                              type:
+                                              - string
+                                              - 'null'
+                                              description: The locale code. Can be null if not applicable
+                                            channel:
+                                              type:
+                                              - string
+                                              - 'null'
+                                              description: The channel code. Can be null if not applicable
+                                      assign_assets_to:
+                                        type: array
+                                        description: 'The product value in which your assets will be assigned.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-value-assignment).
+
+                                          '
+                                        items:
+                                          type: object
+                                          required:
+                                          - attribute
+                                          - mode
+                                          properties:
+                                            attribute:
+                                              type: string
+                                            locale:
+                                              type:
+                                              - string
+                                              - 'null'
+                                              description: The locale code. Can be null if not applicable
+                                            channel:
+                                              type:
+                                              - string
+                                              - 'null'
+                                              description: The channel code. Can be null if not applicable
+                                            mode:
+                                              type: string
+                                  x-validation-rules: To know more about the validation of this property, take a look at our product link rule format
+                                  example:
+                                  - product_selections:
+                                    - field: sku
+                                      operator: EQUALS
+                                      value: '{{product_ref}}'
+                                    assign_assets_to:
+                                    - attribute: model_pictures
+                                      mode: replace
+                                transformations:
+                                  type: array
+                                  description: 'The transformations to perform on source files in order to generate new files into your asset attributes.
+
+                                    To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-transformations).
+
+                                    '
+                                  default: []
+                                  items:
+                                    type: object
+                                    required:
+                                    - label
+                                    - target
+                                    - source
+                                    - operations
+                                    properties:
+                                      label:
+                                        type: string
+                                        description: The name of the transformation
+                                      filename_suffix:
+                                        type: string
+                                        description: 'The suffix that will be appended to the source filename to generate the target filename.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                                          '
+                                      filename_prefix:
+                                        type: string
+                                        description: 'The prefix that will be prepended to the source filename to generate the target filename.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                                          '
+                                      source:
+                                        type: object
+                                        required:
+                                        - attribute
+                                        - channel
+                                        - locale
+                                        description: 'The attribute value in which is stored the media file you want to use as the source file for your transformation.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#source-file).
+
+                                          '
+                                        properties:
+                                          attribute:
+                                            type: string
+                                          locale:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The locale code. Can be null if not applicable
+                                          channel:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The channel code. Can be null if not applicable
+                                      target:
+                                        type: object
+                                        required:
+                                        - attribute
+                                        - channel
+                                        - locale
+                                        description: 'The attribute value in which the PIM will generate the new transformed file, aka the target file.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-file).
+
+                                          '
+                                        properties:
+                                          attribute:
+                                            type: string
+                                          locale:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The locale code. Can be null if not applicable
+                                          channel:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The channel code. Can be null if not applicable
+                                      operations:
+                                        type: array
+                                        description: 'The transformations that should be applied to your source file to generate the target file.
+
+                                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#transformation-operations).
+
+                                          '
+                                        items:
+                                          type: object
+                                          properties:
+                                            type:
+                                              type: string
+                                            parameters:
+                                              type: object
+                                              properties:
+                                                colorspace:
+                                                  type: string
+                                                width:
+                                                  type: integer
+                                                height:
+                                                  type: integer
+                                                ratio:
+                                                  type: integer
+                                                resolution-unit:
+                                                  type: string
+                                                resolution-x:
+                                                  type: integer
+                                                resolution-y:
+                                                  type: integer
+                                                quality:
+                                                  type: integer
+                                        x-validation-rules: Should contain at least one operation
+                                  x-validation-rules: To know more about the validation of this property, take a look at our transformation format
+                                  example:
+                                  - label: Thumbnail plus black and white transformation
+                                    filename_suffix: _thumbnailBW
+                                    source:
+                                      attribute: main_image
+                                      channel: ecommerce
+                                      locale: en_US
+                                    target:
+                                      attribute: thumbnail
+                                      channel: ecommerce
+                                      locale: en_US
+                                    operations:
+                                    - type: thumbnail
+                                      parameters:
+                                        width: 150
+                                        height: 150
+                                    - type: colorspace
+                                      parameters:
+                                        colorspace: grey
+                                sharing_enabled:
+                                  type: boolean
+                                  description: Share links are available/unavailable for media file attributes of all the assets in this family
+                                  example: true
+                                auto_tagging_enabled:
+                                  type: boolean
+                                  description: Auto-tagging is enabled/disabled for all the assets in this family
+                                  example: true
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/asset-families
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/asset-families
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/asset-families?search_after=user_guides
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/asset-families/packshots
+                    code: packshots
+                    labels:
+                      en_US: Packshots
+                      fr_FR: Plans produit
+                    naming_convention:
+                      source:
+                        property: code
+                        channel: null
+                        locale: null
+                      pattern: /(?P<product_ref>.*)\.jpg/
+                      abort_asset_creation_on_error: true
+                    product_link_rules:
+                    - product_selections:
+                      - field: sku
+                        operator: '='
+                        value: '{{product_ref}}'
+                      assign_assets_to:
+                      - attribute: '{{my_product_attribute}}'
+                        mode: add
+                    transformations:
+                    - label: My transformation
+                      filename_suffix: _thumbnailBW
+                      source:
+                        attribute: main_image
+                        channel: null
+                        locale: null
+                      target:
+                        attribute: thumbnail
+                        channel: null
+                        locale: null
+                      operations:
+                      - type: thumbnail
+                        parameters:
+                          width: 150
+                          height: 150
+                      - type: colorspace
+                        parameters:
+                          colorspace: grey
+                    sharing_enabled: false
+                    auto_tagging_enabled: false
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/asset-families/videos
+                    code: videos
+                    labels:
+                      en_US: Videos
+                      fr_FR: Vidéos
+                    product_link_rules:
+                    - product_selections:
+                      - field: categories
+                        operator: IN
+                        value: '{{category}}'
+                      assign_assets_to:
+                      - attribute: presentation_video
+                        locale: '{{locale}}'
+                        mode: replace
+                    sharing_enabled: true
+                    auto_tagging_enabled: true
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/asset-families/user_guides
+                    code: user_guides
+                    labels:
+                      en_US: User guides
+                      fr_FR: Guides utilisateur
+                    product_link_rules:
+                    - product_selections:
+                      - field: sku
+                        operator: '='
+                        value: '{{product_ref}}'
+                      assign_assets_to:
+                      - attribute: user_instructions
+                        locale: '{{locale}}'
+                        mode: replace
+                    sharing_enabled: false
+                    auto_tagging_enabled: false
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+  /api/rest/v1/asset-families/{code}:
+    get:
+      operationId: get_asset_family_by_code
+      x-visibility: public
+      summary: Get an asset family
+      description: This endpoint allows you to get the information about a given asset family
+      tags:
+      - Asset family
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Returns the content of the asset family in JSON format
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                properties:
+                  code:
+                    type: string
+                    description: Asset family code
+                    x-immutable: true
+                    example: model_pictures
+                  labels:
+                    type: object
+                    description: 'Asset family labels for each locale.
+
+                      The `localeCode` must be the code of an existing and activated locale.
+
+                      '
+                    default: {}
+                    patternProperties:
+                      ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                        description: Asset family label for the specified locale
+                        type:
+                        - string
+                        - 'null'
+                        example: Model pictures
+                    x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    example:
+                      en_US: Model pictures
+                      fr_FR: Photographies en pied
+                  attribute_as_main_media:
+                    type: string
+                    minLength: 1
+                    description: Attribute code that is used as the main media of the asset family
+                    default: First media file or media link attribute that was created
+                    x-validation-rules: It should be the code of an attribute that belongs to this family, and it must be a media file or a media link attribute type
+                    example: main_image
+                  naming_convention:
+                    type: object
+                    description: 'The naming convention run over the asset code or the main media filename upon each asset creation, in order to automatically set several values in asset attributes.
+
+                      To learn more and see the format of this property, take a look at [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-naming-convention).
+
+                      '
+                    default: {}
+                    properties:
+                      source:
+                        type: object
+                        description: 'The string on which the naming convention should be applied.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-source-string).
+
+                          '
+                      pattern:
+                        type: string
+                        description: 'The regular expression that should be applied on the source.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-split-pattern).
+
+                          '
+                      abort_asset_creation_on_error:
+                        type: boolean
+                        description: 'Whether the asset should be created if the naming convention failed to apply.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#abortion-on-error).
+
+                          '
+                    x-validation-rules: To know more about the validation of this property, take a look at our naming convention format
+                    example:
+                      source:
+                        property: code
+                      pattern: /(?P<product_ref>.*)-.*/
+                      abort_asset_creation_on_error: true
+                  product_link_rules:
+                    type: array
+                    description: 'The rules that will be run after the asset creation, in order to automatically link the assets of this family to a set of products.
+
+                      To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-product-link-rule).
+
+                      '
+                    default: []
+                    items:
+                      type: object
+                      properties:
+                        product_selections:
+                          type: array
+                          description: 'The product selection to which the assets of the asset family to be automatically linked.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-selection).
+
+                            '
+                          items:
+                            type: object
+                            required:
+                            - field
+                            - operator
+                            - value
+                            properties:
+                              field:
+                                type: string
+                              operator:
+                                type: string
+                              value:
+                                type:
+                                - string
+                                - array
+                                - boolean
+                              locale:
+                                type:
+                                - string
+                                - 'null'
+                                description: The locale code. Can be null if not applicable
+                              channel:
+                                type:
+                                - string
+                                - 'null'
+                                description: The channel code. Can be null if not applicable
+                        assign_assets_to:
+                          type: array
+                          description: 'The product value in which your assets will be assigned.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-value-assignment).
+
+                            '
+                          items:
+                            type: object
+                            required:
+                            - attribute
+                            - mode
+                            properties:
+                              attribute:
+                                type: string
+                              locale:
+                                type:
+                                - string
+                                - 'null'
+                                description: The locale code. Can be null if not applicable
+                              channel:
+                                type:
+                                - string
+                                - 'null'
+                                description: The channel code. Can be null if not applicable
+                              mode:
+                                type: string
+                    x-validation-rules: To know more about the validation of this property, take a look at our product link rule format
+                    example:
+                    - product_selections:
+                      - field: sku
+                        operator: EQUALS
+                        value: '{{product_ref}}'
+                      assign_assets_to:
+                      - attribute: model_pictures
+                        mode: replace
+                  transformations:
+                    type: array
+                    description: 'The transformations to perform on source files in order to generate new files into your asset attributes.
+
+                      To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-transformations).
+
+                      '
+                    default: []
+                    items:
+                      type: object
+                      required:
+                      - label
+                      - target
+                      - source
+                      - operations
+                      properties:
+                        label:
+                          type: string
+                          description: The name of the transformation
+                        filename_suffix:
+                          type: string
+                          description: 'The suffix that will be appended to the source filename to generate the target filename.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                            '
+                        filename_prefix:
+                          type: string
+                          description: 'The prefix that will be prepended to the source filename to generate the target filename.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                            '
+                        source:
+                          type: object
+                          required:
+                          - attribute
+                          - channel
+                          - locale
+                          description: 'The attribute value in which is stored the media file you want to use as the source file for your transformation.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#source-file).
+
+                            '
+                          properties:
+                            attribute:
+                              type: string
+                            locale:
+                              type:
+                              - string
+                              - 'null'
+                              description: The locale code. Can be null if not applicable
+                            channel:
+                              type:
+                              - string
+                              - 'null'
+                              description: The channel code. Can be null if not applicable
+                        target:
+                          type: object
+                          required:
+                          - attribute
+                          - channel
+                          - locale
+                          description: 'The attribute value in which the PIM will generate the new transformed file, aka the target file.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-file).
+
+                            '
+                          properties:
+                            attribute:
+                              type: string
+                            locale:
+                              type:
+                              - string
+                              - 'null'
+                              description: The locale code. Can be null if not applicable
+                            channel:
+                              type:
+                              - string
+                              - 'null'
+                              description: The channel code. Can be null if not applicable
+                        operations:
+                          type: array
+                          description: 'The transformations that should be applied to your source file to generate the target file.
+
+                            More details [here](https://api.akeneo.com/concepts/asset-manager.html#transformation-operations).
+
+                            '
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              parameters:
+                                type: object
+                                properties:
+                                  colorspace:
+                                    type: string
+                                  width:
+                                    type: integer
+                                  height:
+                                    type: integer
+                                  ratio:
+                                    type: integer
+                                  resolution-unit:
+                                    type: string
+                                  resolution-x:
+                                    type: integer
+                                  resolution-y:
+                                    type: integer
+                                  quality:
+                                    type: integer
+                          x-validation-rules: Should contain at least one operation
+                    x-validation-rules: To know more about the validation of this property, take a look at our transformation format
+                    example:
+                    - label: Thumbnail plus black and white transformation
+                      filename_suffix: _thumbnailBW
+                      source:
+                        attribute: main_image
+                        channel: ecommerce
+                        locale: en_US
+                      target:
+                        attribute: thumbnail
+                        channel: ecommerce
+                        locale: en_US
+                      operations:
+                      - type: thumbnail
+                        parameters:
+                          width: 150
+                          height: 150
+                      - type: colorspace
+                        parameters:
+                          colorspace: grey
+                  sharing_enabled:
+                    type: boolean
+                    description: Share links are available/unavailable for media file attributes of all the assets in this family
+                    example: true
+                  auto_tagging_enabled:
+                    type: boolean
+                    description: Auto-tagging is enabled/disabled for all the assets in this family
+                    example: true
+              example:
+                code: model_pictures
+                labels:
+                  en_US: Model pictures
+                  fr_FR: Photographies en pied
+                attribute_as_main_media: main_image
+                naming_convention:
+                  source:
+                    property: code
+                  pattern: /(?P<product_ref>.*)-.*/
+                  abort_asset_creation_on_error: true
+                product_link_rules:
+                - product_selections:
+                  - field: sku
+                    operator: EQUALS
+                    value: '{{product_ref}}'
+                  assign_assets_to:
+                  - attribute: model_pictures
+                    mode: replace
+                transformations:
+                - label: Thumbnail plus black and white transformation
+                  filename_suffix: _thumbnailBW
+                  source:
+                    attribute: main_image
+                    channel: ecommerce
+                    locale: en_US
+                  target:
+                    attribute: thumbnail
+                    channel: ecommerce
+                    locale: en_US
+                  operations:
+                  - type: thumbnail
+                    parameters:
+                      width: 150
+                      height: 150
+                  - type: colorspace
+                    parameters:
+                      colorspace: grey
+                sharing_enabled: true
+                auto_tagging_enabled: false
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_asset_family_by_code
+      x-visibility: public
+      summary: Update/create an asset family
+      description: 'This endpoint allows you to update a given asset family.
+
+        Note that if the asset family does not already exist, it creates it.'
+      tags:
+      - Asset family
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      requestBody:
+        description: The asset family to be patched
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - code
+              properties:
+                code:
+                  type: string
+                  description: Asset family code
+                  x-immutable: true
+                  example: model_pictures
+                labels:
+                  type: object
+                  description: 'Asset family labels for each locale.
+
+                    The `localeCode` must be the code of an existing and activated locale.
+
+                    '
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Asset family label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: Model pictures
+                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                  example:
+                    en_US: Model pictures
+                    fr_FR: Photographies en pied
+                attribute_as_main_media:
+                  type: string
+                  minLength: 1
+                  description: Attribute code that is used as the main media of the asset family
+                  default: First media file or media link attribute that was created
+                  x-validation-rules: It should be the code of an attribute that belongs to this family, and it must be a media file or a media link attribute type
+                  example: main_image
+                naming_convention:
+                  type: object
+                  description: 'The naming convention run over the asset code or the main media filename upon each asset creation, in order to automatically set several values in asset attributes.
+
+                    To learn more and see the format of this property, take a look at [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-naming-convention).
+
+                    '
+                  default: {}
+                  properties:
+                    source:
+                      type: object
+                      description: 'The string on which the naming convention should be applied.
+
+                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-source-string).
+
+                        '
+                    pattern:
+                      type: string
+                      description: 'The regular expression that should be applied on the source.
+
+                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#the-split-pattern).
+
+                        '
+                    abort_asset_creation_on_error:
+                      type: boolean
+                      description: 'Whether the asset should be created if the naming convention failed to apply.
+
+                        More details [here](https://api.akeneo.com/concepts/asset-manager.html#abortion-on-error).
+
+                        '
+                  x-validation-rules: To know more about the validation of this property, take a look at our naming convention format
+                  example:
+                    source:
+                      property: code
+                    pattern: /(?P<product_ref>.*)-.*/
+                    abort_asset_creation_on_error: true
+                product_link_rules:
+                  type: array
+                  description: 'The rules that will be run after the asset creation, in order to automatically link the assets of this family to a set of products.
+
+                    To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-product-link-rule).
+
+                    '
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      product_selections:
+                        type: array
+                        description: 'The product selection to which the assets of the asset family to be automatically linked.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-selection).
+
+                          '
+                        items:
+                          type: object
+                          required:
+                          - field
+                          - operator
+                          - value
+                          properties:
+                            field:
+                              type: string
+                            operator:
+                              type: string
+                            value:
+                              type:
+                              - string
+                              - array
+                              - boolean
+                            locale:
+                              type:
+                              - string
+                              - 'null'
+                              description: The locale code. Can be null if not applicable
+                            channel:
+                              type:
+                              - string
+                              - 'null'
+                              description: The channel code. Can be null if not applicable
+                      assign_assets_to:
+                        type: array
+                        description: 'The product value in which your assets will be assigned.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#product-value-assignment).
+
+                          '
+                        items:
+                          type: object
+                          required:
+                          - attribute
+                          - mode
+                          properties:
+                            attribute:
+                              type: string
+                            locale:
+                              type:
+                              - string
+                              - 'null'
+                              description: The locale code. Can be null if not applicable
+                            channel:
+                              type:
+                              - string
+                              - 'null'
+                              description: The channel code. Can be null if not applicable
+                            mode:
+                              type: string
+                  x-validation-rules: To know more about the validation of this property, take a look at our product link rule format
+                  example:
+                  - product_selections:
+                    - field: sku
+                      operator: EQUALS
+                      value: '{{product_ref}}'
+                    assign_assets_to:
+                    - attribute: model_pictures
+                      mode: replace
+                transformations:
+                  type: array
+                  description: 'The transformations to perform on source files in order to generate new files into your asset attributes.
+
+                    To understand the format of this property, see [here](https://api.akeneo.com/concepts/asset-manager.html#focus-on-the-transformations).
+
+                    '
+                  default: []
+                  items:
+                    type: object
+                    required:
+                    - label
+                    - target
+                    - source
+                    - operations
+                    properties:
+                      label:
+                        type: string
+                        description: The name of the transformation
+                      filename_suffix:
+                        type: string
+                        description: 'The suffix that will be appended to the source filename to generate the target filename.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                          '
+                      filename_prefix:
+                        type: string
+                        description: 'The prefix that will be prepended to the source filename to generate the target filename.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-filename).
+
+                          '
+                      source:
+                        type: object
+                        required:
+                        - attribute
+                        - channel
+                        - locale
+                        description: 'The attribute value in which is stored the media file you want to use as the source file for your transformation.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#source-file).
+
+                          '
+                        properties:
+                          attribute:
+                            type: string
+                          locale:
+                            type:
+                            - string
+                            - 'null'
+                            description: The locale code. Can be null if not applicable
+                          channel:
+                            type:
+                            - string
+                            - 'null'
+                            description: The channel code. Can be null if not applicable
+                      target:
+                        type: object
+                        required:
+                        - attribute
+                        - channel
+                        - locale
+                        description: 'The attribute value in which the PIM will generate the new transformed file, aka the target file.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#target-file).
+
+                          '
+                        properties:
+                          attribute:
+                            type: string
+                          locale:
+                            type:
+                            - string
+                            - 'null'
+                            description: The locale code. Can be null if not applicable
+                          channel:
+                            type:
+                            - string
+                            - 'null'
+                            description: The channel code. Can be null if not applicable
+                      operations:
+                        type: array
+                        description: 'The transformations that should be applied to your source file to generate the target file.
+
+                          More details [here](https://api.akeneo.com/concepts/asset-manager.html#transformation-operations).
+
+                          '
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            parameters:
+                              type: object
+                              properties:
+                                colorspace:
+                                  type: string
+                                width:
+                                  type: integer
+                                height:
+                                  type: integer
+                                ratio:
+                                  type: integer
+                                resolution-unit:
+                                  type: string
+                                resolution-x:
+                                  type: integer
+                                resolution-y:
+                                  type: integer
+                                quality:
+                                  type: integer
+                        x-validation-rules: Should contain at least one operation
+                  x-validation-rules: To know more about the validation of this property, take a look at our transformation format
+                  example:
+                  - label: Thumbnail plus black and white transformation
+                    filename_suffix: _thumbnailBW
+                    source:
+                      attribute: main_image
+                      channel: ecommerce
+                      locale: en_US
+                    target:
+                      attribute: thumbnail
+                      channel: ecommerce
+                      locale: en_US
+                    operations:
+                    - type: thumbnail
+                      parameters:
+                        width: 150
+                        height: 150
+                    - type: colorspace
+                      parameters:
+                        colorspace: grey
+                sharing_enabled:
+                  type: boolean
+                  description: Share links are available/unavailable for media file attributes of all the assets in this family
+                  example: true
+                auto_tagging_enabled:
+                  type: boolean
+                  description: Auto-tagging is enabled/disabled for all the assets in this family
+                  example: true
+            example:
+              code: model_pictures
+              labels:
+                en_US: Model pictures
+                fr_FR: Photographies en pied
+              attribute_as_main_media: main_image
+              naming_convention:
+                source:
+                  property: code
+                pattern: /(?P<product_ref>.*)-.*/
+                abort_asset_creation_on_error: true
+              product_link_rules:
+              - product_selections:
+                - field: sku
+                  operator: EQUALS
+                  value: '{{product_ref}}'
+                assign_assets_to:
+                - attribute: model_pictures
+                  mode: replace
+              transformations:
+              - label: Thumbnail plus black and white transformation
+                filename_suffix: _thumbnailBW
+                source:
+                  attribute: main_image
+                  channel: ecommerce
+                  locale: en_US
+                target:
+                  attribute: thumbnail
+                  channel: ecommerce
+                  locale: en_US
+                operations:
+                - type: thumbnail
+                  parameters:
+                    width: 150
+                    height: 150
+                - type: colorspace
+                  parameters:
+                    colorspace: grey
+              sharing_enabled: true
+              auto_tagging_enabled: false
+        required: true
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

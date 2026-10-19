@@ -1,0 +1,1385 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Attribute option API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Attribute option
+  description: 'An attribute option is a value that can be associated with an attribute.
+
+    For example, if you have an attribute called "Color", the options could be "Red", "Blue", "Green", etc.
+
+    Options are used to provide predefined values for attributes, making it easier to manage and maintain product data.'
+paths:
+  /api/rest/v1/attributes/{attribute_code}/options:
+    get:
+      operationId: get_attribute_options
+      x-visibility: public
+      summary: Get list of attribute options
+      description: 'This endpoint allows you to get a list of attribute options.
+
+        Attribute options are paginated and sorted by code.'
+      tags:
+      - Attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      - in: query
+        name: page
+        description: 'Specify which page of results to retrieve when using pagination.
+
+          It is useful for navigating through large datasets by breaking them into smaller, manageable pages.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+        example: 1
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: with_count
+        description: 'Return the count of items in the response.
+
+          Be careful with that, on a big catalog, it can decrease performance in a significant way.
+
+          It is useful for understanding the size of the dataset being returned, especially when dealing with large collections.
+
+          Use it judiciously to avoid performance issues.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '200':
+          description: 'Return attribute options paginated.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Attribute Options
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    current_page:
+                      type: integer
+                      description: Current page number
+                      example: 1
+                    items_count:
+                      type: integer
+                      description: Total number of items (only if `with_count` parameter is set to true)
+                      example: 5
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/attributes/color/options/red
+                            - type: object
+                              properties:
+                                code:
+                                  type: string
+                                  description: Code of option
+                                  example: black
+                                attribute:
+                                  type: string
+                                  description: Code of attribute related to the attribute option
+                                  x-validation-rules: It is the same attribute code as the one given as path parameter
+                                  example: a_simple_select
+                                sort_order:
+                                  type: integer
+                                  description: Order of attribute option
+                                  x-validation-rules: It is a positive integer
+                                  example: 2
+                                labels:
+                                  type: object
+                                  description: Attribute option labels for each locale
+                                  default: {}
+                                  patternProperties:
+                                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                                      description: Attribute option label for the specified locale
+                                      type:
+                                      - string
+                                      - 'null'
+                                      example: red
+                                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                                  example:
+                                    en_US: Black
+                                    fr_FR: Noir
+                                    de_DE: Schwarz
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/attributes/color/options?page=3&limit=3&with_count=true
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/attributes/color/options?page=1&limit=3&with_count=true
+                  previous:
+                    href: https://demo.akeneo.com/api/rest/v1/attributes/color/options?page=2&limit=3&with_count=true
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/attributes/color/options?page=4&limit=3&with_count=true
+                current_page: 3
+                items_count: 10
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/attributes/color/options/red
+                    code: red
+                    attribute: a_simple_select
+                    sort_order: 1
+                    labels:
+                      en_US: Red
+                      fr_FR: Rouge
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/attributes/color/options/black
+                    code: black
+                    attribute: a_simple_select
+                    sort_order: 2
+                    labels:
+                      en_US: Black
+                      fr_FR: Noir
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/attributes/color/options/purple
+                    code: purple
+                    attribute: a_simple_select
+                    sort_order: 3
+                    labels:
+                      en_US: Purple
+                      fr_FR: Violet
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    post:
+      operationId: post_attribute_option
+      x-visibility: public
+      summary: Create a new attribute option
+      description: This endpoint allows you to create a new attribute option
+      tags:
+      - Attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      requestBody:
+        description: Body containing the attribute option to create
+        content:
+          application/json:
+            schema:
+              required:
+              - code
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Code of option
+                  example: black
+                attribute:
+                  type: string
+                  description: Code of attribute related to the attribute option
+                  x-validation-rules: It is the same attribute code as the one given as path parameter
+                  example: a_simple_select
+                sort_order:
+                  type: integer
+                  description: Order of attribute option
+                  x-validation-rules: It is a positive integer
+                  example: 2
+                labels:
+                  type: object
+                  description: Attribute option labels for each locale
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Attribute option label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: red
+                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                  example:
+                    en_US: Black
+                    fr_FR: Noir
+                    de_DE: Schwarz
+            example:
+              code: black
+              attribute: a_simple_select
+              sort_order: 2
+              labels:
+                en_US: Black
+                fr_FR: Noir
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    patch:
+      operationId: patch_attribute_options
+      x-visibility: public
+      summary: Update/create several attribute options
+      description: This endpoint allows you to update and/or create several attribute options at once
+      tags:
+      - Attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      x-body-by-line: Contains several lines, each line is an attribute option in JSON standard format
+      requestBody:
+        description: "Body containing the attribute options to update or create.\nEach line is a JSON representing an attribute option.\nEach object contains the following properties:\n  - `code`: Code of option (string) (mandatory)\n  - `attribute`: Code of attribute related to the attribute option (string) (not required, taken from the URL)\n  - `sort_order`: Order of attribute option (integer) (optional)\n  - `labels`: Attribute option labels for each locale (object) (optional)\n"
+        content:
+          application/vnd.akeneo.collection+json:
+            schema:
+              type: string
+            x-body-by-line-schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Code of option
+                  example: black
+                attribute:
+                  type: string
+                  description: Code of attribute related to the attribute option
+                  x-validation-rules: It is the same attribute code as the one given as path parameter
+                  example: a_simple_select
+                sort_order:
+                  type: integer
+                  description: Order of attribute option
+                  x-validation-rules: It is a positive integer
+                  example: 2
+                labels:
+                  type: object
+                  description: Attribute option labels for each locale
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Attribute option label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: red
+                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                  example:
+                    en_US: Black
+                    fr_FR: Noir
+                    de_DE: Schwarz
+            example: '{"code":"black","attribute":"a_simple_select","labels":{"en_US":"Black","fr_FR":"Noir"}}
+
+              {"code":"red","label":{"en_US": "Red","fr_FR": "Rouge"}}
+
+              {"code":"yellow","labels":{"en_US": "Yellow","fr_FR": "Jaune"}}
+
+              '
+      responses:
+        '200':
+          description: Returns a plain text response whose lines are JSON containing the status of each update or creation
+          x-no-entity: true
+          content:
+            application/vnd.akeneo.collection+json:
+              schema:
+                type: string
+              x-body-by-line-schema:
+                type: object
+                properties:
+                  line:
+                    type: integer
+                    description: Line number
+                    example: 10
+                  code:
+                    type: string
+                    description: Resource code
+                    example: my_code
+                  status_code:
+                    type: integer
+                    description: HTTP status code, see [Client errors](https://api.akeneo.com/documentation/responses.html#client-errors) to understand the meaning of each code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Property "name" expects a string as data, "NULL" given. Check the API reference documentation.
+              example: '{"line":1,"code":"black","status_code":201}
+
+                {"line":2,"code":"red","status_code":422,"message":"Property \"label\" does not exist. Check the API format documentation."}
+
+                {"line":3,"code":"yellow","status_code":204}
+
+                '
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '413':
+          description: 'This response indicates that the request entity is larger than the server is willing or able to process.
+
+            It can occur when the number of resources in a batch request exceeds the maximum allowed limit.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 413
+                message: Too many resources to process, 100 is the maximum allowed.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '429':
+          description: 'This response indicates that the user has sent too many requests in a given amount of time.
+
+            It occurs when the rate limit for API requests has been exceeded, and the client should wait before making additional requests.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 429
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: You have exceeded the limit of API requests per second.
+              example:
+                code: 429
+                message: You have exceeded the limit of API requests per second.
+  /api/rest/v1/attributes/{attribute_code}/options/{code}:
+    get:
+      operationId: get_attribute_option_by_code
+      x-visibility: public
+      summary: Get an attribute option
+      description: This endpoint allows you to get the information about a given attribute option
+      tags:
+      - Attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Returns the content of the attribute option in JSON standard format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Code of option
+                    example: black
+                  attribute:
+                    type: string
+                    description: Code of attribute related to the attribute option
+                    x-validation-rules: It is the same attribute code as the one given as path parameter
+                    example: a_simple_select
+                  sort_order:
+                    type: integer
+                    description: Order of attribute option
+                    x-validation-rules: It is a positive integer
+                    example: 2
+                  labels:
+                    type: object
+                    description: Attribute option labels for each locale
+                    default: {}
+                    patternProperties:
+                      ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                        description: Attribute option label for the specified locale
+                        type:
+                        - string
+                        - 'null'
+                        example: red
+                    x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    example:
+                      en_US: Black
+                      fr_FR: Noir
+                      de_DE: Schwarz
+              example:
+                code: black
+                attribute: a_simple_select
+                sort_order: 2
+                labels:
+                  en_US: Black
+                  fr_FR: Noir
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_attribute_option_by_code
+      x-visibility: public
+      summary: Update/create an attribute option
+      description: 'This endpoint allows you to update a given attribute option.
+
+        Know more about Update behavior.
+
+        Note that if no attribute option exists for the given code, it creates it.
+
+        Please note that this endpoint applies a rate limit of 3 concurrent API requests per second.'
+      tags:
+      - Attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      requestBody:
+        description: Body containing the attribute option to create or update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Code of option
+                  example: black
+                attribute:
+                  type: string
+                  description: Code of attribute related to the attribute option
+                  x-validation-rules: It is the same attribute code as the one given as path parameter
+                  example: a_simple_select
+                sort_order:
+                  type: integer
+                  description: Order of attribute option
+                  x-validation-rules: It is a positive integer
+                  example: 2
+                labels:
+                  type: object
+                  description: Attribute option labels for each locale
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Attribute option label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: red
+                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                  example:
+                    en_US: Black
+                    fr_FR: Noir
+                    de_DE: Schwarz
+            example:
+              code: black
+              attribute: a_simple_select
+              sort_order: 2
+              labels:
+                en_US: Black
+                fr_FR: Noir
+        required: true
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+        '429':
+          description: 'This response indicates that the user has sent too many requests in a given amount of time.
+
+            It occurs when the rate limit for API requests has been exceeded, and the client should wait before making additional requests.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 429
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: You have exceeded the limit of API requests per second.
+              example:
+                code: 429
+                message: You have exceeded the limit of API requests per second.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

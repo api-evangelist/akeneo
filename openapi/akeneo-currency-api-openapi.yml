@@ -1,0 +1,560 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Currency API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Currency
+  description: 'A currency is a unit of exchange that is used to price products.
+
+    Currencies are used in the PIM to define the prices of products in different markets.'
+paths:
+  /api/rest/v1/currencies:
+    get:
+      operationId: get_currencies
+      x-visibility: public
+      summary: Get a list of currencies
+      description: This endpoint allows you to retrieve a list of currencies available in the system. Currencies are paginated and can be filtered using the `search` query parameter. The response includes the currency code, whether it is enabled, and its label. You can also specify pagination parameters such as `page`, `limit`, and `with_count`.
+      tags:
+      - Currency
+      security:
+      - bearerToken: []
+      parameters:
+      - name: search
+        in: query
+        description: 'The `search` query parameter allows you to filter currencies based on specific criteria.
+
+          For more details see the [Filters section](https://api.akeneo.com/documentation/filter.html#filter-currencies).
+
+          '
+        required: false
+        schema:
+          type: string
+        examples:
+          getOnlyEnabledCurrencies:
+            summary: Filter the currencies to get only the enabled ones
+            value: '{"enabled":[{"operator":"=","value":true}]}'
+      - in: query
+        name: page
+        description: 'Specify which page of results to retrieve when using pagination.
+
+          It is useful for navigating through large datasets by breaking them into smaller, manageable pages.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+        example: 1
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: with_count
+        description: 'Return the count of items in the response.
+
+          Be careful with that, on a big catalog, it can decrease performance in a significant way.
+
+          It is useful for understanding the size of the dataset being returned, especially when dealing with large collections.
+
+          Use it judiciously to avoid performance issues.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '200':
+          description: 'Return currencies paginated.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Currencies
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    current_page:
+                      type: integer
+                      description: Current page number
+                      example: 1
+                    items_count:
+                      type: integer
+                      description: Total number of items (only if `with_count` parameter is set to true)
+                      example: 5
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/currencies/ADP
+                            - type: object
+                              properties:
+                                code:
+                                  type: string
+                                  description: Currency code
+                                  x-immutable: true
+                                  example: EUR
+                                enabled:
+                                  type: boolean
+                                  description: Whether the currency is enabled
+                                  example: true
+                                label:
+                                  type: string
+                                  description: Currency label
+                                  example: EUR (Euro)
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/currencies?page=1&limit=3&with_count=true
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/currencies?page=2&limit=3&with_count=true
+                  previous:
+                    href: https://demo.akeneo.com/api/rest/v1/currencies?page=1&limit=3&with_count=true
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/currencies?page=3&limit=3&with_count=true
+                current_page: 1
+                items_count: 10
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/currencies/ADP
+                    code: ADP
+                    enabled: true
+                    label: ADP (Andorran Peseta)
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/currencies/AED
+                    code: AED
+                    enabled: true
+                    label: AED (United Arab Emirates Dirham)
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/currencies/AFA
+                    code: AFA
+                    enabled: false
+                    label: AFA (Afghan Afghani (1927–2002))
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+  /api/rest/v1/currencies/{code}:
+    get:
+      operationId: get_currency_by_code
+      x-visibility: public
+      summary: Get a currency
+      description: 'This endpoint allows you to get the information about a given currency.
+
+        You can retrieve details such as the currency code, whether it is enabled, and its label.
+
+        The response will be in JSON format.'
+      tags:
+      - Currency
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Returns the content of the currency in JSON standard format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Currency code
+                    x-immutable: true
+                    example: EUR
+                  enabled:
+                    type: boolean
+                    description: Whether the currency is enabled
+                    example: true
+                  label:
+                    type: string
+                    description: Currency label
+                    example: EUR (Euro)
+              example:
+                code: EUR
+                enabled: true
+                label: EUR (Euro)
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

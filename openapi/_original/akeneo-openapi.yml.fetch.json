@@ -1,0 +1,12 @@
+{
+ "url": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml",
+ "final": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml",
+ "status": 200,
+ "content_type": "application/octet-stream",
+ "bytes": 1417021,
+ "sha256": "0fe37b7aad5317ea989f501d87e787b71ac4a6e9a3edea9579395c5108cad511",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

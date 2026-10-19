@@ -1,0 +1,339 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Asset media file API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Asset media file
+  description: 'An asset media file is a file that can be attached to an asset family or an asset.
+
+    It can be an image, a video, a PDF, or any other type of file.
+
+    Asset media files are used to enrich the asset information and provide additional context to the assets.'
+paths:
+  /api/rest/v1/asset-media-files:
+    post:
+      operationId: post_asset_media_file
+      x-visibility: public
+      summary: Create a new media file for an asset
+      description: This endpoint allows you to create a new media file and associate it to a media file attribute value of an asset
+      tags:
+      - Asset media file
+      security:
+      - bearerToken: []
+      parameters:
+      - in: header
+        name: Content-Type
+        description: 'Equal to ''multipart/form-data'' (with [boundary value](https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2)), no other value allowed.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+      x-form-data: true
+      requestBody:
+        description: 'The media file to be uploaded. The file must be a valid media type (e.g., image, video, audio) and should not exceed the maximum allowed size.
+
+          The file will be associated with an asset''s media file attribute value.
+
+          '
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  description: The binary of the media file
+                  format: binary
+                  example: ''
+            examples:
+              example:
+                summary: Example media file upload
+                value: ''
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+                example: https://demo.akeneo.com/api/rest/v1/asset-media-files/3/c/d/6/3cd6a399c51507514d60560f76772bbabacb6564_SampleJPGImage_5mbmb.jpg
+            asset-media-file-code:
+              description: Code of the created asset media file
+              schema:
+                type: string
+                example: 3/c/d/6/3cd6a399c51507514d60560f76772bbabacb6564_SampleJPGImage_5mbmb.jpg
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+  /api/rest/v1/asset-media-files/{code}:
+    get:
+      operationId: get_asset_media_files_by_code
+      x-visibility: public
+      summary: Download the media file associated to an asset
+      description: This endpoint allows you to download a given media file that is associated with an asset
+      tags:
+      - Asset media file
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      x-content-type: Mime-type of the media file
+      responses:
+        '200':
+          description: Returns the binary of the media file
+          headers:
+            X-File-Size:
+              description: Size of the media file in bytes
+              schema:
+                type: integer
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+              example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+              example: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYa
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

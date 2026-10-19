@@ -1,61 +1,114 @@
 openapi: 3.2.0
 info:
-  title: Akeneo PIM REST System API
+  title: Akeneo API REFERENCE System API
   version: 1.0.0
-  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
 
-    Manage products, product models, families, attributes, categories,
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
 
-    channels, locales, assets, reference entities, catalogs, workflows,
 
-    and more. Authentication uses OAuth 2.0 client credentials with
-
-    per-tenant base URLs in the SaaS edition.'
-  contact:
-    name: Akeneo
-    url: https://api.akeneo.com
+    For more information, visit the Akeneo PIM documentation.'
   license:
-    name: Documentation Terms
-    url: https://api.akeneo.com
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
 servers:
-- url: https://{tenant}.cloud.akeneo.com
-  description: Akeneo PIM SaaS tenant
+- url: '{your-pim-url}'
   variables:
-    tenant:
-      default: demo
-      description: Tenant subdomain assigned by Akeneo.
-security:
-- BearerAuth: []
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
 tags:
 - name: System
+  description: 'The System endpoints provide information about the Akeneo PIM instance and its environment.
+
+    You can use these endpoints to retrieve details such as the PIM version, edition, enabled features, and system health.
+
+    This information is useful for monitoring, troubleshooting, and ensuring compatibility with integrations or applications that interact with the PIM API.'
 paths:
-  /api/rest/v1:
-    get:
-      tags:
-      - System
-      summary: API entry point
-      operationId: apiEntry
-      responses:
-        '200':
-          description: OK
   /api/rest/v1/system-information:
     get:
+      operationId: get_system_information
+      x-visibility: public
+      summary: Get system information
+      description: This endpoint allows you to get the version and the edition of the PIM
       tags:
       - System
-      summary: System information
-      operationId: getSystemInformation
+      security:
+      - bearerToken: []
+      x-no-token: true
       responses:
         '200':
-          description: OK
+          description: Return the version and the edition of the PIM
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    description: Version of the PIM
+                    example: v20250717143807
+                  edition:
+                    type: string
+                    description: Edition of the PIM
+                    example: Serenity
+              example:
+                version: v20250717143807
+                edition: Serenity
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
 components:
   securitySchemes:
-    OAuth2ClientCredentials:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
-          scopes: {}
-    BearerAuth:
+    basicToken:
+      scheme: basic
       type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
       scheme: bearer
-      bearerFormat: JWT
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

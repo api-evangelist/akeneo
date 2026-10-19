@@ -53,34 +53,6 @@ created: '2026-05-11'
 modified: '2026-05-11'
 specificationVersion: '0.23'
 apis:
-- aid: akeneo:akeneo-asset-manager-api
-  name: Akeneo Asset Manager API
-  description: The Asset Manager API from Akeneo — 2 operation(s) for asset manager.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Asset Manager
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-asset-manager-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-attributes-api
-  name: Akeneo Attributes API
-  description: The Attributes API from Akeneo — 2 operation(s) for attributes.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Attributes
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-attributes-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
 - aid: akeneo:akeneo-authentication-api
   name: Akeneo Authentication API
   description: The Authentication API from Akeneo — 1 operation(s) for authentication.
@@ -111,136 +83,6 @@ apis:
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted
     url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-categories-api
-  name: Akeneo Categories API
-  description: The Categories API from Akeneo — 2 operation(s) for categories.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Categories
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-categories-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-channels-api
-  name: Akeneo Channels API
-  description: The Channels API from Akeneo — 1 operation(s) for channels.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Channels
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-channels-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-currencies-api
-  name: Akeneo Currencies API
-  description: The Currencies API from Akeneo — 1 operation(s) for currencies.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Currency
-  tags_raw:
-  - Currencies
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-currencies-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-families-api
-  name: Akeneo Families API
-  description: The Families API from Akeneo — 2 operation(s) for families.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Families
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-families-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-locales-api
-  name: Akeneo Locales API
-  description: The Locales API from Akeneo — 1 operation(s) for locales.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Locales
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-locales-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-media-files-api
-  name: Akeneo Media Files API
-  description: The Media Files API from Akeneo — 3 operation(s) for media files.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Media Files
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-media-files-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-product-models-api
-  name: Akeneo Product Models API
-  description: The Product Models API from Akeneo — 2 operation(s) for product models.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Product Models
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-product-models-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-products-api
-  name: Akeneo Products API
-  description: The Products API from Akeneo — 4 operation(s) for products.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Product
-  tags_raw:
-  - Products
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-products-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
-- aid: akeneo:akeneo-reference-entities-api
-  name: Akeneo Reference Entities API
-  description: The Reference Entities API from Akeneo — 2 operation(s) for reference entities.
-  humanURL: https://api.akeneo.com/api-reference-index.html
-  baseURL: https://api.akeneo.com
-  tags:
-  - Reference Entities
-  properties:
-  - type: OpenAPI
-    url: openapi/akeneo-reference-entities-api-openapi.yml
-  - type: Documentation
-    url: https://api.akeneo.com/api-reference-index.html
-  - type: GettingStarted
-    url: https://api.akeneo.com/getting-started.html
 - aid: akeneo:akeneo-system-api
   name: Akeneo System API
   description: The System API from Akeneo — 2 operation(s) for system.
@@ -265,6 +107,788 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/akeneo-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-asset-api
+  name: Akeneo Asset API
+  description: >-
+    An asset is a flexible object that makes it possible to enrich products with images, videos, documents…
+
+    An asset must be part of an asset family. That way, it will have its own attributes and lifecycle.
+
+    Assets can be linked to products and product models, in order to enrich them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Asset
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-asset-attribute-api
+  name: Akeneo Asset attribute API
+  description: >-
+    An asset attribute is a piece of information that can be associated with an asset.
+
+    Asset attributes can be used to store various types of data, such as text, numbers, dates, or media
+    files.
+
+    They are used to define the characteristics of assets and to provide additional information about
+    them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Asset attribute
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-attribute-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-asset-attribute-option-api
+  name: Akeneo Asset attribute option API
+  description: >-
+    An asset attribute option is a value that can be associated with an asset attribute.
+
+    For example, if you have an asset attribute called "Type", the options could be "Image", "Video",
+    "Document", etc.
+
+    Options are used to provide predefined values for asset attributes, making it easier to manage and
+    maintain asset data.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Asset attribute option
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-attribute-option-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-asset-family-api
+  name: Akeneo Asset family API
+  description: >-
+    An asset family is a set of attributes that are shared by assets belonging to this family.
+
+    In other words, an asset family can be considered as a template for assets.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Asset family
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-family-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-asset-media-file-api
+  name: Akeneo Asset media file API
+  description: >-
+    An asset media file is a file that can be attached to an asset family or an asset.
+
+    It can be an image, a video, a PDF, or any other type of file.
+
+    Asset media files are used to enrich the asset information and provide additional context to the assets.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Asset media file
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-asset-media-file-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-association-type-api
+  name: Akeneo Association type API
+  description: >-
+    An association type is a way to define the relationship between products or product models.
+
+    It allows you to create links between products, such as "related products", "up-sell products", or
+    "cross-sell products".
+
+    Association types are used to manage the relationships between products and to provide additional
+    context to the product information.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Association type
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-association-type-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-attribute-api
+  name: Akeneo Attribute API
+  description: >-
+    An attribute is a piece of information that can be associated with a product or product model.
+
+    Attributes can be used to store various types of data, such as text, numbers, dates, or media files.
+
+    They are used to define the characteristics of products and to provide additional information about
+    them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Attribute
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-attribute-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-attribute-group-api
+  name: Akeneo Attribute group API
+  description: >-
+    An attribute group is a way to organize attributes in the PIM.
+
+    It allows you to group related attributes together, making it easier to manage and maintain product
+    data.
+
+    For example, you could have an attribute group called "Specifications" that contains attributes like
+    "Weight", "Dimensions", and "Material".
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Attribute group
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-attribute-group-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-attribute-option-api
+  name: Akeneo Attribute option API
+  description: >-
+    An attribute option is a value that can be associated with an attribute.
+
+    For example, if you have an attribute called "Color", the options could be "Red", "Blue", "Green",
+    etc.
+
+    Options are used to provide predefined values for attributes, making it easier to manage and maintain
+    product data.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Attribute option
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-attribute-option-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-catalog-products-api
+  name: Akeneo Catalog products API
+  description: >-
+    A catalog contains a selection of products from the PIM, intended to be synchronized with a third-party
+    application via the API.
+
+    The Catalog products endpoint allows you to retrieve the list of products for a given catalog, with
+    options to filter, paginate, and select the returned fields.
+
+    Each returned product includes its attributes, values, status information, and associated references,
+    all in the context of the catalog.
+
+    This endpoint is mainly used by Apps to synchronize product data between Akeneo PIM and external platforms,
+    while respecting access rights and catalog configuration.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Catalog products
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-catalog-products-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-category-api
+  name: Akeneo Category API
+  description: >-
+    A category is a way of classifying products.
+
+    Categories constitute category trees and in Akeneo, you can have multiple category trees with an unlimited
+    number of levels (categories, subcategories, subsubcategories..).
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Category
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-category-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-channel-api
+  name: Akeneo Channel API
+  description: >-
+    A channel is a way to define how products are presented in different contexts, such as online stores,
+    mobile applications, or print catalogs.
+
+    Channels can have different configurations, such as currencies, locales, and measurement systems.
+
+    They allow you to tailor the product information to specific markets or audiences.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Channel
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-channel-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-currency-api
+  name: Akeneo Currency API
+  description: >-
+    A currency is a unit of exchange that is used to price products.
+
+    Currencies are used in the PIM to define the prices of products in different markets.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Currency
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-currency-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-data-architect-agent-api
+  name: Akeneo Data Architect Agent API
+  description: >-
+    The Data Architect Agent endpoints allow you to create modelization suggestions for the data model
+    designer.
+
+    These suggestions can be used to improve the catalog structure and data quality.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Data Architect Agent
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-data-architect-agent-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-extensions-api
+  name: Akeneo Extensions API
+  description: >-
+    Extensions allow you to extend the Akeneo PIM user interface with custom components.
+
+    They can be used to add new features or to modify the existing ones.
+
+    Extensions are useful for integrating with external systems or for providing additional functionality
+    to the PIM.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Extensions
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-extensions-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-family-api
+  name: Akeneo Family API
+  description: >-
+    A family is a set of attributes that are shared by products belonging to this family.
+
+    In other words, a family can be considered as a template for products.
+
+    A product family can use all of the attributes available in the PIM.
+
+    Several families of products can use the same attributes.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Family
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-family-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-family-variant-api
+  name: Akeneo Family variant API
+  description: >-
+    A family variant is a specific type of family that allows you to create variants of a product model.
+
+    It allows you to define the attributes and values that are specific to the variants of a product model.
+
+    Family variants are used to manage the relationships between product models and their variants.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Family variant
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-family-variant-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-jobs-api
+  name: Akeneo Jobs API
+  description: >-
+    A job is a process that can be executed in the PIM to perform various tasks, such as importing or
+    exporting data.
+
+    Jobs can be used to synchronize data between the PIM and external systems, or to perform bulk operations
+    on products, product models, or other entities.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-locale-api
+  name: Akeneo Locale API
+  description: >-
+    A locale is a combination of a language (English, German, French...) and a country (United States,
+    United Kingdom, France...).
+
+    Examples: English UK (en_GB), English US (en_US), English AU (en_AU).
+
+    You can have one or more locales activated in your PIM.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Locale
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-locale-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-mapping-schema-for-products-api
+  name: Akeneo Mapping schema for products API
+  description: >-
+    The mapping schema for products defines the expected structure of product data when synchronizing
+    via the API.
+
+    It describes the fields, their types, constraints, and transformation rules applied during the export
+    or import of products in a catalog connected to an App.
+
+    This schema ensures data consistency between Akeneo PIM and third-party applications by clarifying
+    how PIM attributes correspond to those expected by the App.
+
+    For each field, the schema specifies the data type (text, number, boolean, etc.), whether the field
+    is required or optional, and any allowed values or transformations to apply.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Mapping schema for products
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-mapping-schema-for-products-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-measurement-family-api
+  name: Akeneo Measurement family API
+  description: >-
+    A measurement family is a set of comparable units used to measure a specific physical quantity, such
+    as Area, Weight, or Power.
+
+    For example, the "Weight" measurement family can group units like "Kilogram" and "Pound" together.
+
+    Each family has a standard unit for conversions (e.g., "Kilogram"), and all other units within that
+    family include their conversion formulas.
+
+    These families are used for metric attributes, allowing product data to be entered in one unit and
+    automatically converted for different channels or locales.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Measurement family
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-measurement-family-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-overview-api
+  name: Akeneo Overview API
+  description: >-
+    This API reference provides comprehensive documentation for the Akeneo PIM REST API.
+
+    It describes all available endpoints, request and response formats, authentication methods, and error
+    codes.
+
+    The Akeneo PIM REST API enables you to interact programmatically with your PIM instance, allowing
+    you to manage products, product models, attributes, categories, assets, reference entities, and more.
+
+    You can use the API to integrate Akeneo PIM with other systems, automate data flows, and build custom
+    applications.
+
+    All API endpoints are organized by resource type and support standard HTTP methods (GET, POST, PUT,
+    PATCH, DELETE).
+
+    Authentication is required for all endpoints and is based on OAuth 2.0 or HTTP Basic authentication.
+
+    For more details, please refer to the [official Akeneo API documentation](https://api.akeneo.com/).
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-overview-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-permissions-api
+  name: Akeneo Permissions API
+  description: >-
+    The Permissions endpoints allow you to retrieve the permissions for a given user.
+
+    You can use these endpoints to get information about which channels and locales a user can view or
+    edit.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-product-identifier-api
+  name: Akeneo Product [identifier] API
+  description: >-
+    A product is a single item that can be managed in the PIM.
+
+    It can have various attributes and values, and can be associated with product models, categories,
+    and other entities.
+
+    Products are the core entities in the PIM and are used to manage the product information.
+
+    This endpoint is useful when you already have a product identifier within your systems.
+
+    This identifier, which could be a SKU or internal code, can be used to directly interact with the
+    corresponding product in our API.
+
+    This simplifies integration for workflows that rely on existing product identification methods.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Product [identifier]
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-product-identifier-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-product-media-file-api
+  name: Akeneo Product media file API
+  description: >-
+    A media file is a file that can be attached to a product, product model, category, or asset.
+
+    It can be an image, a video, a PDF, or any other type of file.
+
+    Media files are used to enrich the product information and provide additional context to the products.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Product media file
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-product-media-file-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-product-model-api
+  name: Akeneo Product model API
+  description: >-
+    A product model is a template for products that share the same attributes and values.
+
+    It allows you to create a hierarchy of products, where a product model can have several variants.
+
+    A product model can also have its own attributes and values, which are inherited by its variants.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Product model
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-product-model-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-product-uuid-api
+  name: Akeneo Product [uuid] API
+  description: >-
+    A product is a single item that can be managed in the PIM.
+
+    It can have various attributes and values, and can be associated with product models, categories,
+    and other entities.
+
+    Products are the core entities in the PIM and are used to manage the product information.
+
+    We strongly recommend using this endpoint for its reliability and flexibility.
+
+    UUIDs, or Universally Unique Identifiers, are guaranteed to be unique and never change, even if other
+    product identifiers like SKUs are modified.
+
+    This ensures consistent product identification regardless of future changes.
+
+    Additionally, UUIDs allow interaction with products that lack a traditional identifier.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Product [uuid]
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-product-uuid-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-readiness-api
+  name: Akeneo Readiness API
+  description: >-
+    A readiness configuration defines custom "ready" criteria for products and/or product models, distinct
+    from completeness.
+
+    It computes a 0-100 score for each channel/locale combination, based on a configurable product selection
+    and a list of business requirements.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Readiness
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-readiness-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-reference-entity-api
+  name: Akeneo Reference entity API
+  description: >-
+    A reference entity is a custom entity that can be used to store additional information about products
+    or product models.
+
+    It allows you to create your own entities with their own attributes and values, which can be linked
+    to products or product models.
+
+    Reference entities are useful for managing complex data structures or for integrating with external
+    systems.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference entity
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entity-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-reference-entity-attribute-api
+  name: Akeneo Reference entity attribute API
+  description: >-
+    A reference entity attribute is a piece of information that can be associated with a reference entity.
+
+    Reference entity attributes can be used to store various types of data, such as text, numbers, dates,
+    or media files.
+
+    They are used to define the characteristics of reference entities and to provide additional information
+    about them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference entity attribute
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entity-attribute-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-reference-entity-attribute-option-api
+  name: Akeneo Reference entity attribute option API
+  description: >-
+    A reference entity attribute option is a value that can be associated with a reference entity attribute.
+
+    For example, if you have a reference entity attribute called "Category", the options could be "Electronics",
+    "Clothing", "Books", etc.
+
+    Options are used to provide predefined values for reference entity attributes, making it easier to
+    manage and maintain reference entity data.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference entity attribute option
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entity-attribute-option-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-reference-entity-media-file-api
+  name: Akeneo Reference entity media file API
+  description: >-
+    A reference entity media file is a file that can be attached to a reference entity record.
+
+    It can be an image, a video, a PDF, or any other type of file.
+
+    Reference entity media files are used to enrich the reference entity information and provide additional
+    context to the reference entities.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference entity media file
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entity-media-file-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-reference-entity-record-api
+  name: Akeneo Reference entity record API
+  description: >-
+    A reference entity record is a specific instance of a reference entity.
+
+    It contains the values for the attributes defined in the reference entity.
+
+    Reference entity records can be linked to products or product models, allowing you to associate additional
+    information with them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Reference entity record
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-reference-entity-record-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-rule-definition-api
+  name: Akeneo Rule definition API
+  description: >-
+    Rule definitions automate product data enrichment by applying actions when conditions are met.
+
+    These endpoints allow you to list, read, and create or update rule definitions.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Rule definition
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-rule-definition-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-supplier-api
+  name: Akeneo Supplier API
+  description: >-
+    A supplier is an external organization that contributes product data to the PIM through the supplier
+    portal.
+
+    A supplier holds its own users, who sign in to the portal to submit and enrich products on the supplier's
+    behalf.
+
+    These endpoints let you provision suppliers and their users from your own systems, so supplier onboarding
+
+    and offboarding can be automated instead of being done by hand in the PIM.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Supplier
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-supplier-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-user-api
+  name: Akeneo User API
+  description: >-
+    A user is a person who signs in to the PIM.
+
+    Their roles define what they are allowed to do, and their user groups define which data they can access.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-user-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-workflow-executions-api
+  name: Akeneo Workflow executions API
+  description: >-
+    The Workflow executions endpoints allow you to start workflows on products and product models.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Workflow executions
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-workflow-executions-api-openapi.yml
+  - type: Documentation
+    url: https://api.akeneo.com/api-reference-index.html
+  - type: GettingStarted
+    url: https://api.akeneo.com/getting-started.html
+- aid: akeneo:akeneo-workflow-tasks-api
+  name: Akeneo Workflow tasks API
+  description: >-
+    The Tasks endpoints allow you to retrieve the tasks for each workflow steps, products and product
+    models.
+
+    It also allows you to manage the tasks by approving, rejecting or completing them.
+  humanURL: https://api.akeneo.com/api-reference-index.html
+  baseURL: https://api.akeneo.com
+  tags:
+  - Workflow tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/akeneo-workflow-tasks-api-openapi.yml
   - type: Documentation
     url: https://api.akeneo.com/api-reference-index.html
   - type: GettingStarted

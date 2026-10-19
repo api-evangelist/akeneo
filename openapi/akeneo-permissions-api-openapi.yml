@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Permissions API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Permissions
+  description: 'The Permissions endpoints allow you to retrieve the permissions for a given user.
+
+    You can use these endpoints to get information about which channels and locales a user can view or edit.'
+paths:
+  /api/rest/v1/permissions/{uuid}/channels:
+    get:
+      operationId: get_permissions_channels
+      x-visibility: public
+      summary: Get user's channels permissions
+      description: This endpoint allows you to get the channels' permissions for a given user.
+      tags:
+      - Permissions
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: Returns the user's channels permissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userUuid:
+                    type: string
+                    format: uuid
+                    description: The UUID of the user
+                    example: abcd1234-5678-90ef-ghij-klmnopqrstuv
+                  channels:
+                    type: object
+                    description: Channels permissions for the user, keyed by channel code
+                    additionalProperties:
+                      type: object
+                      properties:
+                        canView:
+                          type: string
+                          enum:
+                          - 'true'
+                          - 'false'
+                          description: Whether the user can view the channel (value is "true" or "false")
+                          example: 'true'
+                        canEdit:
+                          type: string
+                          enum:
+                          - 'true'
+                          - 'false'
+                          description: Whether the user can edit the channel (value is "true" or "false")
+                          example: 'false'
+                      required:
+                      - canView
+                      - canEdit
+                    example:
+                      ecommerce:
+                        canView: 'true'
+                        canEdit: 'false'
+                      mobile:
+                        canView: 'false'
+                        canEdit: 'true'
+                required:
+                - userUuid
+                - channels
+              example:
+                userUuid: abcd1234-5678-90ef-ghij-klmnopqrstuv
+                channels:
+                  ecommerce:
+                    canView: 'true'
+                    canEdit: 'false'
+                  mobile:
+                    canView: 'false'
+                    canEdit: 'true'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+  /api/rest/v1/permissions/{uuid}/locales:
+    get:
+      operationId: get_permissions_locales
+      x-visibility: public
+      summary: Get user's locales permissions
+      description: This endpoint allows you to get the locales' permissions for a given user.
+      tags:
+      - Permissions
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: Returns the user's locales permissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userUuid:
+                    type: string
+                    format: uuid
+                    description: The UUID of the user
+                    example: abcd1234-5678-90ef-ghij-klmnopqrstuv
+                  locales:
+                    type: object
+                    description: Locales permissions for the user, keyed by locale code
+                    additionalProperties:
+                      type: object
+                      properties:
+                        canView:
+                          type: string
+                          enum:
+                          - 'true'
+                          - 'false'
+                          description: Whether the user can view the locale (value is "true" or "false")
+                          example: 'true'
+                        canEdit:
+                          type: string
+                          enum:
+                          - 'true'
+                          - 'false'
+                          description: Whether the user can edit the locale (value is "true" or "false")
+                          example: 'false'
+                      required:
+                      - canView
+                      - canEdit
+                    example:
+                      en_US:
+                        canView: 'true'
+                        canEdit: 'false'
+                      fr_FR:
+                        canView: 'false'
+                        canEdit: 'true'
+                required:
+                - userUuid
+                - locales
+              example:
+                userUuid: abcd1234-5678-90ef-ghij-klmnopqrstuv
+                locales:
+                  en_US:
+                    canView: 'true'
+                    canEdit: 'false'
+                  fr_FR:
+                    canView: 'false'
+                    canEdit: 'true'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

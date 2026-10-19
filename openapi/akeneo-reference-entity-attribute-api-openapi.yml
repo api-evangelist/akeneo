@@ -1,0 +1,991 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Reference entity attribute API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Reference entity attribute
+  description: 'A reference entity attribute is a piece of information that can be associated with a reference entity.
+
+    Reference entity attributes can be used to store various types of data, such as text, numbers, dates, or media files.
+
+    They are used to define the characteristics of reference entities and to provide additional information about them.'
+paths:
+  /api/rest/v1/reference-entities/{reference_entity_code}/attributes:
+    get:
+      operationId: get_reference_entity_attributes
+      x-visibility: public
+      summary: Get the list of attributes of a given reference entity
+      description: This endpoint allows you to get the list of attributes of a given reference entity
+      tags:
+      - Reference entity attribute
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      responses:
+        '200':
+          description: Return the attributes of the given reference entity
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - code
+                  - type
+                  properties:
+                    code:
+                      type: string
+                      description: Attribute code
+                      x-immutable: true
+                      example: description
+                    labels:
+                      type: object
+                      description: Attribute labels per locale
+                      default: {}
+                      patternProperties:
+                        ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                          description: Attribute label for the specified locale
+                          type:
+                          - string
+                          - 'null'
+                          example: The description
+                      x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                      example:
+                        en_US: The description
+                        fr_FR: La description
+                    type:
+                      type: string
+                      description: 'Attribute type.
+
+                        See [type](https://api.akeneo.com/concepts/reference-entities.html#reference-entity-attribute) section for more details.
+
+                        '
+                      enum:
+                      - text
+                      - image
+                      - number
+                      - single_option
+                      - multiple_options
+                      - reference_entity_single_link
+                      - reference_entity_multiple_links
+                      - asset_collection
+                      x-immutable: true
+                      example: text
+                    value_per_locale:
+                      type: boolean
+                      description: Whether the attribute is localizable, i.e. can have one value by locale
+                      default: false
+                      x-immutable: true
+                      example: true
+                    value_per_channel:
+                      type: boolean
+                      description: Whether the attribute is scopable, i.e. can have one value by channel
+                      default: false
+                      x-immutable: true
+                      example: false
+                    is_required_for_completeness:
+                      type: boolean
+                      description: Whether the attribute should be part of the record's completeness calculation
+                      default: false
+                      example: true
+                    max_characters:
+                      type:
+                      - integer
+                      - 'null'
+                      description: Maximum number of characters allowed for the value of the attribute when the attribute type is `text`
+                      x-warning: Only for `text` attribute type
+                      example: 255
+                    is_textarea:
+                      type: boolean
+                      description: Whether the UI should display a text area instead of a simple field when the attribute type is `text`
+                      default: false
+                      x-warning: Only for `text` attribute type
+                      example: true
+                    is_rich_text_editor:
+                      type: boolean
+                      description: Whether the UI should display a rich text editor instead of a simple text area when the attribute type is `text`
+                      default: false
+                      x-validation-rules: Required when the property `is_textarea` is equal to `true`
+                      x-warning: Only for `text` attribute type
+                      example: true
+                    validation_rule:
+                      type:
+                      - string
+                      - 'null'
+                      description: Validation rule type used to validate the attribute value when the attribute type is `text`
+                      enum:
+                      - email
+                      - url
+                      - regular_expression
+                      - none
+                      - null
+                      default: none
+                      x-validation-rules: Required when the property `validation_rule` is equal to `regular_expression`
+                      x-warning: Only for `text` attribute type
+                      example: none
+                    validation_regexp:
+                      type:
+                      - string
+                      - 'null'
+                      description: Regexp expression used to validate the attribute value when the attribute type is `text`
+                      x-validation-rules: Required when the property `validation_rule` is equal to `regular_expression`
+                      x-warning: Only for `text` attribute type
+                      example: null
+                    allowed_extensions:
+                      type: array
+                      description: Extensions allowed when the attribute type is `image`
+                      items:
+                        type: string
+                      default: []
+                      x-warning: Only for `image` attribute type
+                      example:
+                      - png
+                      - jpg
+                    max_file_size:
+                      type:
+                      - string
+                      - 'null'
+                      description: Max file size in MB when the attribute type is `image`
+                      x-warning: Only for `image` attribute type
+                      example: '5'
+                    reference_entity_code:
+                      type:
+                      - string
+                      - 'null'
+                      description: Code of the linked reference entity when the attribute type is `reference_entity_single_link` or `reference_entity_multiple_links`
+                      x-immutable: true
+                      x-validation-rules: Required when the attribute type is either `reference_entity_single_link` or `reference_entity_multiple_links`
+                      x-warning: Only for `reference_entity_single_link` and `reference_entity_multiple_links` attribute type
+                      example: color
+                    asset_family_identifier:
+                      type:
+                      - string
+                      - 'null'
+                      description: Code of the linked asset family when the attribute type is `asset_collection`
+                      x-immutable: true
+                      x-validation-rules: Required when the attribute type is `asset_collection`
+                      x-warning: Only for `asset_collection` attribute type
+                      example: youtube
+                    decimals_allowed:
+                      type: boolean
+                      description: Whether decimals are allowed when the attribute type is `number`
+                      default: false
+                      x-warning: Only for `number` attribute type
+                      example: false
+                    min_value:
+                      type:
+                      - string
+                      - 'null'
+                      description: Minimum value allowed when the attribute type is `number`
+                      x-validation-rules: The minimum value must be lower than the maximum value
+                      x-warning: Only for `number` attribute type
+                      example: '1800'
+                    max_value:
+                      type:
+                      - string
+                      - 'null'
+                      description: Maximum value allowed when the attribute type is `number`
+                      x-validation-rules: The maximum value must be greater than the minimum value
+                      x-warning: Only for `number` attribute type
+                      example: '2100'
+              example:
+              - code: description
+                labels:
+                  en_US: Description
+                  fr_FR: Description
+                type: text
+                value_per_locale: true
+                value_per_channel: false
+                is_required_for_completeness: true
+                max_characters: null
+                is_textarea: true
+                is_rich_text_editor: true
+                validation_rule: none
+                validation_regexp: null
+              - code: country
+                labels:
+                  en_US: Country
+                  fr_FR: Pays
+                type: text
+                value_per_locale: false
+                value_per_channel: false
+                is_required_for_completeness: false
+              - code: creation_year
+                labels:
+                  en_US: Creation year
+                  fr_FR: Année de création
+                type: number
+                value_per_locale: false
+                value_per_channel: false
+                is_required_for_completeness: false
+                decimals_allowed: false
+                min_value: '1800'
+                max_value: '2100'
+              - code: collection_overview
+                labels:
+                  en_US: Collection overview
+                  fr_FR: Aperçu de la collection
+                type: image
+                value_per_locale: true
+                value_per_channel: false
+                is_required_for_completeness: true
+                allowed_extensions:
+                - png
+                max_file_size: '1000'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+  /api/rest/v1/reference-entities/{reference_entity_code}/attributes/{code}:
+    get:
+      operationId: get_reference_entity_attribute_by_code
+      x-visibility: public
+      summary: Get an attribute of a given reference entity
+      description: This endpoint allows you to get the information about a given attribute for a given reference entity
+      tags:
+      - Reference entity attribute
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Returns the content of the reference entity attribute in JSON format
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - type
+                properties:
+                  code:
+                    type: string
+                    description: Attribute code
+                    x-immutable: true
+                    example: description
+                  labels:
+                    type: object
+                    description: Attribute labels per locale
+                    default: {}
+                    patternProperties:
+                      ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                        description: Attribute label for the specified locale
+                        type:
+                        - string
+                        - 'null'
+                        example: The description
+                    x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    example:
+                      en_US: The description
+                      fr_FR: La description
+                  type:
+                    type: string
+                    description: 'Attribute type.
+
+                      See [type](https://api.akeneo.com/concepts/reference-entities.html#reference-entity-attribute) section for more details.
+
+                      '
+                    enum:
+                    - text
+                    - image
+                    - number
+                    - single_option
+                    - multiple_options
+                    - reference_entity_single_link
+                    - reference_entity_multiple_links
+                    - asset_collection
+                    x-immutable: true
+                    example: text
+                  value_per_locale:
+                    type: boolean
+                    description: Whether the attribute is localizable, i.e. can have one value by locale
+                    default: false
+                    x-immutable: true
+                    example: true
+                  value_per_channel:
+                    type: boolean
+                    description: Whether the attribute is scopable, i.e. can have one value by channel
+                    default: false
+                    x-immutable: true
+                    example: false
+                  is_required_for_completeness:
+                    type: boolean
+                    description: Whether the attribute should be part of the record's completeness calculation
+                    default: false
+                    example: true
+                  max_characters:
+                    type:
+                    - integer
+                    - 'null'
+                    description: Maximum number of characters allowed for the value of the attribute when the attribute type is `text`
+                    x-warning: Only for `text` attribute type
+                    example: 255
+                  is_textarea:
+                    type: boolean
+                    description: Whether the UI should display a text area instead of a simple field when the attribute type is `text`
+                    default: false
+                    x-warning: Only for `text` attribute type
+                    example: true
+                  is_rich_text_editor:
+                    type: boolean
+                    description: Whether the UI should display a rich text editor instead of a simple text area when the attribute type is `text`
+                    default: false
+                    x-validation-rules: Required when the property `is_textarea` is equal to `true`
+                    x-warning: Only for `text` attribute type
+                    example: true
+                  validation_rule:
+                    type:
+                    - string
+                    - 'null'
+                    description: Validation rule type used to validate the attribute value when the attribute type is `text`
+                    enum:
+                    - email
+                    - url
+                    - regular_expression
+                    - none
+                    - null
+                    default: none
+                    x-validation-rules: Required when the property `validation_rule` is equal to `regular_expression`
+                    x-warning: Only for `text` attribute type
+                    example: none
+                  validation_regexp:
+                    type:
+                    - string
+                    - 'null'
+                    description: Regexp expression used to validate the attribute value when the attribute type is `text`
+                    x-validation-rules: Required when the property `validation_rule` is equal to `regular_expression`
+                    x-warning: Only for `text` attribute type
+                    example: null
+                  allowed_extensions:
+                    type: array
+                    description: Extensions allowed when the attribute type is `image`
+                    items:
+                      type: string
+                    default: []
+                    x-warning: Only for `image` attribute type
+                    example:
+                    - png
+                    - jpg
+                  max_file_size:
+                    type:
+                    - string
+                    - 'null'
+                    description: Max file size in MB when the attribute type is `image`
+                    x-warning: Only for `image` attribute type
+                    example: '5'
+                  reference_entity_code:
+                    type:
+                    - string
+                    - 'null'
+                    description: Code of the linked reference entity when the attribute type is `reference_entity_single_link` or `reference_entity_multiple_links`
+                    x-immutable: true
+                    x-validation-rules: Required when the attribute type is either `reference_entity_single_link` or `reference_entity_multiple_links`
+                    x-warning: Only for `reference_entity_single_link` and `reference_entity_multiple_links` attribute type
+                    example: color
+                  asset_family_identifier:
+                    type:
+                    - string
+                    - 'null'
+                    description: Code of the linked asset family when the attribute type is `asset_collection`
+                    x-immutable: true
+                    x-validation-rules: Required when the attribute type is `asset_collection`
+                    x-warning: Only for `asset_collection` attribute type
+                    example: youtube
+                  decimals_allowed:
+                    type: boolean
+                    description: Whether decimals are allowed when the attribute type is `number`
+                    default: false
+                    x-warning: Only for `number` attribute type
+                    example: false
+                  min_value:
+                    type:
+                    - string
+                    - 'null'
+                    description: Minimum value allowed when the attribute type is `number`
+                    x-validation-rules: The minimum value must be lower than the maximum value
+                    x-warning: Only for `number` attribute type
+                    example: '1800'
+                  max_value:
+                    type:
+                    - string
+                    - 'null'
+                    description: Maximum value allowed when the attribute type is `number`
+                    x-validation-rules: The maximum value must be greater than the minimum value
+                    x-warning: Only for `number` attribute type
+                    example: '2100'
+              example:
+                code: description
+                labels:
+                  en_US: Description
+                  fr_FR: Description
+                type: text
+                value_per_locale: true
+                value_per_channel: false
+                is_required_for_completeness: true
+                is_textarea: true
+                is_rich_text_editor: true
+                validation_rule: none
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_reference_entity_attribute_by_code
+      x-visibility: public
+      summary: Update/create an attribute of a given reference entity
+      description: 'This endpoint allows you to update a given attribute for a given reference entity.
+
+        Note that if the attribute does not already exist for the given reference entity, it creates it.'
+      tags:
+      - Reference entity attribute
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      requestBody:
+        description: Payload to update or create a reference entity attribute
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Attribute code
+                  x-immutable: true
+                  example: description
+                labels:
+                  type: object
+                  description: Attribute labels per locale
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Attribute label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: The description
+                  x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                  example:
+                    en_US: The description
+                    fr_FR: La description
+                type:
+                  type: string
+                  description: 'Attribute type.
+
+                    See [type](https://api.akeneo.com/concepts/reference-entities.html#reference-entity-attribute) section for more details.
+
+                    '
+                  enum:
+                  - text
+                  - image
+                  - number
+                  - single_option
+                  - multiple_options
+                  - reference_entity_single_link
+                  - reference_entity_multiple_links
+                  - asset_collection
+                  x-immutable: true
+                  example: text
+                value_per_locale:
+                  type: boolean
+                  description: Whether the attribute is localizable, i.e. can have one value by locale
+                  default: false
+                  x-immutable: true
+                  example: true
+                value_per_channel:
+                  type: boolean
+                  description: Whether the attribute is scopable, i.e. can have one value by channel
+                  default: false
+                  x-immutable: true
+                  example: false
+                is_required_for_completeness:
+                  type: boolean
+                  description: Whether the attribute should be part of the record's completeness calculation
+                  default: false
+                  example: true
+                max_characters:
+                  type:
+                  - integer
+                  - 'null'
+                  description: Maximum number of characters allowed for the value of the attribute when the attribute type is `text`
+                  x-warning: Only for `text` attribute type
+                  example: 255
+                is_textarea:
+                  type: boolean
+                  description: Whether the UI should display a text area instead of a simple field when the attribute type is `text`
+                  default: false
+                  x-warning: Only for `text` attribute type
+                  example: true
+                is_rich_text_editor:
+                  type: boolean
+                  description: 'Whether the UI should display a rich text editor instead of a simple text area when the attribute type is `text`
+
+                    '
+                  default: false
+                  x-validation-rules: Required when the property `is_textarea` is equal to `true`
+                  x-warning: Only for `text` attribute type
+                  example: true
+                validation_rule:
+                  type: string
+                  description: Validation rule type used to validate the attribute value when the attribute type is `text`
+                  enum:
+                  - email
+                  - url
+                  - regular_expression
+                  - none
+                  default: none
+                  x-validation-rules: Required when the property `validation_rule` is equal to `regular_expression`
+                  x-warning: Only for `text` attribute type
+                  example: none
+                validation_regexp:
+                  type:
+                  - string
+                  - 'null'
+                  description: Regexp expression used to validate the attribute value when the attribute type is `text`
+                  x-validation-rules: Required when the property `validation_rule` is equal to `regexp`
+                  x-warning: Only for `text` attribute type
+                  example: null
+                allowed_extensions:
+                  type: array
+                  description: Extensions allowed when the attribute type is `image`
+                  items:
+                    type: string
+                  default: []
+                  x-warning: Only for `image` attribute type
+                  example:
+                  - png
+                  - jpg
+                max_file_size:
+                  type:
+                  - string
+                  - 'null'
+                  description: Max file size in MB when the attribute type is `image`
+                  x-warning: Only for `image` attribute type
+                  example: '5'
+                decimals_allowed:
+                  type: boolean
+                  description: Whether decimals are allowed when the attribute type is `number`
+                  default: false
+                  x-warning: Only for `number` attribute type
+                  example: false
+                min_value:
+                  type:
+                  - string
+                  - 'null'
+                  description: Minimum value allowed when the attribute type is `number`
+                  x-validation-rules: The minimum value must be lower than the maximum value
+                  x-warning: Only for `number` attribute type
+                  example: '1800'
+                max_value:
+                  type:
+                  - string
+                  - 'null'
+                  description: Maximum value allowed when the attribute type is `number`
+                  x-validation-rules: The maximum value must be greater than the minimum value
+                  x-warning: Only for `number` attribute type
+                  example: '2100'
+            example:
+              code: description
+              labels:
+                en_US: Description
+                fr_FR: Description
+              type: text
+              value_per_locale: true
+              value_per_channel: false
+              is_required_for_completeness: true
+              is_textarea: true
+              is_rich_text_editor: true
+              validation_rule: none
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

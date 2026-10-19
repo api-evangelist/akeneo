@@ -1,0 +1,3544 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Catalog products API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Catalog products
+  description: 'A catalog contains a selection of products from the PIM, intended to be synchronized with a third-party application via the API.
+
+    The Catalog products endpoint allows you to retrieve the list of products for a given catalog, with options to filter, paginate, and select the returned fields.
+
+    Each returned product includes its attributes, values, status information, and associated references, all in the context of the catalog.
+
+    This endpoint is mainly used by Apps to synchronize product data between Akeneo PIM and external platforms, while respecting access rights and catalog configuration.'
+paths:
+  /api/rest/v1/catalogs/{id}/product-uuids:
+    get:
+      operationId: get_catalog_product_uuids
+      x-visibility: public
+      summary: Get the list of product uuids
+      description: 'This endpoint allows you to get the list of uuids of products contained in a catalog.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      x-app-token: true
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: updated_before
+        description: 'Filter products that have been updated BEFORE the provided date.
+
+          It is useful for retrieving products that haven''t been modified since a specific date, which is essential for historical data analysis and reporting.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-05-17T10:00:00Z'
+      - in: query
+        name: updated_after
+        description: 'Filter products that have been updated AFTER the provided date.
+
+          It is useful for retrieving only recently modified products, which is essential for synchronization and incremental data processing.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-06-17T10:00:00Z'
+      - in: query
+        name: with_count
+        description: 'Return the count of items in the response.
+
+          Be careful with that, on a big catalog, it can decrease performance in a significant way.
+
+          It is useful for understanding the size of the dataset being returned, especially when dealing with large collections.
+
+          Use it judiciously to avoid performance issues.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '200':
+          description: 'Return the paginated product uuids.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Product uuids
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    items_count:
+                      type: integer
+                      description: Total number of items (only if `with_count` parameter is set to true)
+                      example: 5
+                    _embedded:
+                      type: object
+                      required:
+                      - items
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: string
+                            format: uuid
+                            example: 4756e653-e25d-48c1-bb72-adce7b1366fd
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/product-uuids&with_count=true
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/product-uuids&with_count=true
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/product-uuids?search_after=eddfbd2a-abc7-488d-b9e3-41289c824f80&with_count=true
+                items_count: 10
+                _embedded:
+                  items:
+                  - 844c736b-a19b-48a6-a354-6056044729f0
+                  - b2a683ef-4a91-4ed3-b3fa-76dab065a8d5
+                  - eddfbd2a-abc7-488d-b9e3-41289c824f80
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+  /api/rest/v1/catalogs/{id}/products:
+    get:
+      operationId: get_catalog_products
+      x-visibility: public
+      summary: Get the list of products related to a catalog
+      description: 'This endpoint allows you to get the list of products related to a catalog.
+
+        Products are paginated and they can be filtered. In the Enterprise Edition,
+
+        permissions based on your app settings are applied to the set of products you request.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: updated_before
+        description: 'Filter products that have been updated BEFORE the provided date.
+
+          It is useful for retrieving products that haven''t been modified since a specific date, which is essential for historical data analysis and reporting.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-05-17T10:00:00Z'
+      - in: query
+        name: updated_after
+        description: 'Filter products that have been updated AFTER the provided date.
+
+          It is useful for retrieving only recently modified products, which is essential for synchronization and incremental data processing.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-06-17T10:00:00Z'
+      x-app-token: true
+      responses:
+        '200':
+          description: 'Return the paginated products or error message.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Catalog Products
+                type: object
+                oneOf:
+                - allOf:
+                  - type: object
+                    properties:
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                description: URI of the current page of resources
+                                example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                          first:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                description: URI of the first page of resources
+                                example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                          previous:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                description: URI of the previous page of resources
+                                example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                          next:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                description: URI of the next page of resources
+                                example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                  - type: object
+                    properties:
+                      _embedded:
+                        type: object
+                        required:
+                        - items
+                        properties:
+                          items:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                  description: Product UUID
+                                  example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                enabled:
+                                  type: boolean
+                                  description: Whether the product is enabled
+                                  default: true
+                                  example: true
+                                family:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: '[Family](https://api.akeneo.com/api-reference.html#Family) code from which the product inherits its attributes and attributes requirements.
+
+                                    In the case of variant product, the given family should be the same as the product model family.
+
+                                    '
+                                  default: null only in the case of a non variant product
+                                  x-validation-rules: It is equal to an existing family code
+                                  example: smartphone
+                                categories:
+                                  type: array
+                                  description: Codes of the [categories](https://api.akeneo.com/api-reference.html#Category) in which the product is classified
+                                  items:
+                                    type: string
+                                  default: []
+                                  x-validation-rules: Each string of the array is equal to an existing category code
+                                  example:
+                                  - smartphones
+                                  - electronics
+                                groups:
+                                  type: array
+                                  description: 'Codes of the groups to which the product belong.
+
+                                    Each string of the array is equal to an existing group code.
+
+                                    '
+                                  items:
+                                    type: string
+                                  default: []
+                                  x-validation-rules: Each string of the array is equal to an existing group code
+                                  example:
+                                  - summer_collection
+                                  - sale
+                                parent:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Code of the parent [product model](https://api.akeneo.com/api-reference.html#Productmodel) when the product is a variant
+                                  default: null
+                                  x-validation-rules: '- It is equal to an existing product model.
+
+                                    - This product model has the same family variant as the one given in the `family_variant field`.
+
+                                    '
+                                  example: my_super_battery
+                                root_parent:
+                                  type: string
+                                  readOnly: true
+                                  description: 'Code of the root parent product model when the product is a variant
+
+                                    (only available when the `with_root_parent` is set to `true`).
+
+                                    '
+                                  default: 'null'
+                                  x-validation-rules: It is equal to an existing product model code only if the product is variant; otherwise, the property does not appear
+                                  example: my_super_battery
+                                values:
+                                  type: object
+                                  description: 'Product attributes values.
+
+                                    Each key is an attribute code, and the value is an array of value objects for that attribute.
+
+                                    See [documentation](https://api.akeneo.com/concepts/products.html#focus-on-the-product-values) for details.
+
+                                    '
+                                  patternProperties:
+                                    ^\w+$:
+                                      type: array
+                                      items:
+                                        type: object
+                                        required:
+                                        - data
+                                        description: 'A value for a given attribute, for a given locale/scope combination.
+
+                                          - locale: Locale code, or null if not localizable.
+
+                                          - scope: Channel code, or null if not scopable.
+
+                                          - data: The value for this attribute/locale/scope. Type and format depend on the attribute type (see Akeneo docs).
+
+                                          - linked_data: Additional data for select/multiselect/asset attributes. Read-only.
+
+                                          - attribute_type: The type of the value''s attribute. Read-only.
+
+                                          - reference_data_name: Reference entity code or asset family code. Read-only.
+
+                                          '
+                                        properties:
+                                          locale:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: '[Locale](https://api.akeneo.com/api-reference.html#Locale) code of the product value'
+                                            example: en_US
+                                          scope:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: '[Channel](https://api.akeneo.com/api-reference.html#Channel) code of the product value'
+                                            example: ecommerce
+                                          data:
+                                            description: 'The value for this attribute/locale/scope. Type and format depend on the attribute type.
+
+                                              - String for text, textarea, file, image, date, simple select, reference data simple select, reference entity.
+
+                                              - Array of strings for multi select, reference data multi select, reference entity collection, asset collection, PAM asset collection.
+
+                                              - Integer or string for number (depending on decimals_allowed).
+
+                                              - Boolean for boolean attributes.
+
+                                              - Object for metric, containing an "amount" (int), "unit" (string), and "symbol" (string, read-only) key.
+
+                                              - Object for product link, containing a "type" (string) and "id" (string) key.
+
+                                              - Object for table, containing different keys (int, boolean or string).
+
+                                              - Object for price, with a "amount" (int) and a "currency" (string) key.
+
+                                              '
+                                            anyOf:
+                                            - type: string
+                                              description: 'A reference entity value.
+
+                                                The string is the code of the reference entity.
+
+                                                '
+                                              example: designer_ref
+                                            - type: array
+                                              description: 'A reference entity collection value.
+
+                                                The array contains codes of reference entities.
+
+                                                '
+                                              items:
+                                                type: string
+                                              example:
+                                              - designer_ref_1
+                                              - designer_ref_2
+                                            - type: array
+                                              description: 'An asset collection value.
+
+                                                The array contains asset codes
+
+                                                '
+                                              items:
+                                                type: string
+                                              example:
+                                              - left_side
+                                              - right_side
+                                            - type: boolean
+                                              description: 'A boolean value.
+
+                                                Used for attributes of type `pim_catalog_boolean`.
+
+                                                '
+                                              example: true
+                                            - type: string
+                                              description: "A date value for attributes of type `pim_catalog_date`.\n\nTwo input formats are accepted:\n  - **Date only** (`YYYY-MM-DD`), for example `2021-04-29`.\n  - **ISO 8601 date-time**, either with a UTC offset (`YYYY-MM-DDTHH:MM:SS+00:00`) or in Zulu form (`YYYY-MM-DDTHH:MM:SSZ`), for example `2021-04-29T08:58:00Z`.\n\nThe ISO 8601 date-time form is only meaningful on attributes where `display_time` is enabled.\nOn attributes where `display_time` is `false`, the time component is ignored and the filter behaves as if a date-only value was provided.\n\nSpace-separated date-times (for example `2021-04-29 08:58:00`) are not supported and will be rejected.\n"
+                                              example: '2021-04-29T08:58:00Z'
+                                            - type: string
+                                              description: 'A file value.
+
+                                                The string is a file key referencing the uploaded file.
+
+                                                '
+                                              example: f/2/e/6/f2e6674e0766acdc70f814_myFile.pdf
+                                            - type: string
+                                              description: 'An identifier value.
+
+                                                Used for attributes of type `pim_catalog_identifier`.
+
+                                                '
+                                              example: SKU-12345
+                                            - type: string
+                                              description: 'An image value.
+
+                                                The string is a file key referencing the uploaded image.
+
+                                                '
+                                              example: 1/d/7/f/1d7f0987000cea4d14908fe679af4e36ea3632ef_10806799_1356.jpg
+                                            - type: object
+                                              description: 'A metric value.
+
+                                                Object with amount, unit, and symbol.
+
+                                                '
+                                              properties:
+                                                amount:
+                                                  description: 'The amount of the metric.
+
+                                                    - String representing a number if allowed on attribute settings ("decimals_allowed" parameter).
+
+                                                    - Integer if the attribute does not allow decimals.
+
+                                                    '
+                                                  oneOf:
+                                                  - type: string
+                                                    example: '800.0000'
+                                                  - type: integer
+                                                    example: 800
+                                                unit:
+                                                  type: string
+                                                  description: The unit of the metric
+                                                  example: GRAM
+                                                symbol:
+                                                  type: string
+                                                  description: The symbol of the unit, resolved from the measurement family definition. Read-only.
+                                                  readOnly: true
+                                                  example: g
+                                              required:
+                                              - amount
+                                              - unit
+                                              example:
+                                                amount: '800.0000'
+                                                unit: GRAM
+                                                symbol: g
+                                            - type: array
+                                              description: 'A multi select value.
+
+                                                The array contains option codes.
+
+                                                '
+                                              items:
+                                                type: string
+                                              example:
+                                              - summer_2017
+                                              - winter_2016
+                                            - anyOf:
+                                              - type: number
+                                              - type: string
+                                                pattern: ^\\d+(\\.\\d+)?$
+                                              description: 'A number value.
+
+                                                Used for attributes of type `pim_catalog_number`.
+
+                                                Can be integer or decimal, depending on attribute settings (`decimals_allowed` parameter).
+
+                                                '
+                                              example: 42.5
+                                            - type: array
+                                              description: 'A price collection value.
+
+                                                The array contains objects with amount and currency.
+
+                                                '
+                                              items:
+                                                type: object
+                                                required:
+                                                - amount
+                                                - currency
+                                                properties:
+                                                  amount:
+                                                    description: 'The amount of the price.
+
+                                                      - String representing a number if the attribute allows decimals.
+
+                                                      - Integer if the attribute does not allow decimals.
+
+                                                      '
+                                                    oneOf:
+                                                    - type: string
+                                                      example: '12.50'
+                                                    - type: integer
+                                                      example: 10
+                                                  currency:
+                                                    type: string
+                                                    description: The currency code
+                                                    example: USD
+                                              example:
+                                              - amount: '12.50'
+                                                currency: USD
+                                              - amount: 10
+                                                currency: EUR
+                                            - type: object
+                                              oneOf:
+                                              - type: object
+                                                description: Link to a product by UUID or identifier
+                                                required:
+                                                - type
+                                                - id
+                                                properties:
+                                                  type:
+                                                    type: string
+                                                    enum:
+                                                    - product
+                                                    description: The type of the linked entity
+                                                    example: product
+                                                  id:
+                                                    type: string
+                                                    description: The UUID of the linked product
+                                                    example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                                additionalProperties: false
+                                              - type: object
+                                                description: Link to a product by identifier
+                                                required:
+                                                - type
+                                                - identifier
+                                                properties:
+                                                  type:
+                                                    type: string
+                                                    enum:
+                                                    - product
+                                                    description: The type of the linked entity
+                                                    example: product
+                                                  identifier:
+                                                    type:
+                                                    - string
+                                                    - 'null'
+                                                    description: The identifier of the linked product
+                                                    example: bl1850b
+                                                additionalProperties: false
+                                              - type: object
+                                                description: Link to a product model by code
+                                                required:
+                                                - type
+                                                - id
+                                                properties:
+                                                  type:
+                                                    type: string
+                                                    enum:
+                                                    - product_model
+                                                    description: The type of the linked entity
+                                                    example: product_model
+                                                  id:
+                                                    type: string
+                                                    description: The code of the linked product model
+                                                    example: my_super_battery
+                                                additionalProperties: false
+                                              description: "A product link value. Object with:\n  - type: 'product' or 'product_model'\n  - id: UUID (for product) or code (for product_model)\n  - identifier: identifier (for product)\nOnly one of id or identifier is present, depending on the type and linking method.\n"
+                                              example:
+                                                type: product
+                                                id: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                            - type: string
+                                              description: 'A simple select value.
+
+                                                The string is the option code.
+
+                                                '
+                                              example: black
+                                            - type: array
+                                              description: "A table value. Each item in the array is a row, represented as an object.\nEach key in the row object is a column code, and the value depends on the column type:\n  - string (for text, select, reference entity, date)\n  - integer or number (for number, depending on decimals_allowed)\n  - boolean (for yes/no)\n  - object (for product link, measurement, etc.)\nThe first column is always a select, reference entity, incremental number, or product link.\nThe table structure (columns and types) is defined in the attribute configuration.\n"
+                                              items:
+                                                type: object
+                                                description: 'The value for the column identified by the key.
+
+                                                  The type of the value depends on the column type defined in the attribute configuration.
+
+                                                  '
+                                                patternProperties:
+                                                  ^\w+$:
+                                                    oneOf:
+                                                    - type: string
+                                                      description: Text, select, reference entity, or date value
+                                                      example: value1
+                                                    - type: number
+                                                      description: Decimal value (number column, with or without decimals)
+                                                      example: 3.14
+                                                    - type: boolean
+                                                      description: Boolean value (yes/no column)
+                                                      example: true
+                                                    - type: object
+                                                      description: Product link value (see pim_catalog_product_link)
+                                                      required:
+                                                      - type
+                                                      properties:
+                                                        type:
+                                                          type: string
+                                                          enum:
+                                                          - product
+                                                          - product_model
+                                                          description: The type of the linked entity
+                                                          example: product
+                                                        id:
+                                                          type: string
+                                                          description: The UUID (for product) or code (for product_model)
+                                                          example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                                        identifier:
+                                                          type: string
+                                                          description: The identifier of the linked product (alternative to id for product)
+                                                          example: bl1850b
+                                                      additionalProperties: false
+                                                    - type: object
+                                                      description: Measurement value (metric column)
+                                                      required:
+                                                      - amount
+                                                      - unit
+                                                      properties:
+                                                        amount:
+                                                          oneOf:
+                                                          - type: string
+                                                            pattern: ^-?\d+\.\d+$
+                                                            example: '12.50'
+                                                          - type: integer
+                                                            example: 10
+                                                          description: The amount of the measurement
+                                                        unit:
+                                                          type: string
+                                                          description: The unit of the measurement
+                                                          example: GRAM
+                                                      additionalProperties: false
+                                              example:
+                                              - ingredient: Sugar
+                                                quantity: 10
+                                                organic: true
+                                                best_before: '2024-12-31'
+                                                included_product:
+                                                  type: product
+                                                  id: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                                weight:
+                                                  amount: '12.50'
+                                                  unit: GRAM
+                                            - type: string
+                                              description: 'A text value.
+
+                                                Used for attributes of type `pim_catalog_text`.
+
+                                                '
+                                              example: T-shirt long sleeves Winter special, 100% wool
+                                            - type: string
+                                              description: 'A textarea value.
+
+                                                Used for attributes of type `pim_catalog_textarea`.
+
+                                                '
+                                              example: This is a long product description with multiple lines.
+                                            - type: 'null'
+                                              description: Null value used to clear/remove attribute values
+                                            example: T-shirt long sleeves Winter special, 100% wool
+                                          linked_data:
+                                            type:
+                                            - object
+                                            - 'null'
+                                            description: 'Object containing additional data when a related query parameter is enabled.
+
+                                              See [the `linked_data` format](https://api.akeneo.com/concepts/products.html#the-linked_data-format) section for more details.
+
+                                              '
+                                            example:
+                                              attribute: main_color
+                                              code: black
+                                              labels:
+                                                en_US: Black
+                                                fr_FR: Noir
+                                          attribute_type:
+                                            type: string
+                                            description: The type of the value's attribute. See [type](https://api.akeneo.com/concepts/catalog-structure.html#attribute) section for more details.
+                                            readOnly: true
+                                            enum:
+                                            - pim_catalog_identifier
+                                            - pim_catalog_text
+                                            - pim_catalog_textarea
+                                            - pim_catalog_simpleselect
+                                            - pim_catalog_multiselect
+                                            - pim_catalog_boolean
+                                            - pim_catalog_date
+                                            - pim_catalog_number
+                                            - pim_catalog_metric
+                                            - pim_catalog_price_collection
+                                            - pim_catalog_image
+                                            - pim_catalog_file
+                                            - pim_catalog_asset_collection
+                                            - akeneo_reference_entity
+                                            - akeneo_reference_entity_collection
+                                            - pim_reference_data_simpleselect
+                                            - pim_reference_data_multiselect
+                                            - pim_catalog_table
+                                            - pim_catalog_product_link
+                                            example: pim_catalog_text
+                                          reference_data_name:
+                                            type: string
+                                            description: 'Reference entity code when the attribute type is `akeneo_reference_entity` or `akeneo_reference_entity_collection`
+
+                                              OR Asset family code when the attribute type is `pim_catalog_asset_collection`.
+
+                                              '
+                                            readOnly: true
+                                            x-warning: Only for `akeneo_reference_entity` or `akeneo_reference_entity_collection` or `pim_catalog_asset_collection` attribute types
+                                            example: designer_ref
+                                          _links:
+                                            type:
+                                            - object
+                                            - 'null'
+                                            description: 'Object containing download links for media files (images, files).
+
+                                              Only present for file and image attribute types.
+
+                                              '
+                                            readOnly: true
+                                            properties:
+                                              download:
+                                                type: object
+                                                properties:
+                                                  href:
+                                                    type: string
+                                                    description: URL for downloading the media file
+                                                    example: http://localhost/api/rest/v1/media-files/path/to/file/download
+                                            example:
+                                              download:
+                                                href: http://localhost/api/rest/v1/media-files/5/d/b/1/5db16b5800314d8bc6358fb80b75f0fb0dedc6d0_akeneo.jpg/download
+                                  x-validation-rules: Validation rules detailed in Product values section
+                                  example:
+                                    description:
+                                    - data: T-shirt long sleeves Winter special, 100% wool
+                                      locale: null
+                                      scope: null
+                                associations:
+                                  type: object
+                                  description: Several associations related to groups, product models and/or other products, grouped by association types
+                                  patternProperties:
+                                    ^\w+$:
+                                      type: object
+                                      properties:
+                                        groups:
+                                          type: array
+                                          description: Array of groups codes with which the product is in relation
+                                          items:
+                                            type: string
+                                        products:
+                                          type: array
+                                          description: Array of product identifiers with which the product is in relation
+                                          items:
+                                            type: string
+                                        product_models:
+                                          type: array
+                                          description: Array of product model codes with which the product is in relation
+                                          items:
+                                            type: string
+                                  additionalProperties: false
+                                  x-validation-rules: '- The `associationTypeCode` is the code of an existing association type.
+
+                                    - Each string in the array of the property `groups` is the code of an existing group.
+
+                                    - Each string in the array of the property `products` is the identifier of an existing product.
+
+                                    - Each string in the array of the property `product_models` is the code of an existing product model.
+
+                                    '
+                                  example:
+                                    X_SELL:
+                                      groups: []
+                                      products:
+                                      - product_1
+                                      - product_2
+                                      product_models:
+                                      - product_model_1
+                                    UPSELL:
+                                      groups:
+                                      - group_1
+                                      products: []
+                                      product_models: []
+                                quantified_associations:
+                                  type: object
+                                  description: Several quantified associations related to products and/or product models, grouped by quantified association types
+                                  patternProperties:
+                                    ^\w+$:
+                                      type: object
+                                      properties:
+                                        products:
+                                          type: array
+                                          description: Array of objects containing product uuids and quantities with which the product is in relation
+                                          items:
+                                            type: object
+                                            properties:
+                                              uuid:
+                                                type: string
+                                              quantity:
+                                                type: integer
+                                        product_models:
+                                          type: array
+                                          description: Array of objects containing product model codes and quantities with which the product is in relation
+                                          items:
+                                            type: object
+                                            properties:
+                                              identifier:
+                                                type: string
+                                              quantity:
+                                                type: integer
+                                  x-validation-rules: '- The `quantifiedAssociationTypeCode` is the code of an existing association type which provides quantity information.
+
+                                    - Each object in the array of the property `products` contains the uuid of an existing product and the quantity of it.
+
+                                    - Each object in the array of the property `product_models` contains the code of an existing product model and the quantity of it.
+
+                                    '
+                                  example:
+                                    PACK:
+                                      products:
+                                      - uuid: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                        quantity: 2
+                                      - uuid: aaf518b2-f91e-40f1-a53a-78ce5e81a6f9
+                                        quantity: 3
+                                      product_models:
+                                      - identifier: product_model_1
+                                        quantity: 1
+                                created:
+                                  type: string
+                                  description: Date of creation
+                                  format: date-time
+                                  readOnly: true
+                                  x-immutable: true
+                                  example: '2022-03-14T15:25:45+00:00'
+                                updated:
+                                  type: string
+                                  description: Date of the last update
+                                  format: date-time
+                                  readOnly: true
+                                  example: '2022-06-24T12:54:58+00:00'
+                                metadata:
+                                  type: object
+                                  description: More information around the product
+                                  readOnly: true
+                                  properties:
+                                    workflow_status:
+                                      description: Status of the product regarding the user permissions
+                                      type: string
+                                      enum:
+                                      - read_only
+                                      - draft_in_progress
+                                      - proposal_waiting_for_approval
+                                      - working_copy
+                                  x-immutable: true
+                                  example:
+                                    workflow_status: read_only
+                                proposal_review_status:
+                                  type: object
+                                  description: 'Review status of each change carried by the draft, grouped like the `values` property so that a change can be matched on its attribute code, locale and scope
+
+                                    (only available on the draft endpoints when the `with_proposal_review_status` query parameter is set to `true`).
+
+                                    While `metadata.workflow_status` is `proposal_waiting_for_approval`, a change with the `draft` review status is one that was submitted and then rejected by a reviewer (or edited by the author after submission), whereas a change with the `to_review` review status is still pending.
+
+                                    Clients must treat unknown `review_status` values as opaque.
+
+                                    '
+                                  readOnly: true
+                                  x-immutable: true
+                                  properties:
+                                    values:
+                                      type: object
+                                      description: Review status of each attribute value changed in the draft. Each key is an attribute code.
+                                      patternProperties:
+                                        ^\w+$:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              locale:
+                                                type:
+                                                - string
+                                                - 'null'
+                                                description: Locale code of the changed value, null if the attribute is not localizable
+                                              scope:
+                                                type:
+                                                - string
+                                                - 'null'
+                                                description: Channel code of the changed value, null if the attribute is not scopable
+                                              review_status:
+                                                type: string
+                                                description: Review status stored for the change
+                                                enum:
+                                                - draft
+                                                - to_review
+                                  example:
+                                    values:
+                                      description:
+                                      - locale: fr_FR
+                                        scope: ecommerce
+                                        review_status: draft
+                                      - locale: de_DE
+                                        scope: ecommerce
+                                        review_status: to_review
+                                      weight:
+                                      - locale: null
+                                        scope: null
+                                        review_status: to_review
+                                quality_scores:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      scope:
+                                        type: string
+                                        description: Channel code for which the quality score is calculated
+                                      locale:
+                                        type: string
+                                        description: Locale code for which the quality score is calculated
+                                      data:
+                                        type: string
+                                        enum:
+                                        - A
+                                        - B
+                                        - C
+                                        - D
+                                        - E
+                                        description: Quality score value for the given channel/locale combination
+                                  description: 'Product quality scores for each channel/locale combination
+
+                                    (only available when the `with_quality_scores` query parameter is set to `true`).
+
+                                    '
+                                  readOnly: true
+                                  x-immutable: true
+                                  example:
+                                  - scope: ecommerce
+                                    locale: en_US
+                                    data: A
+                                completenesses:
+                                  type: array
+                                  description: 'Product completenesses for each channel/locale combination
+
+                                    (only available when the `with_completenesses` query parameter is set to `true`).
+
+                                    '
+                                  items:
+                                    type: object
+                                    properties:
+                                      scope:
+                                        type: string
+                                        description: Channel code for which the completenesses score is calculated
+                                      locale:
+                                        type: string
+                                        description: Channel code for which the completenesses score is calculated
+                                      data:
+                                        type: integer
+                                        description: Completenesses score value for the given channel/locale combination
+                                  readOnly: true
+                                  x-immutable: true
+                                  example:
+                                  - scope: ecommerce
+                                    locale: en_US
+                                    data: 100
+                                readiness:
+                                  type: object
+                                  x-visibility: public
+                                  description: 'Readiness scores
+
+                                    (only available when the `with_readiness` query parameter is set to `scores_only` or `detailed`).
+
+
+                                    Readiness is currently in beta and is available by request only. If you would like to participate, please reach out to your Customer Success Manager.
+
+                                    '
+                                  properties:
+                                    aggregated_scores_by_scope:
+                                      type: array
+                                      description: 'Aggregated readiness score per channel: the average of the per-locale scores within each
+
+                                        readiness, then averaged across the readiness configurations that apply to that channel
+
+                                        (equal weight) and rounded.
+
+                                        '
+                                      items:
+                                        type: object
+                                        properties:
+                                          scope:
+                                            type: string
+                                            description: Channel code for which the aggregated readiness score is calculated
+                                          score:
+                                            type: integer
+                                            description: Aggregated readiness percentage score (0-100) for the given channel
+                                    scores_by_scope_and_locale:
+                                      type: object
+                                      description: Readiness scores grouped by readiness code, for each channel/locale combination
+                                      additionalProperties:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            scope:
+                                              type: string
+                                              description: Channel code for which the readiness score is calculated
+                                            locale:
+                                              type: string
+                                              description: Locale code for which the readiness score is calculated
+                                            score:
+                                              type: integer
+                                              description: Readiness percentage score (0-100) for the given channel/locale combination
+                                            unmet_requirements:
+                                              type: array
+                                              description: 'Requirements not yet met (only available when `with_readiness` is set to `detailed`).
+
+                                                '
+                                              items:
+                                                type: object
+                                                properties:
+                                                  field:
+                                                    type: string
+                                                    description: Attribute code or product field the requirement applies to (e.g. `name`, `family`, `categories`)
+                                                  operator:
+                                                    type: string
+                                                    description: Comparison operator applied to the field to evaluate the requirement (e.g. `NOT EMPTY`, `=`, `IN`)
+                                                  value:
+                                                    description: Expected value for the requirement; type depends on the operator and may be null
+                                                    nullable: true
+                                  readOnly: true
+                                  x-immutable: true
+                                  example:
+                                    aggregated_scores_by_scope:
+                                    - scope: ecommerce
+                                      score: 88
+                                    scores_by_scope_and_locale:
+                                      camcorders_ecommerce:
+                                      - scope: ecommerce
+                                        locale: en_US
+                                        score: 75
+                                        unmet_requirements:
+                                        - field: name
+                                          operator: NOT EMPTY
+                                          value: null
+                                      - scope: ecommerce
+                                        locale: fr_FR
+                                        score: 100
+                                        unmet_requirements: []
+                                workflow_execution_statuses:
+                                  type: array
+                                  description: 'Workflow execution statuses of the product
+
+                                    (only available when the `with_workflow_execution_statuses` query parameter is set to `true`)
+
+                                    '
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                        description: Workflow execution UUID
+                                      status:
+                                        type: string
+                                        description: Status of the workflow execution
+                                        enum:
+                                        - in_progress
+                                        - completed
+                                      started_at:
+                                        type: string
+                                        format: date-time
+                                        description: Date and time when the workflow execution was started
+                                      completed_at:
+                                        type:
+                                        - string
+                                        - 'null'
+                                        format: date-time
+                                        description: Date and time when the workflow execution was completed, null if still in progress
+                                      workflow:
+                                        type: object
+                                        description: Workflow associated with the workflow execution
+                                        properties:
+                                          uuid:
+                                            type: string
+                                            description: Workflow UUID
+                                          code:
+                                            type: string
+                                            description: Workflow code
+                                          labels:
+                                            type: object
+                                            description: Workflow labels for each locale
+                                            additionalProperties:
+                                              type: string
+                                      tasks:
+                                        type: array
+                                        description: Tasks associated with the workflow execution
+                                        items:
+                                          type: object
+                                          properties:
+                                            uuid:
+                                              type: string
+                                              description: Task UUID
+                                            status:
+                                              type: string
+                                              description: Status of the task
+                                              enum:
+                                              - in_progress
+                                            created_at:
+                                              type: string
+                                              format: date-time
+                                              description: Date and time when the task was created
+                                            step:
+                                              type: object
+                                              properties:
+                                                uuid:
+                                                  type: string
+                                                  description: Step UUID
+                                                code:
+                                                  type: string
+                                                  description: Step code
+                                                labels:
+                                                  type: object
+                                                  description: Step labels for each locale
+                                                  additionalProperties:
+                                                    type: string
+                                  readOnly: true
+                                  x-immutable: true
+                                  example:
+                                  - uuid: 8c0fe59f-4d29-4faa-b4c3-d327e7f3cc52
+                                    status: in_progress
+                                    started_at: '2024-02-22T17:31:00Z'
+                                    completed_at: null
+                                    workflow:
+                                      uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                                      code: enrichment_workflow
+                                      labels:
+                                        en_US: Enrichment workflow
+                                        fr_FR: Workflow d'enrichissement
+                                    tasks:
+                                    - uuid: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                                      status: in_progress
+                                      created_at: '2024-02-22T17:31:00Z'
+                                      step:
+                                        uuid: f626d0e5-84a5-41fc-8215-65508c253edb
+                                        code: review_step
+                                        labels:
+                                          en_US: Marketing review
+                                          fr_FR: Revue marketing
+                                  - uuid: fc66ab46-3362-4000-862b-bd825f35f735
+                                    status: completed
+                                    started_at: '2024-02-22T17:31:00Z'
+                                    completed_at: '2024-03-20T00:31:00Z'
+                                    workflow:
+                                      uuid: 71b777a3-c2c2-4237-8d39-8bf13ec81755
+                                      code: compliance_workflow
+                                      labels: {}
+                                    tasks: []
+                  required:
+                  - _links
+                  - _embedded
+                - type: object
+                  required:
+                  - error
+                  properties:
+                    error:
+                      type: string
+                      description: Error message when catalog is disabled or invalid
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/65f5a521-e65c-4d7b-8be8-1f267fa2729c/products?limit=3
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/65f5a521-e65c-4d7b-8be8-1f267fa2729c/products?limit=3
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/65f5a521-e65c-4d7b-8be8-1f267fa2729c/products?search_after=0059d30f-6874-4277-81ed-3b3657c83f5e&limit=3
+                _embedded:
+                  items:
+                  - uuid: 00073089-1310-4340-bcf0-9e33e4019b79
+                    enabled: true
+                    family: mens_clothing
+                    categories:
+                    - Cloths
+                    groups: []
+                    values:
+                      Default_Price:
+                      - data:
+                        - amount: '10.00'
+                          currency: USD
+                        locale: null
+                        scope: null
+                      sku:
+                      - data: product_416
+                        locale: null
+                        scope: null
+                      Name:
+                      - data: Product 416
+                        locale: null
+                        scope: null
+                      Weight:
+                      - data:
+                          amount: 10
+                          unit: KILOGRAM
+                        locale: null
+                        scope: null
+                    created: '2022-03-14T15:25:45+00:00'
+                    updated: '2022-06-24T12:54:58+00:00'
+                    associations:
+                      PACK:
+                        products: []
+                        product_models: []
+                        groups: []
+                      UPSELL:
+                        products: []
+                        product_models: []
+                        groups: []
+                      X_SELL:
+                        products: []
+                        product_models: []
+                        groups: []
+                      SUBSTITUTION:
+                        products: []
+                        product_models: []
+                        groups: []
+                    quantified_associations: {}
+                  - uuid: 00248acf-f1f7-45cb-b409-c8c4b9a17a86
+                    enabled: true
+                    family: mens_clothing
+                    categories:
+                    - Cloths
+                    groups: []
+                    values:
+                      Default_Price:
+                      - data:
+                        - amount: '10.00'
+                          currency: USD
+                        locale: null
+                        scope: null
+                      sku:
+                      - data: product_470
+                        locale: null
+                        scope: null
+                      Name:
+                      - data: Product 470
+                        locale: null
+                        scope: null
+                      Weight:
+                      - data:
+                          amount: 10
+                          unit: KILOGRAM
+                        locale: null
+                        scope: null
+                    created: '2022-03-14T15:25:45+00:00'
+                    updated: '2022-06-24T12:55:01+00:00'
+                    associations:
+                      PACK:
+                        products: []
+                        product_models: []
+                        groups: []
+                      UPSELL:
+                        products: []
+                        product_models: []
+                        groups: []
+                      X_SELL:
+                        products: []
+                        product_models: []
+                        groups: []
+                      SUBSTITUTION:
+                        products: []
+                        product_models: []
+                        groups: []
+                    quantified_associations: {}
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+  /api/rest/v1/catalogs/{id}/products/{uuid}:
+    get:
+      operationId: get_catalog_product_by_uuid
+      x-visibility: public
+      summary: Get a product related to a catalog
+      description: 'This endpoint allows you to get a specific product related to a catalog.
+
+        In the Enterprise Edition, permissions based on your app settings are applied on the product you request.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      x-app-token: true
+      responses:
+        '200':
+          description: Return the product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    description: Product UUID
+                    example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                  enabled:
+                    type: boolean
+                    description: Whether the product is enabled
+                    default: true
+                    example: true
+                  family:
+                    type:
+                    - string
+                    - 'null'
+                    description: '[Family](https://api.akeneo.com/api-reference.html#Family) code from which the product inherits its attributes and attributes requirements.
+
+                      In the case of variant product, the given family should be the same as the product model family.
+
+                      '
+                    default: null only in the case of a non variant product
+                    x-validation-rules: It is equal to an existing family code
+                    example: smartphone
+                  categories:
+                    type: array
+                    description: Codes of the [categories](https://api.akeneo.com/api-reference.html#Category) in which the product is classified
+                    items:
+                      type: string
+                    default: []
+                    x-validation-rules: Each string of the array is equal to an existing category code
+                    example:
+                    - smartphones
+                    - electronics
+                  groups:
+                    type: array
+                    description: 'Codes of the groups to which the product belong.
+
+                      Each string of the array is equal to an existing group code.
+
+                      '
+                    items:
+                      type: string
+                    default: []
+                    x-validation-rules: Each string of the array is equal to an existing group code
+                    example:
+                    - summer_collection
+                    - sale
+                  parent:
+                    type:
+                    - string
+                    - 'null'
+                    description: Code of the parent [product model](https://api.akeneo.com/api-reference.html#Productmodel) when the product is a variant
+                    default: null
+                    x-validation-rules: '- It is equal to an existing product model.
+
+                      - This product model has the same family variant as the one given in the `family_variant field`.
+
+                      '
+                    example: my_super_battery
+                  root_parent:
+                    type: string
+                    readOnly: true
+                    description: 'Code of the root parent product model when the product is a variant
+
+                      (only available when the `with_root_parent` is set to `true`).
+
+                      '
+                    default: 'null'
+                    x-validation-rules: It is equal to an existing product model code only if the product is variant; otherwise, the property does not appear
+                    example: my_super_battery
+                  values:
+                    type: object
+                    description: 'Product attributes values.
+
+                      Each key is an attribute code, and the value is an array of value objects for that attribute.
+
+                      See [documentation](https://api.akeneo.com/concepts/products.html#focus-on-the-product-values) for details.
+
+                      '
+                    patternProperties:
+                      ^\w+$:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - data
+                          description: 'A value for a given attribute, for a given locale/scope combination.
+
+                            - locale: Locale code, or null if not localizable.
+
+                            - scope: Channel code, or null if not scopable.
+
+                            - data: The value for this attribute/locale/scope. Type and format depend on the attribute type (see Akeneo docs).
+
+                            - linked_data: Additional data for select/multiselect/asset attributes. Read-only.
+
+                            - attribute_type: The type of the value''s attribute. Read-only.
+
+                            - reference_data_name: Reference entity code or asset family code. Read-only.
+
+                            '
+                          properties:
+                            locale:
+                              type:
+                              - string
+                              - 'null'
+                              description: '[Locale](https://api.akeneo.com/api-reference.html#Locale) code of the product value'
+                              example: en_US
+                            scope:
+                              type:
+                              - string
+                              - 'null'
+                              description: '[Channel](https://api.akeneo.com/api-reference.html#Channel) code of the product value'
+                              example: ecommerce
+                            data:
+                              description: 'The value for this attribute/locale/scope. Type and format depend on the attribute type.
+
+                                - String for text, textarea, file, image, date, simple select, reference data simple select, reference entity.
+
+                                - Array of strings for multi select, reference data multi select, reference entity collection, asset collection, PAM asset collection.
+
+                                - Integer or string for number (depending on decimals_allowed).
+
+                                - Boolean for boolean attributes.
+
+                                - Object for metric, containing an "amount" (int), "unit" (string), and "symbol" (string, read-only) key.
+
+                                - Object for product link, containing a "type" (string) and "id" (string) key.
+
+                                - Object for table, containing different keys (int, boolean or string).
+
+                                - Object for price, with a "amount" (int) and a "currency" (string) key.
+
+                                '
+                              anyOf:
+                              - type: string
+                                description: 'A reference entity value.
+
+                                  The string is the code of the reference entity.
+
+                                  '
+                                example: designer_ref
+                              - type: array
+                                description: 'A reference entity collection value.
+
+                                  The array contains codes of reference entities.
+
+                                  '
+                                items:
+                                  type: string
+                                example:
+                                - designer_ref_1
+                                - designer_ref_2
+                              - type: array
+                                description: 'An asset collection value.
+
+                                  The array contains asset codes
+
+                                  '
+                                items:
+                                  type: string
+                                example:
+                                - left_side
+                                - right_side
+                              - type: boolean
+                                description: 'A boolean value.
+
+                                  Used for attributes of type `pim_catalog_boolean`.
+
+                                  '
+                                example: true
+                              - type: string
+                                description: "A date value for attributes of type `pim_catalog_date`.\n\nTwo input formats are accepted:\n  - **Date only** (`YYYY-MM-DD`), for example `2021-04-29`.\n  - **ISO 8601 date-time**, either with a UTC offset (`YYYY-MM-DDTHH:MM:SS+00:00`) or in Zulu form (`YYYY-MM-DDTHH:MM:SSZ`), for example `2021-04-29T08:58:00Z`.\n\nThe ISO 8601 date-time form is only meaningful on attributes where `display_time` is enabled.\nOn attributes where `display_time` is `false`, the time component is ignored and the filter behaves as if a date-only value was provided.\n\nSpace-separated date-times (for example `2021-04-29 08:58:00`) are not supported and will be rejected.\n"
+                                example: '2021-04-29T08:58:00Z'
+                              - type: string
+                                description: 'A file value.
+
+                                  The string is a file key referencing the uploaded file.
+
+                                  '
+                                example: f/2/e/6/f2e6674e0766acdc70f814_myFile.pdf
+                              - type: string
+                                description: 'An identifier value.
+
+                                  Used for attributes of type `pim_catalog_identifier`.
+
+                                  '
+                                example: SKU-12345
+                              - type: string
+                                description: 'An image value.
+
+                                  The string is a file key referencing the uploaded image.
+
+                                  '
+                                example: 1/d/7/f/1d7f0987000cea4d14908fe679af4e36ea3632ef_10806799_1356.jpg
+                              - type: object
+                                description: 'A metric value.
+
+                                  Object with amount, unit, and symbol.
+
+                                  '
+                                properties:
+                                  amount:
+                                    description: 'The amount of the metric.
+
+                                      - String representing a number if allowed on attribute settings ("decimals_allowed" parameter).
+
+                                      - Integer if the attribute does not allow decimals.
+
+                                      '
+                                    oneOf:
+                                    - type: string
+                                      example: '800.0000'
+                                    - type: integer
+                                      example: 800
+                                  unit:
+                                    type: string
+                                    description: The unit of the metric
+                                    example: GRAM
+                                  symbol:
+                                    type: string
+                                    description: The symbol of the unit, resolved from the measurement family definition. Read-only.
+                                    readOnly: true
+                                    example: g
+                                required:
+                                - amount
+                                - unit
+                                example:
+                                  amount: '800.0000'
+                                  unit: GRAM
+                                  symbol: g
+                              - type: array
+                                description: 'A multi select value.
+
+                                  The array contains option codes.
+
+                                  '
+                                items:
+                                  type: string
+                                example:
+                                - summer_2017
+                                - winter_2016
+                              - anyOf:
+                                - type: number
+                                - type: string
+                                  pattern: ^\\d+(\\.\\d+)?$
+                                description: 'A number value.
+
+                                  Used for attributes of type `pim_catalog_number`.
+
+                                  Can be integer or decimal, depending on attribute settings (`decimals_allowed` parameter).
+
+                                  '
+                                example: 42.5
+                              - type: array
+                                description: 'A price collection value.
+
+                                  The array contains objects with amount and currency.
+
+                                  '
+                                items:
+                                  type: object
+                                  required:
+                                  - amount
+                                  - currency
+                                  properties:
+                                    amount:
+                                      description: 'The amount of the price.
+
+                                        - String representing a number if the attribute allows decimals.
+
+                                        - Integer if the attribute does not allow decimals.
+
+                                        '
+                                      oneOf:
+                                      - type: string
+                                        example: '12.50'
+                                      - type: integer
+                                        example: 10
+                                    currency:
+                                      type: string
+                                      description: The currency code
+                                      example: USD
+                                example:
+                                - amount: '12.50'
+                                  currency: USD
+                                - amount: 10
+                                  currency: EUR
+                              - type: object
+                                oneOf:
+                                - type: object
+                                  description: Link to a product by UUID or identifier
+                                  required:
+                                  - type
+                                  - id
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - product
+                                      description: The type of the linked entity
+                                      example: product
+                                    id:
+                                      type: string
+                                      description: The UUID of the linked product
+                                      example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                  additionalProperties: false
+                                - type: object
+                                  description: Link to a product by identifier
+                                  required:
+                                  - type
+                                  - identifier
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - product
+                                      description: The type of the linked entity
+                                      example: product
+                                    identifier:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The identifier of the linked product
+                                      example: bl1850b
+                                  additionalProperties: false
+                                - type: object
+                                  description: Link to a product model by code
+                                  required:
+                                  - type
+                                  - id
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - product_model
+                                      description: The type of the linked entity
+                                      example: product_model
+                                    id:
+                                      type: string
+                                      description: The code of the linked product model
+                                      example: my_super_battery
+                                  additionalProperties: false
+                                description: "A product link value. Object with:\n  - type: 'product' or 'product_model'\n  - id: UUID (for product) or code (for product_model)\n  - identifier: identifier (for product)\nOnly one of id or identifier is present, depending on the type and linking method.\n"
+                                example:
+                                  type: product
+                                  id: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                              - type: string
+                                description: 'A simple select value.
+
+                                  The string is the option code.
+
+                                  '
+                                example: black
+                              - type: array
+                                description: "A table value. Each item in the array is a row, represented as an object.\nEach key in the row object is a column code, and the value depends on the column type:\n  - string (for text, select, reference entity, date)\n  - integer or number (for number, depending on decimals_allowed)\n  - boolean (for yes/no)\n  - object (for product link, measurement, etc.)\nThe first column is always a select, reference entity, incremental number, or product link.\nThe table structure (columns and types) is defined in the attribute configuration.\n"
+                                items:
+                                  type: object
+                                  description: 'The value for the column identified by the key.
+
+                                    The type of the value depends on the column type defined in the attribute configuration.
+
+                                    '
+                                  patternProperties:
+                                    ^\w+$:
+                                      oneOf:
+                                      - type: string
+                                        description: Text, select, reference entity, or date value
+                                        example: value1
+                                      - type: number
+                                        description: Decimal value (number column, with or without decimals)
+                                        example: 3.14
+                                      - type: boolean
+                                        description: Boolean value (yes/no column)
+                                        example: true
+                                      - type: object
+                                        description: Product link value (see pim_catalog_product_link)
+                                        required:
+                                        - type
+                                        properties:
+                                          type:
+                                            type: string
+                                            enum:
+                                            - product
+                                            - product_model
+                                            description: The type of the linked entity
+                                            example: product
+                                          id:
+                                            type: string
+                                            description: The UUID (for product) or code (for product_model)
+                                            example: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                          identifier:
+                                            type: string
+                                            description: The identifier of the linked product (alternative to id for product)
+                                            example: bl1850b
+                                        additionalProperties: false
+                                      - type: object
+                                        description: Measurement value (metric column)
+                                        required:
+                                        - amount
+                                        - unit
+                                        properties:
+                                          amount:
+                                            oneOf:
+                                            - type: string
+                                              pattern: ^-?\d+\.\d+$
+                                              example: '12.50'
+                                            - type: integer
+                                              example: 10
+                                            description: The amount of the measurement
+                                          unit:
+                                            type: string
+                                            description: The unit of the measurement
+                                            example: GRAM
+                                        additionalProperties: false
+                                example:
+                                - ingredient: Sugar
+                                  quantity: 10
+                                  organic: true
+                                  best_before: '2024-12-31'
+                                  included_product:
+                                    type: product
+                                    id: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                                  weight:
+                                    amount: '12.50'
+                                    unit: GRAM
+                              - type: string
+                                description: 'A text value.
+
+                                  Used for attributes of type `pim_catalog_text`.
+
+                                  '
+                                example: T-shirt long sleeves Winter special, 100% wool
+                              - type: string
+                                description: 'A textarea value.
+
+                                  Used for attributes of type `pim_catalog_textarea`.
+
+                                  '
+                                example: This is a long product description with multiple lines.
+                              - type: 'null'
+                                description: Null value used to clear/remove attribute values
+                              example: T-shirt long sleeves Winter special, 100% wool
+                            linked_data:
+                              type:
+                              - object
+                              - 'null'
+                              description: 'Object containing additional data when a related query parameter is enabled.
+
+                                See [the `linked_data` format](https://api.akeneo.com/concepts/products.html#the-linked_data-format) section for more details.
+
+                                '
+                              example:
+                                attribute: main_color
+                                code: black
+                                labels:
+                                  en_US: Black
+                                  fr_FR: Noir
+                            attribute_type:
+                              type: string
+                              description: The type of the value's attribute. See [type](https://api.akeneo.com/concepts/catalog-structure.html#attribute) section for more details.
+                              readOnly: true
+                              enum:
+                              - pim_catalog_identifier
+                              - pim_catalog_text
+                              - pim_catalog_textarea
+                              - pim_catalog_simpleselect
+                              - pim_catalog_multiselect
+                              - pim_catalog_boolean
+                              - pim_catalog_date
+                              - pim_catalog_number
+                              - pim_catalog_metric
+                              - pim_catalog_price_collection
+                              - pim_catalog_image
+                              - pim_catalog_file
+                              - pim_catalog_asset_collection
+                              - akeneo_reference_entity
+                              - akeneo_reference_entity_collection
+                              - pim_reference_data_simpleselect
+                              - pim_reference_data_multiselect
+                              - pim_catalog_table
+                              - pim_catalog_product_link
+                              example: pim_catalog_text
+                            reference_data_name:
+                              type: string
+                              description: 'Reference entity code when the attribute type is `akeneo_reference_entity` or `akeneo_reference_entity_collection`
+
+                                OR Asset family code when the attribute type is `pim_catalog_asset_collection`.
+
+                                '
+                              readOnly: true
+                              x-warning: Only for `akeneo_reference_entity` or `akeneo_reference_entity_collection` or `pim_catalog_asset_collection` attribute types
+                              example: designer_ref
+                            _links:
+                              type:
+                              - object
+                              - 'null'
+                              description: 'Object containing download links for media files (images, files).
+
+                                Only present for file and image attribute types.
+
+                                '
+                              readOnly: true
+                              properties:
+                                download:
+                                  type: object
+                                  properties:
+                                    href:
+                                      type: string
+                                      description: URL for downloading the media file
+                                      example: http://localhost/api/rest/v1/media-files/path/to/file/download
+                              example:
+                                download:
+                                  href: http://localhost/api/rest/v1/media-files/5/d/b/1/5db16b5800314d8bc6358fb80b75f0fb0dedc6d0_akeneo.jpg/download
+                    x-validation-rules: Validation rules detailed in Product values section
+                    example:
+                      description:
+                      - data: T-shirt long sleeves Winter special, 100% wool
+                        locale: null
+                        scope: null
+                  associations:
+                    type: object
+                    description: Several associations related to groups, product models and/or other products, grouped by association types
+                    patternProperties:
+                      ^\w+$:
+                        type: object
+                        properties:
+                          groups:
+                            type: array
+                            description: Array of groups codes with which the product is in relation
+                            items:
+                              type: string
+                          products:
+                            type: array
+                            description: Array of product identifiers with which the product is in relation
+                            items:
+                              type: string
+                          product_models:
+                            type: array
+                            description: Array of product model codes with which the product is in relation
+                            items:
+                              type: string
+                    additionalProperties: false
+                    x-validation-rules: '- The `associationTypeCode` is the code of an existing association type.
+
+                      - Each string in the array of the property `groups` is the code of an existing group.
+
+                      - Each string in the array of the property `products` is the identifier of an existing product.
+
+                      - Each string in the array of the property `product_models` is the code of an existing product model.
+
+                      '
+                    example:
+                      X_SELL:
+                        groups: []
+                        products:
+                        - product_1
+                        - product_2
+                        product_models:
+                        - product_model_1
+                      UPSELL:
+                        groups:
+                        - group_1
+                        products: []
+                        product_models: []
+                  quantified_associations:
+                    type: object
+                    description: Several quantified associations related to products and/or product models, grouped by quantified association types
+                    patternProperties:
+                      ^\w+$:
+                        type: object
+                        properties:
+                          products:
+                            type: array
+                            description: Array of objects containing product uuids and quantities with which the product is in relation
+                            items:
+                              type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                quantity:
+                                  type: integer
+                          product_models:
+                            type: array
+                            description: Array of objects containing product model codes and quantities with which the product is in relation
+                            items:
+                              type: object
+                              properties:
+                                identifier:
+                                  type: string
+                                quantity:
+                                  type: integer
+                    x-validation-rules: '- The `quantifiedAssociationTypeCode` is the code of an existing association type which provides quantity information.
+
+                      - Each object in the array of the property `products` contains the uuid of an existing product and the quantity of it.
+
+                      - Each object in the array of the property `product_models` contains the code of an existing product model and the quantity of it.
+
+                      '
+                    example:
+                      PACK:
+                        products:
+                        - uuid: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                          quantity: 2
+                        - uuid: aaf518b2-f91e-40f1-a53a-78ce5e81a6f9
+                          quantity: 3
+                        product_models:
+                        - identifier: product_model_1
+                          quantity: 1
+                  created:
+                    type: string
+                    description: Date of creation
+                    format: date-time
+                    readOnly: true
+                    x-immutable: true
+                    example: '2022-03-14T15:25:45+00:00'
+                  updated:
+                    type: string
+                    description: Date of the last update
+                    format: date-time
+                    readOnly: true
+                    example: '2022-06-24T12:54:58+00:00'
+                  metadata:
+                    type: object
+                    description: More information around the product
+                    readOnly: true
+                    properties:
+                      workflow_status:
+                        description: Status of the product regarding the user permissions
+                        type: string
+                        enum:
+                        - read_only
+                        - draft_in_progress
+                        - proposal_waiting_for_approval
+                        - working_copy
+                    x-immutable: true
+                    example:
+                      workflow_status: read_only
+                  proposal_review_status:
+                    type: object
+                    description: 'Review status of each change carried by the draft, grouped like the `values` property so that a change can be matched on its attribute code, locale and scope
+
+                      (only available on the draft endpoints when the `with_proposal_review_status` query parameter is set to `true`).
+
+                      While `metadata.workflow_status` is `proposal_waiting_for_approval`, a change with the `draft` review status is one that was submitted and then rejected by a reviewer (or edited by the author after submission), whereas a change with the `to_review` review status is still pending.
+
+                      Clients must treat unknown `review_status` values as opaque.
+
+                      '
+                    readOnly: true
+                    x-immutable: true
+                    properties:
+                      values:
+                        type: object
+                        description: Review status of each attribute value changed in the draft. Each key is an attribute code.
+                        patternProperties:
+                          ^\w+$:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                locale:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Locale code of the changed value, null if the attribute is not localizable
+                                scope:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Channel code of the changed value, null if the attribute is not scopable
+                                review_status:
+                                  type: string
+                                  description: Review status stored for the change
+                                  enum:
+                                  - draft
+                                  - to_review
+                    example:
+                      values:
+                        description:
+                        - locale: fr_FR
+                          scope: ecommerce
+                          review_status: draft
+                        - locale: de_DE
+                          scope: ecommerce
+                          review_status: to_review
+                        weight:
+                        - locale: null
+                          scope: null
+                          review_status: to_review
+                  quality_scores:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        scope:
+                          type: string
+                          description: Channel code for which the quality score is calculated
+                        locale:
+                          type: string
+                          description: Locale code for which the quality score is calculated
+                        data:
+                          type: string
+                          enum:
+                          - A
+                          - B
+                          - C
+                          - D
+                          - E
+                          description: Quality score value for the given channel/locale combination
+                    description: 'Product quality scores for each channel/locale combination
+
+                      (only available when the `with_quality_scores` query parameter is set to `true`).
+
+                      '
+                    readOnly: true
+                    x-immutable: true
+                    example:
+                    - scope: ecommerce
+                      locale: en_US
+                      data: A
+                  completenesses:
+                    type: array
+                    description: 'Product completenesses for each channel/locale combination
+
+                      (only available when the `with_completenesses` query parameter is set to `true`).
+
+                      '
+                    items:
+                      type: object
+                      properties:
+                        scope:
+                          type: string
+                          description: Channel code for which the completenesses score is calculated
+                        locale:
+                          type: string
+                          description: Channel code for which the completenesses score is calculated
+                        data:
+                          type: integer
+                          description: Completenesses score value for the given channel/locale combination
+                    readOnly: true
+                    x-immutable: true
+                    example:
+                    - scope: ecommerce
+                      locale: en_US
+                      data: 100
+                  readiness:
+                    type: object
+                    x-visibility: public
+                    description: 'Readiness scores
+
+                      (only available when the `with_readiness` query parameter is set to `scores_only` or `detailed`).
+
+
+                      Readiness is currently in beta and is available by request only. If you would like to participate, please reach out to your Customer Success Manager.
+
+                      '
+                    properties:
+                      aggregated_scores_by_scope:
+                        type: array
+                        description: 'Aggregated readiness score per channel: the average of the per-locale scores within each
+
+                          readiness, then averaged across the readiness configurations that apply to that channel
+
+                          (equal weight) and rounded.
+
+                          '
+                        items:
+                          type: object
+                          properties:
+                            scope:
+                              type: string
+                              description: Channel code for which the aggregated readiness score is calculated
+                            score:
+                              type: integer
+                              description: Aggregated readiness percentage score (0-100) for the given channel
+                      scores_by_scope_and_locale:
+                        type: object
+                        description: Readiness scores grouped by readiness code, for each channel/locale combination
+                        additionalProperties:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              scope:
+                                type: string
+                                description: Channel code for which the readiness score is calculated
+                              locale:
+                                type: string
+                                description: Locale code for which the readiness score is calculated
+                              score:
+                                type: integer
+                                description: Readiness percentage score (0-100) for the given channel/locale combination
+                              unmet_requirements:
+                                type: array
+                                description: 'Requirements not yet met (only available when `with_readiness` is set to `detailed`).
+
+                                  '
+                                items:
+                                  type: object
+                                  properties:
+                                    field:
+                                      type: string
+                                      description: Attribute code or product field the requirement applies to (e.g. `name`, `family`, `categories`)
+                                    operator:
+                                      type: string
+                                      description: Comparison operator applied to the field to evaluate the requirement (e.g. `NOT EMPTY`, `=`, `IN`)
+                                    value:
+                                      description: Expected value for the requirement; type depends on the operator and may be null
+                                      nullable: true
+                    readOnly: true
+                    x-immutable: true
+                    example:
+                      aggregated_scores_by_scope:
+                      - scope: ecommerce
+                        score: 88
+                      scores_by_scope_and_locale:
+                        camcorders_ecommerce:
+                        - scope: ecommerce
+                          locale: en_US
+                          score: 75
+                          unmet_requirements:
+                          - field: name
+                            operator: NOT EMPTY
+                            value: null
+                        - scope: ecommerce
+                          locale: fr_FR
+                          score: 100
+                          unmet_requirements: []
+                  workflow_execution_statuses:
+                    type: array
+                    description: 'Workflow execution statuses of the product
+
+                      (only available when the `with_workflow_execution_statuses` query parameter is set to `true`)
+
+                      '
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          description: Workflow execution UUID
+                        status:
+                          type: string
+                          description: Status of the workflow execution
+                          enum:
+                          - in_progress
+                          - completed
+                        started_at:
+                          type: string
+                          format: date-time
+                          description: Date and time when the workflow execution was started
+                        completed_at:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: Date and time when the workflow execution was completed, null if still in progress
+                        workflow:
+                          type: object
+                          description: Workflow associated with the workflow execution
+                          properties:
+                            uuid:
+                              type: string
+                              description: Workflow UUID
+                            code:
+                              type: string
+                              description: Workflow code
+                            labels:
+                              type: object
+                              description: Workflow labels for each locale
+                              additionalProperties:
+                                type: string
+                        tasks:
+                          type: array
+                          description: Tasks associated with the workflow execution
+                          items:
+                            type: object
+                            properties:
+                              uuid:
+                                type: string
+                                description: Task UUID
+                              status:
+                                type: string
+                                description: Status of the task
+                                enum:
+                                - in_progress
+                              created_at:
+                                type: string
+                                format: date-time
+                                description: Date and time when the task was created
+                              step:
+                                type: object
+                                properties:
+                                  uuid:
+                                    type: string
+                                    description: Step UUID
+                                  code:
+                                    type: string
+                                    description: Step code
+                                  labels:
+                                    type: object
+                                    description: Step labels for each locale
+                                    additionalProperties:
+                                      type: string
+                    readOnly: true
+                    x-immutable: true
+                    example:
+                    - uuid: 8c0fe59f-4d29-4faa-b4c3-d327e7f3cc52
+                      status: in_progress
+                      started_at: '2024-02-22T17:31:00Z'
+                      completed_at: null
+                      workflow:
+                        uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                        code: enrichment_workflow
+                        labels:
+                          en_US: Enrichment workflow
+                          fr_FR: Workflow d'enrichissement
+                      tasks:
+                      - uuid: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                        status: in_progress
+                        created_at: '2024-02-22T17:31:00Z'
+                        step:
+                          uuid: f626d0e5-84a5-41fc-8215-65508c253edb
+                          code: review_step
+                          labels:
+                            en_US: Marketing review
+                            fr_FR: Revue marketing
+                    - uuid: fc66ab46-3362-4000-862b-bd825f35f735
+                      status: completed
+                      started_at: '2024-02-22T17:31:00Z'
+                      completed_at: '2024-03-20T00:31:00Z'
+                      workflow:
+                        uuid: 71b777a3-c2c2-4237-8d39-8bf13ec81755
+                        code: compliance_workflow
+                        labels: {}
+                      tasks: []
+              example:
+                uuid: 25566245-55c3-42ce-86d9-8610ac459fa8
+                enabled: true
+                family: tshirt
+                categories:
+                - summer_collection
+                groups: []
+                values:
+                  sku:
+                  - data: top
+                  name:
+                  - data: Top
+                    locale: en_US
+                  - data: Débardeur
+                    locale: fr_FR
+                  description:
+                  - data: Summer top
+                    locale: en_US
+                    scope: ecommerce
+                  - data: Top
+                    locale: en_US
+                    scope: tablet
+                  - data: Débardeur pour l'été
+                    locale: fr_FR
+                    scope: ecommerce
+                  - data: Débardeur
+                    locale: fr_FR
+                    scope: tablet
+                  price:
+                  - data:
+                    - amount: '15.5'
+                      currency: EUR
+                    - amount: '15'
+                      currency: USD
+                  color:
+                  - data: black
+                    linked_data:
+                      attribute: color
+                      code: black
+                      labels:
+                        en_US: Black
+                        fr_FR: Noir
+                  size:
+                  - data: m
+                    linked_data:
+                      attribute: size
+                      code: m
+                      labels:
+                        en_US: M
+                        fr_FR: M
+                  collection:
+                  - data:
+                    - winter_2016
+                    linked_data:
+                      winter_2016:
+                        attribute: collection
+                        code: winter_2016
+                        labels:
+                          en_US: Winter 2016
+                          fr_FR: Hiver 2016
+                created: '2016-06-23T18:24:44+02:00'
+                updated: '2016-06-25T17:56:12+02:00'
+                associations:
+                  PACK:
+                    products:
+                    - d055527c-0698-4967-8f16-8a5f23f4e5cf
+                    product_models: []
+                    groups: []
+                quantified_associations:
+                  PRODUCT_SET:
+                    products:
+                    - uuid: fc24e6c3-933c-4a93-8a81-e5c703d134d5
+                      quantity: 2
+                    - uuid: a9b69002-a0b1-4ead-85c2-f8dbf59c6cfc
+                      quantity: 1
+                    product_models:
+                    - identifier: model-biker-jacket-leather
+                      quantity: 2
+                root_parent: clothes
+                quality_scores:
+                - scope: ecommerce
+                  locale: en_US
+                  data: A
+                - scope: ecommerce
+                  locale: fr_FR
+                  data: B
+                - scope: tablet
+                  locale: en_US
+                  data: D
+                - scope: tablet
+                  locale: fr_FR
+                  data: E
+                completenesses:
+                - scope: ecommerce
+                  locale: en_US
+                  data: 10
+                - scope: ecommerce
+                  locale: fr_FR
+                  data: 20
+                - scope: tablet
+                  locale: en_US
+                  data: 30
+                - scope: tablet
+                  locale: fr_FR
+                  data: 40
+                workflow_execution_statuses:
+                - uuid: 8c0fe59f-4d29-4faa-b4c3-d327e7f3cc52
+                  status: in_progress
+                  started_at: '2024-02-22T17:31:00Z'
+                  completed_at: null
+                  workflow:
+                    uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                    code: enrichment_workflow
+                    labels:
+                      en_US: Enrichment workflow
+                      fr_FR: Workflow d'enrichissement
+                  tasks:
+                  - uuid: 8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07
+                    status: in_progress
+                    created_at: '2024-02-22T17:31:00Z'
+                    step:
+                      uuid: f626d0e5-84a5-41fc-8215-65508c253edb
+                      code: review_step
+                      labels:
+                        en_US: Marketing review
+                        fr_FR: Revue marketing
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+  /api/rest/v1/catalogs/{id}/mapped-products:
+    get:
+      operationId: get_catalog_mapped_products
+      x-visibility: public
+      summary: Get the list of mapped flattened products or simple products related to a…
+      description: 'This endpoint is available when the mapping is enabled on a specified catalog.
+
+        When the mapping is in a basic mode, this endpoint allows you to get the list of all flattened products related to the catalog.
+
+        When it''s in models/variants mode, this endpoint allows you to get the list of simple products with all specified targets in the two levels of the mapping schema.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: updated_before
+        description: 'Filter products that have been updated BEFORE the provided date.
+
+          It is useful for retrieving products that haven''t been modified since a specific date, which is essential for historical data analysis and reporting.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-05-17T10:00:00Z'
+      - in: query
+        name: updated_after
+        description: 'Filter products that have been updated AFTER the provided date.
+
+          It is useful for retrieving only recently modified products, which is essential for synchronization and incremental data processing.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-06-17T10:00:00Z'
+      x-app-token: true
+      responses:
+        '200':
+          description: 'Return the paginated mapped products.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Mapped products
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: true
+                            example:
+                              uuid: 04f47a54-8cc9-4c51-90e9-eb9aace0865f
+                              title: Canon Video Visualiser RE-455X
+                              code: sku-1234
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/d259aecf-3ec1-4b07-ae0f-ce234b86c025/mapped-products?limit=4
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/d259aecf-3ec1-4b07-ae0f-ce234b86c025/mapped-products?limit=4
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/d259aecf-3ec1-4b07-ae0f-ce234b86c025/mapped-products?search_after=0e957ed4-fa44-48de-b6c7-7149d890fb3a&limit=4
+                _embedded:
+                  items:
+                  - uuid: 04f47a54-8cc9-4c51-90e9-eb9aace0865f
+                    title: Canon Video Visualiser RE-455X
+                    code: sku-1234
+                  - uuid: 06dc8c5b-9e2f-4423-b9dd-31a3aaa0a048
+                    title: Trust Cuby Pro
+                    code: sku-1235
+                  - uuid: 0c3635f9-fedc-4bbd-96ab-856f69746b56
+                    title: Trust Urban Revolt
+                    code: sku-1236
+                  - uuid: 0e957ed4-fa44-48de-b6c7-7149d890fb3a
+                    title: Microsoft LifeCam Studio
+                    code: sku-1237
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+  /api/rest/v1/catalogs/{id}/mapped-models:
+    get:
+      operationId: get_catalog_mapped_models
+      x-visibility: public
+      summary: Get the list of mapped models related to a catalog
+      description: 'This endpoint allows you to get the list of models related to a catalog when the mapping is enabled with a models/variants schema.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: updated_before
+        description: 'Filter products that have been updated BEFORE the provided date.
+
+          It is useful for retrieving products that haven''t been modified since a specific date, which is essential for historical data analysis and reporting.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-05-17T10:00:00Z'
+      - in: query
+        name: updated_after
+        description: 'Filter products that have been updated AFTER the provided date.
+
+          It is useful for retrieving only recently modified products, which is essential for synchronization and incremental data processing.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-06-17T10:00:00Z'
+      x-app-token: true
+      responses:
+        '200':
+          description: 'Return the paginated mapped models.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Mapped models
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: true
+                            example:
+                              code: tshirt_akeneo
+                              title: Beautiful t-shirt with Akeneo logo
+                              variants: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_akeneo/variants
+                              variation_axes:
+                              - code: color
+                                label:
+                                - locale: en_US
+                                  value: Color
+                                - locale: fr_FR
+                                  value: Couleur
+                              - code: size
+                                label:
+                                - locale: en_US
+                                  value: Size
+                                - locale: fr_FR
+                                  value: Taille
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models?limit=2
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models?limit=2
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models?search_after=tshirt_pim&limit=2
+                _embedded:
+                  items:
+                  - code: tshirt_akeneo
+                    title: Beautiful t-shirt with Akeneo logo
+                    variants: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_akeneo/variants
+                    variation_axes:
+                    - code: color
+                      label:
+                      - locale: en_US
+                        value: Color
+                      - locale: fr_FR
+                        value: Couleur
+                    - code: size
+                      label:
+                      - locale: en_US
+                        value: Size
+                      - locale: fr_FR
+                        value: Taille
+                  - code: tshirt_pim
+                    title: Beautiful t-shirt with PIM logo
+                    variants: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_pim/variants
+                    variation_axes:
+                    - code: color
+                      label:
+                      - locale: en_US
+                        value: Color
+                      - locale: fr_FR
+                        value: Couleur
+                    - code: size
+                      label:
+                      - locale: en_US
+                        value: Size
+                      - locale: fr_FR
+                        value: Taille
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+  /api/rest/v1/catalogs/{id}/mapped-models/{model_code}/variants:
+    get:
+      operationId: get_catalog_mapped_variants
+      x-visibility: public
+      summary: Get the list of mapped variants of a model related to a catalog
+      description: 'This endpoint allows you to get the list of variants of a model related to a catalog when the mapping is enabled.
+
+        Please, note that a disabled catalog can return an HTTP 200 with a payload containing an error message,
+
+        for more details see the App Catalog section.'
+      tags:
+      - Catalog products
+      security:
+      - appToken: []
+      parameters:
+      - in: path
+        name: id
+        description: 'This path parameter is used to specify the unique identifier of the catalog you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the catalog ID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 12351d98-200e-4bbc-aa19-7fdda1bd14f2
+      - in: query
+        name: search_after
+        description: 'Cursor when using the `search_after` pagination method type.
+
+          It is essential for navigating through pages in cursor-based pagination, providing more efficient pagination for large datasets.
+
+          Should never be set manually, see [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: cursor to the first page
+        example: qaXbcde
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - name: model_code
+        in: path
+        description: Model code
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: updated_before
+        description: 'Filter products that have been updated BEFORE the provided date.
+
+          It is useful for retrieving products that haven''t been modified since a specific date, which is essential for historical data analysis and reporting.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-05-17T10:00:00Z'
+      - in: query
+        name: updated_after
+        description: 'Filter products that have been updated AFTER the provided date.
+
+          It is useful for retrieving only recently modified products, which is essential for synchronization and incremental data processing.
+
+          This filter uses the PIM products updated date and is only available on Catalogs endpoints.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-06-17T10:00:00Z'
+      x-app-token: true
+      responses:
+        '200':
+          description: 'Return the paginated mapped variants.
+
+            The response is paginated and includes links to navigate through the pages.
+
+            Only `search_after` pagination is used.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: true
+                            example:
+                              is_published: true
+                              sku: AK10BLXL
+                              uuid: 6b025a71-537f-48d4-aa26-a6617d6199e9
+                              variant_axes_values:
+                              - code: color
+                                label:
+                                - locale: en_US
+                                  value: Blue
+                                - locale: fr_FR
+                                  value: Bleu
+                                value: blue
+                              - code: size
+                                label:
+                                - locale: en_US
+                                  value: XL
+                                - locale: fr_FR
+                                  value: XL
+                                value: xl
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_akeneo/variants?limit=2
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_akeneo/variants?limit=2
+                  next:
+                    href: https://demo.akeneo.com/api/rest/v1/catalogs/232be0b2-093c-4591-a506-2a2ed5176721/mapped-models/tshirt_akeneo/variants?search_after=6b025a71-537f-48d4-aa26-a6617d6199e9&limit=100
+                _embedded:
+                  items:
+                  - is_published: true
+                    sku: AK10BLXL
+                    uuid: 6b025a71-537f-48d4-aa26-a6617d6199e9
+                    variant_axes_values:
+                    - code: color
+                      label:
+                      - locale: en_US
+                        value: Blue
+                      - locale: fr_FR
+                        value: Bleu
+                      value: blue
+                    - code: size
+                      label:
+                      - locale: en_US
+                        value: XL
+                      - locale: fr_FR
+                        value: XL
+                      value: xl
+                  - is_published: true
+                    sku: AK10YEXL
+                    uuid: 6b025a71-537f-48d4-aa26-a6617d6199e9
+                    variant_axes_values:
+                    - code: color
+                      label:
+                      - locale: en_US
+                        value: Yellow
+                      - locale: fr_FR
+                        value: Jaune
+                      value: yellow
+                    - code: size
+                      label:
+                      - locale: en_US
+                        value: XL
+                      - locale: fr_FR
+                        value: XL
+                      value: xl
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

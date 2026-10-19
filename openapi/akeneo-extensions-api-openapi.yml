@@ -1,0 +1,1864 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Extensions API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Extensions
+  description: 'Extensions allow you to extend the Akeneo PIM user interface with custom components.
+
+    They can be used to add new features or to modify the existing ones.
+
+    Extensions are useful for integrating with external systems or for providing additional functionality to the PIM.'
+paths:
+  /api/rest/v1/ui-extensions:
+    get:
+      operationId: get_ui_extensions
+      x-visibility: public
+      summary: List Extensions
+      description: List all Extensions associated with your token
+      tags:
+      - Extensions
+      security:
+      - bearerToken: []
+      responses:
+        '200':
+          description: Returns the list of extensions
+          content:
+            application/json:
+              schema:
+                title: Extensions
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the extension, shown within the Administration interface
+                      example: my_awesome_button_extension
+                    description:
+                      type: string
+                      description: Short description, shown within the Administration interface
+                      example: A short human readable description.
+                    version:
+                      type: string
+                      description: 'Version of the extension, shown within the Administration
+
+                        interface
+
+                        '
+                      example: V1.02.3
+                    position:
+                      type: string
+                      description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                      example: pim.product.tab
+                    type:
+                      type: string
+                      description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                      example: iframe
+                    configuration:
+                      type: object
+                      description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                      properties:
+                        default_label:
+                          type: string
+                          description: Default label, used if there is no translation for the PIM user locale
+                          example: My awesome link extension
+                        labels:
+                          type: object
+                          description: Label translations
+                        secret:
+                          type: string
+                          minLength: 32
+                          description: Shows ***REDACTED*** if a secret is registered for the extension
+                          example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                        url:
+                          type: string
+                          description: Destination URL of the extension
+                          example: https://www.example.com
+                        file:
+                          type: string
+                          format: binary
+                          description: Built JavaScript file for sdk_script type extensions
+                        custom_variables:
+                          type: object
+                          description: Custom variables that can be used within the extension
+                          additionalProperties: true
+                    status:
+                      type: string
+                      description: Status of the Extension (active or inactive)
+                      example: active
+                    credentials:
+                      type: array
+                      description: Credentials for the Extension
+                      items:
+                        oneOf:
+                        - type: object
+                          required:
+                          - type
+                          - value
+                          properties:
+                            code:
+                              type: string
+                              description: Unique identifier for this credential
+                            type:
+                              type: string
+                              description: Type of credentials
+                              enum:
+                              - Custom Header
+                            value:
+                              type: object
+                              description: Custom header credentials
+                              required:
+                              - header_key
+                              - header_value
+                              properties:
+                                header_key:
+                                  type: string
+                                  description: Key of the custom header to be used for authentication in API requests
+                                header_value:
+                                  type: string
+                                  description: Value of the custom header to be used for authentication in API requests
+                        - type: object
+                          required:
+                          - type
+                          - value
+                          properties:
+                            code:
+                              type: string
+                              description: Unique identifier for this credential
+                            type:
+                              type: string
+                              description: Type of credentials
+                              enum:
+                              - Bearer Token
+                            value:
+                              type: string
+                              description: 'The value of the bearer token to be used for authentication in API requests.
+
+                                This token should be kept secret and not shared publicly.
+
+                                '
+                        - type: object
+                          required:
+                          - type
+                          - value
+                          properties:
+                            code:
+                              type: string
+                              description: Unique identifier for this credential
+                            type:
+                              type: string
+                              description: Type of credentials
+                              enum:
+                              - Basic Auth
+                            value:
+                              type: object
+                              description: Basic authentication credentials
+                              required:
+                              - username
+                              - password
+                              properties:
+                                username:
+                                  type: string
+                                  description: Username for basic authentication
+                                password:
+                                  type: string
+                                  description: Password for basic authentication
+                      example:
+                      - code: custom_header_cred
+                        type: Custom Header
+                        value:
+                          header_key: X-My-Custom-Header
+                          header_value: My custom header value
+                      - code: bearer_token_cred
+                        type: Bearer Token
+                        value: my_bearer_token_value
+                      - code: basic_auth_cred
+                        type: Basic Auth
+                        value:
+                          username: my_username
+                          password: my_password
+              example:
+              - uuid: d414135b-ff4d-44e1-8cb6-fce64cbe29c0
+                name: my_awesome_iframe_extension
+                type: iframe
+                position: pim.product.tab
+                configuration:
+                  url: https://www.example.com
+                  labels:
+                    en_US: My awesome iframe extension
+                    fr_FR: Ma super iframe extension
+                  default_label: My awesome iframe extension
+                status: active
+                version: V1.02.3
+                description: A short human readable description.
+              - uuid: 64c683bd-452b-4609-b957-c586ff6b0999
+                name: my_other_iframe_extension
+                type: iframe
+                position: pim.product.tab
+                configuration:
+                  url: https://www.example2.com
+                  labels:
+                    en_US: My other iframe extension
+                    fr_FR: Mon autre iframe extension
+                  default_label: My other link extension
+                status: active
+                version: V0.1.0
+                description: A short human readable description.
+              - uuid: a1234567-89ab-cdef-0123-456789abcdef
+                name: my_custom_sdk_extension
+                type: sdk_script
+                position: pim.product.panel
+                configuration:
+                  default_label: My Custom Extension
+                  labels:
+                    en_US: My Custom Extension
+                    fr_FR: Mon Extension Personnalisée
+                  custom_variables:
+                    apiEndpoint: https://api.example.com
+                    featureFlag: enabled
+                credentials:
+                - code: api_auth
+                  type: Bearer Token
+                  value: '***REDACTED***'
+                status: active
+                version: 1.0.0
+                description: A custom SDK-based extension with file upload.
+    post:
+      operationId: post_ui_extension
+      x-visibility: public
+      summary: Create a new Extension
+      description: 'This endpoint allows you to create a new Extension.
+
+        `default_label` and `url` configuration fields are mandatory for all Extensions.
+
+        `secret` is optional and only available for action Extension.
+
+        For `sdk_script` type extensions, use multipart/form-data to upload the JavaScript file.'
+      tags:
+      - Extensions
+      security:
+      - bearerToken: []
+      requestBody:
+        description: body of the Extension to create
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              - type
+              - position
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the extension, shown within the Administration interface
+                  example: my_awesome_button_extension
+                description:
+                  type: string
+                  description: Short description, shown within the Administration interface
+                  example: A short human readable description.
+                version:
+                  type: string
+                  description: 'Version of the extension, shown within the Administration
+
+                    interface
+
+                    '
+                  example: V1.02.3
+                position:
+                  type: string
+                  description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                  example: pim.product.tab
+                type:
+                  type: string
+                  description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                  example: iframe
+                configuration:
+                  type: object
+                  description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                  properties:
+                    default_label:
+                      type: string
+                      description: Default label, used if there is no translation for the PIM user locale
+                      example: My awesome link extension
+                    labels:
+                      type: object
+                      description: Label translations
+                    secret:
+                      type: string
+                      minLength: 32
+                      description: Shows ***REDACTED*** if a secret is registered for the extension
+                      example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                    url:
+                      type: string
+                      description: Destination URL of the extension
+                      example: https://www.example.com
+                    file:
+                      type: string
+                      format: binary
+                      description: Built JavaScript file for sdk_script type extensions
+                    custom_variables:
+                      type: object
+                      description: Custom variables that can be used within the extension
+                      additionalProperties: true
+                status:
+                  type: string
+                  description: Status of the Extension (active or inactive)
+                  example: active
+                credentials:
+                  type: array
+                  description: Credentials for the Extension
+                  items:
+                    oneOf:
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Custom Header
+                        value:
+                          type: object
+                          description: Custom header credentials
+                          required:
+                          - header_key
+                          - header_value
+                          properties:
+                            header_key:
+                              type: string
+                              description: Key of the custom header to be used for authentication in API requests
+                            header_value:
+                              type: string
+                              description: Value of the custom header to be used for authentication in API requests
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Bearer Token
+                        value:
+                          type: string
+                          description: 'The value of the bearer token to be used for authentication in API requests.
+
+                            This token should be kept secret and not shared publicly.
+
+                            '
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Basic Auth
+                        value:
+                          type: object
+                          description: Basic authentication credentials
+                          required:
+                          - username
+                          - password
+                          properties:
+                            username:
+                              type: string
+                              description: Username for basic authentication
+                            password:
+                              type: string
+                              description: Password for basic authentication
+                  example:
+                  - code: custom_header_cred
+                    type: Custom Header
+                    value:
+                      header_key: X-My-Custom-Header
+                      header_value: My custom header value
+                  - code: bearer_token_cred
+                    type: Bearer Token
+                    value: my_bearer_token_value
+                  - code: basic_auth_cred
+                    type: Basic Auth
+                    value:
+                      username: my_username
+                      password: my_password
+            example:
+              name: my_awesome_button_extension
+              type: iframe
+              position: pim.product.tab
+              configuration:
+                url: https://www.example.com
+                secret: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                labels:
+                  en_US: My awesome link extension
+                  fr_FR: Ma super link extension
+                default_label: My awesome link extension
+              version: V1.02.3
+              description: A short human readable description.
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - name
+              - type
+              - position
+              - file
+              - configuration[default_label]
+              properties:
+                name:
+                  type: string
+                  description: Unique extension identifier
+                  example: my_custom_sdk_extension
+                type:
+                  type: string
+                  description: Must be "sdk_script" for custom extensions
+                  enum:
+                  - sdk_script
+                  example: sdk_script
+                position:
+                  type: string
+                  description: UI location where the extension will be displayed
+                  example: pim.product.panel
+                file:
+                  type: string
+                  format: binary
+                  description: Built JavaScript file
+                  example: <binary file content>
+                configuration[default_label]:
+                  type: string
+                  description: Display label for the extension
+                  example: My Custom Extension
+                configuration[labels][en_US]:
+                  type: string
+                  description: Label translation for English (US)
+                  example: My Custom Extension
+                configuration[labels][fr_FR]:
+                  type: string
+                  description: Label translation for French (France)
+                  example: Mon Extension Personnalisée
+                configuration[custom_variables]:
+                  type: string
+                  description: JSON string of custom variables
+                  example: '{"apiEndpoint": "https://api.example.com"}'
+                credentials[0][code]:
+                  type: string
+                  description: Code for the first credential
+                  example: my_api_token
+                credentials[0][type]:
+                  type: string
+                  description: Type of the first credential (Bearer Token, Basic Auth, Custom Header)
+                  example: Bearer Token
+                credentials[0][value]:
+                  type: string
+                  description: Value for the first credential
+                  example: my_secret_token_value
+                version:
+                  type: string
+                  description: Version of the extension
+                  example: 1.0.0
+                description:
+                  type: string
+                  description: Short description of the extension
+                  example: A custom SDK-based extension
+            example:
+              name: my_custom_sdk_extension
+              type: sdk_script
+              position: pim.product.panel
+              file: '@/path/to/built-extension.js'
+              configuration[default_label]: My Custom Extension
+              configuration[labels][en_US]: My Custom Extension
+              configuration[custom_variables]: '{"apiEndpoint": "https://api.example.com"}'
+              credentials[0][code]: my_api_token
+              credentials[0][type]: Bearer Token
+              credentials[0][value]: my_secret_token_value
+              version: 1.0.0
+              description: A custom SDK-based extension
+      responses:
+        '201':
+          description: 'Creation successfully applied.
+
+            Returns a JSON document representing the UI extension created.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the extension, shown within the Administration interface
+                    example: my_awesome_button_extension
+                  description:
+                    type: string
+                    description: Short description, shown within the Administration interface
+                    example: A short human readable description.
+                  version:
+                    type: string
+                    description: 'Version of the extension, shown within the Administration
+
+                      interface
+
+                      '
+                    example: V1.02.3
+                  position:
+                    type: string
+                    description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                    example: pim.product.tab
+                  type:
+                    type: string
+                    description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                    example: iframe
+                  configuration:
+                    type: object
+                    description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                    properties:
+                      default_label:
+                        type: string
+                        description: Default label, used if there is no translation for the PIM user locale
+                        example: My awesome link extension
+                      labels:
+                        type: object
+                        description: Label translations
+                      secret:
+                        type: string
+                        minLength: 32
+                        description: Shows ***REDACTED*** if a secret is registered for the extension
+                        example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                      url:
+                        type: string
+                        description: Destination URL of the extension
+                        example: https://www.example.com
+                      file:
+                        type: string
+                        format: binary
+                        description: Built JavaScript file for sdk_script type extensions
+                      custom_variables:
+                        type: object
+                        description: Custom variables that can be used within the extension
+                        additionalProperties: true
+                  status:
+                    type: string
+                    description: Status of the Extension (active or inactive)
+                    example: active
+                  credentials:
+                    type: array
+                    description: Credentials for the Extension
+                    items:
+                      oneOf:
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Custom Header
+                          value:
+                            type: object
+                            description: Custom header credentials
+                            required:
+                            - header_key
+                            - header_value
+                            properties:
+                              header_key:
+                                type: string
+                                description: Key of the custom header to be used for authentication in API requests
+                              header_value:
+                                type: string
+                                description: Value of the custom header to be used for authentication in API requests
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Bearer Token
+                          value:
+                            type: string
+                            description: 'The value of the bearer token to be used for authentication in API requests.
+
+                              This token should be kept secret and not shared publicly.
+
+                              '
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Basic Auth
+                          value:
+                            type: object
+                            description: Basic authentication credentials
+                            required:
+                            - username
+                            - password
+                            properties:
+                              username:
+                                type: string
+                                description: Username for basic authentication
+                              password:
+                                type: string
+                                description: Password for basic authentication
+                    example:
+                    - code: custom_header_cred
+                      type: Custom Header
+                      value:
+                        header_key: X-My-Custom-Header
+                        header_value: My custom header value
+                    - code: bearer_token_cred
+                      type: Bearer Token
+                      value: my_bearer_token_value
+                    - code: basic_auth_cred
+                      type: Basic Auth
+                      value:
+                        username: my_username
+                        password: my_password
+              examples:
+                iframe_extension:
+                  summary: Example of an iframe extension created
+                  value:
+                    uuid: d414135b-ff4d-44e1-8cb6-fce64cbe29c0
+                    name: my_awesome_iframe_extension
+                    type: iframe
+                    position: pim.product.tab
+                    configuration:
+                      url: https://www.example.com
+                      labels:
+                        en_US: My awesome iframe extension
+                        fr_FR: Ma super iframe extension
+                      default_label: My awesome iframe extension
+                    status: active
+                    credentials: []
+                    version: V1.02.3
+                    description: A short human readable description.
+                sdk_script_extension:
+                  summary: Example of a custom sdk_script extension created
+                  value:
+                    uuid: a1234567-89ab-cdef-0123-456789abcdef
+                    name: my_custom_sdk_extension
+                    type: sdk_script
+                    position: pim.product.panel
+                    configuration:
+                      default_label: My Custom Extension
+                      labels:
+                        en_US: My Custom Extension
+                        fr_FR: Mon Extension Personnalisée
+                      custom_variables:
+                        apiEndpoint: https://api.example.com
+                        featureFlag: enabled
+                    credentials:
+                    - code: api_auth
+                      type: Bearer Token
+                      value: '***REDACTED***'
+                    status: active
+                    version: 1.0.0
+                    description: A custom SDK-based extension with file upload.
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+  /api/rest/v1/ui-extensions/{uuid}:
+    patch:
+      operationId: patch_ui_extension_by_uuid
+      x-visibility: public
+      summary: Update an Extension
+      description: 'This endpoint allows you to update an existing extension.
+
+        You can send only the fields that you want to update.
+
+        If a field is not sent, the previous value is kept.
+
+        This endpoint is also available as POST, prefer the POST if you need to upload a file.'
+      tags:
+      - Extensions
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      requestBody:
+        description: body of the Extension to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the extension, shown within the Administration interface
+                  example: my_awesome_button_extension
+                description:
+                  type: string
+                  description: Short description, shown within the Administration interface
+                  example: A short human readable description.
+                version:
+                  type: string
+                  description: 'Version of the extension, shown within the Administration
+
+                    interface
+
+                    '
+                  example: V1.02.3
+                position:
+                  type: string
+                  description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                  example: pim.product.tab
+                type:
+                  type: string
+                  description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                  example: iframe
+                configuration:
+                  type: object
+                  description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                  properties:
+                    default_label:
+                      type: string
+                      description: Default label, used if there is no translation for the PIM user locale
+                      example: My awesome link extension
+                    labels:
+                      type: object
+                      description: Label translations
+                    secret:
+                      type: string
+                      minLength: 32
+                      description: Shows ***REDACTED*** if a secret is registered for the extension
+                      example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                    url:
+                      type: string
+                      description: Destination URL of the extension
+                      example: https://www.example.com
+                    file:
+                      type: string
+                      format: binary
+                      description: Built JavaScript file for sdk_script type extensions
+                    custom_variables:
+                      type: object
+                      description: Custom variables that can be used within the extension
+                      additionalProperties: true
+                status:
+                  type: string
+                  description: Status of the Extension (active or inactive)
+                  example: active
+                credentials:
+                  type: array
+                  description: Credentials for the Extension
+                  items:
+                    oneOf:
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Custom Header
+                        value:
+                          type: object
+                          description: Custom header credentials
+                          required:
+                          - header_key
+                          - header_value
+                          properties:
+                            header_key:
+                              type: string
+                              description: Key of the custom header to be used for authentication in API requests
+                            header_value:
+                              type: string
+                              description: Value of the custom header to be used for authentication in API requests
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Bearer Token
+                        value:
+                          type: string
+                          description: 'The value of the bearer token to be used for authentication in API requests.
+
+                            This token should be kept secret and not shared publicly.
+
+                            '
+                    - type: object
+                      required:
+                      - type
+                      - value
+                      properties:
+                        code:
+                          type: string
+                          description: Unique identifier for this credential
+                        type:
+                          type: string
+                          description: Type of credentials
+                          enum:
+                          - Basic Auth
+                        value:
+                          type: object
+                          description: Basic authentication credentials
+                          required:
+                          - username
+                          - password
+                          properties:
+                            username:
+                              type: string
+                              description: Username for basic authentication
+                            password:
+                              type: string
+                              description: Password for basic authentication
+                  example:
+                  - code: custom_header_cred
+                    type: Custom Header
+                    value:
+                      header_key: X-My-Custom-Header
+                      header_value: My custom header value
+                  - code: bearer_token_cred
+                    type: Bearer Token
+                    value: my_bearer_token_value
+                  - code: basic_auth_cred
+                    type: Basic Auth
+                    value:
+                      username: my_username
+                      password: my_password
+            example:
+              type: link
+              position: pim.product.header
+              version: V1.02.4
+        required: true
+      responses:
+        '200':
+          description: 'Changes applied successfully.
+
+            Returns a JSON document representing the UI extension updated.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the extension, shown within the Administration interface
+                    example: my_awesome_button_extension
+                  description:
+                    type: string
+                    description: Short description, shown within the Administration interface
+                    example: A short human readable description.
+                  version:
+                    type: string
+                    description: 'Version of the extension, shown within the Administration
+
+                      interface
+
+                      '
+                    example: V1.02.3
+                  position:
+                    type: string
+                    description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                    example: pim.product.tab
+                  type:
+                    type: string
+                    description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                    example: iframe
+                  configuration:
+                    type: object
+                    description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                    properties:
+                      default_label:
+                        type: string
+                        description: Default label, used if there is no translation for the PIM user locale
+                        example: My awesome link extension
+                      labels:
+                        type: object
+                        description: Label translations
+                      secret:
+                        type: string
+                        minLength: 32
+                        description: Shows ***REDACTED*** if a secret is registered for the extension
+                        example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                      url:
+                        type: string
+                        description: Destination URL of the extension
+                        example: https://www.example.com
+                      file:
+                        type: string
+                        format: binary
+                        description: Built JavaScript file for sdk_script type extensions
+                      custom_variables:
+                        type: object
+                        description: Custom variables that can be used within the extension
+                        additionalProperties: true
+                  status:
+                    type: string
+                    description: Status of the Extension (active or inactive)
+                    example: active
+                  credentials:
+                    type: array
+                    description: Credentials for the Extension
+                    items:
+                      oneOf:
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Custom Header
+                          value:
+                            type: object
+                            description: Custom header credentials
+                            required:
+                            - header_key
+                            - header_value
+                            properties:
+                              header_key:
+                                type: string
+                                description: Key of the custom header to be used for authentication in API requests
+                              header_value:
+                                type: string
+                                description: Value of the custom header to be used for authentication in API requests
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Bearer Token
+                          value:
+                            type: string
+                            description: 'The value of the bearer token to be used for authentication in API requests.
+
+                              This token should be kept secret and not shared publicly.
+
+                              '
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Basic Auth
+                          value:
+                            type: object
+                            description: Basic authentication credentials
+                            required:
+                            - username
+                            - password
+                            properties:
+                              username:
+                                type: string
+                                description: Username for basic authentication
+                              password:
+                                type: string
+                                description: Password for basic authentication
+                    example:
+                    - code: custom_header_cred
+                      type: Custom Header
+                      value:
+                        header_key: X-My-Custom-Header
+                        header_value: My custom header value
+                    - code: bearer_token_cred
+                      type: Bearer Token
+                      value: my_bearer_token_value
+                    - code: basic_auth_cred
+                      type: Basic Auth
+                      value:
+                        username: my_username
+                        password: my_password
+              examples:
+                iframe_extension:
+                  summary: Example of an iframe extension updated
+                  value:
+                    uuid: d414135b-ff4d-44e1-8cb6-fce64cbe29c0
+                    name: my_awesome_iframe_extension
+                    type: iframe
+                    position: pim.product.tab
+                    configuration:
+                      url: https://www.example.com
+                      labels:
+                        en_US: My awesome iframe extension
+                        fr_FR: Ma super iframe extension
+                      default_label: My awesome iframe extension
+                    status: active
+                    credentials: []
+                    version: V1.02.3
+                    description: A short human readable description.
+                sdk_script_extension:
+                  summary: Example of a custom sdk_script extension updated
+                  value:
+                    uuid: a1234567-89ab-cdef-0123-456789abcdef
+                    name: my_custom_sdk_extension
+                    type: sdk_script
+                    position: pim.product.panel
+                    configuration:
+                      default_label: My Custom Extension Updated
+                      labels:
+                        en_US: My Custom Extension Updated
+                        fr_FR: Mon Extension Personnalisée Mise à Jour
+                      custom_variables:
+                        apiEndpoint: https://api.example.com/v2
+                        featureFlag: enabled
+                    credentials:
+                    - code: api_auth
+                      type: Bearer Token
+                      value: '***REDACTED***'
+                    status: active
+                    version: 1.1.0
+                    description: A custom SDK-based extension with file updated.
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    post:
+      operationId: post_ui_extension_by_uuid
+      x-visibility: public
+      summary: Update a UI extension with file upload
+      description: 'This endpoint allows you to update an existing Extension.
+
+        Use this endpoint when you need to upload a new file for sdk_script type extensions.
+
+        You can send only the fields that you want to update.
+
+        If a field is not sent, the previous value is kept.'
+      tags:
+      - Extensions
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      - in: header
+        name: Content-Type
+        description: 'Equal to ''multipart/form-data'' (with [boundary value](https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2)), no other value allowed.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+      requestBody:
+        description: body of the Extension to update
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique extension identifier
+                  example: my_custom_sdk_extension
+                type:
+                  type: string
+                  description: Type of the extension
+                  example: sdk_script
+                position:
+                  type: string
+                  description: UI location where the extension will be displayed
+                  example: pim.product.panel
+                file:
+                  type: string
+                  format: binary
+                  description: Updated JavaScript file for sdk_script type extensions
+                  example: <binary file content>
+                configuration[default_label]:
+                  type: string
+                  description: Display label for the extension
+                  example: My Custom Extension Updated
+                configuration[labels][en_US]:
+                  type: string
+                  description: Label translation for English (US)
+                  example: My Custom Extension Updated
+                configuration[labels][fr_FR]:
+                  type: string
+                  description: Label translation for French (France)
+                  example: Mon Extension Personnalisée Mise à Jour
+                configuration[custom_variables]:
+                  type: string
+                  description: JSON string of custom variables
+                  example: '{"apiEndpoint": "https://api.example.com/v2"}'
+                credentials[0][code]:
+                  type: string
+                  description: Code for the first credential
+                  example: api_auth
+                credentials[0][type]:
+                  type: string
+                  description: Type of the first credential (Bearer Token, Basic Auth, Custom Header)
+                  example: Bearer Token
+                credentials[0][value]:
+                  type: string
+                  description: Value for the first credential
+                  example: my_updated_token_value
+                version:
+                  type: string
+                  description: Version of the extension
+                  example: 1.1.0
+                description:
+                  type: string
+                  description: Short description of the extension
+                  example: A custom SDK-based extension with file updated
+            example:
+              file: '@/path/to/updated-extension.js'
+              version: 1.1.0
+              configuration[custom_variables]: '{"apiEndpoint": "https://api.example.com/v2"}'
+        required: true
+      responses:
+        '200':
+          description: 'Changes applied successfully.
+
+            Returns a JSON document representing the UI extension updated.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the extension, shown within the Administration interface
+                    example: my_awesome_button_extension
+                  description:
+                    type: string
+                    description: Short description, shown within the Administration interface
+                    example: A short human readable description.
+                  version:
+                    type: string
+                    description: 'Version of the extension, shown within the Administration
+
+                      interface
+
+                      '
+                    example: V1.02.3
+                  position:
+                    type: string
+                    description: '[Position](https://api.akeneo.com/extensions/positions.html) of the Extension'
+                    example: pim.product.tab
+                  type:
+                    type: string
+                    description: '[Type](https://api.akeneo.com/extensions/types.html) of the Extension'
+                    example: iframe
+                  configuration:
+                    type: object
+                    description: Configuration options that are specific to the Extension [type](https://api.akeneo.com/extensions/types.html)
+                    properties:
+                      default_label:
+                        type: string
+                        description: Default label, used if there is no translation for the PIM user locale
+                        example: My awesome link extension
+                      labels:
+                        type: object
+                        description: Label translations
+                      secret:
+                        type: string
+                        minLength: 32
+                        description: Shows ***REDACTED*** if a secret is registered for the extension
+                        example: UOL2EHjh7P0nGNUV8RwDMBclyMwe4c5IA
+                      url:
+                        type: string
+                        description: Destination URL of the extension
+                        example: https://www.example.com
+                      file:
+                        type: string
+                        format: binary
+                        description: Built JavaScript file for sdk_script type extensions
+                      custom_variables:
+                        type: object
+                        description: Custom variables that can be used within the extension
+                        additionalProperties: true
+                  status:
+                    type: string
+                    description: Status of the Extension (active or inactive)
+                    example: active
+                  credentials:
+                    type: array
+                    description: Credentials for the Extension
+                    items:
+                      oneOf:
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Custom Header
+                          value:
+                            type: object
+                            description: Custom header credentials
+                            required:
+                            - header_key
+                            - header_value
+                            properties:
+                              header_key:
+                                type: string
+                                description: Key of the custom header to be used for authentication in API requests
+                              header_value:
+                                type: string
+                                description: Value of the custom header to be used for authentication in API requests
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Bearer Token
+                          value:
+                            type: string
+                            description: 'The value of the bearer token to be used for authentication in API requests.
+
+                              This token should be kept secret and not shared publicly.
+
+                              '
+                      - type: object
+                        required:
+                        - type
+                        - value
+                        properties:
+                          code:
+                            type: string
+                            description: Unique identifier for this credential
+                          type:
+                            type: string
+                            description: Type of credentials
+                            enum:
+                            - Basic Auth
+                          value:
+                            type: object
+                            description: Basic authentication credentials
+                            required:
+                            - username
+                            - password
+                            properties:
+                              username:
+                                type: string
+                                description: Username for basic authentication
+                              password:
+                                type: string
+                                description: Password for basic authentication
+                    example:
+                    - code: custom_header_cred
+                      type: Custom Header
+                      value:
+                        header_key: X-My-Custom-Header
+                        header_value: My custom header value
+                    - code: bearer_token_cred
+                      type: Bearer Token
+                      value: my_bearer_token_value
+                    - code: basic_auth_cred
+                      type: Basic Auth
+                      value:
+                        username: my_username
+                        password: my_password
+              examples:
+                iframe_extension:
+                  summary: Example of an iframe extension updated
+                  value:
+                    uuid: d414135b-ff4d-44e1-8cb6-fce64cbe29c0
+                    name: my_awesome_iframe_extension
+                    type: iframe
+                    position: pim.product.tab
+                    configuration:
+                      url: https://www.example.com
+                      labels:
+                        en_US: My awesome iframe extension
+                        fr_FR: Ma super iframe extension
+                      default_label: My awesome iframe extension
+                    status: active
+                    credentials: []
+                    version: V1.02.3
+                    description: A short human readable description.
+                sdk_script_extension:
+                  summary: Example of a custom sdk_script extension updated
+                  value:
+                    uuid: a1234567-89ab-cdef-0123-456789abcdef
+                    name: my_custom_sdk_extension
+                    type: sdk_script
+                    position: pim.product.panel
+                    configuration:
+                      default_label: My Custom Extension Updated
+                      labels:
+                        en_US: My Custom Extension Updated
+                        fr_FR: Mon Extension Personnalisée Mise à Jour
+                      custom_variables:
+                        apiEndpoint: https://api.example.com/v2
+                        featureFlag: enabled
+                    credentials:
+                    - code: api_auth
+                      type: Bearer Token
+                      value: '***REDACTED***'
+                    status: active
+                    version: 1.1.0
+                    description: A custom SDK-based extension with file updated.
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    delete:
+      operationId: delete_ui_extension_by_uuid
+      x-visibility: public
+      summary: Delete an Extension
+      description: This endpoint allows you to delete a given extension
+      tags:
+      - Extensions
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: uuid
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the UUID is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '204':
+          description: 'No content to return.
+
+            Means that the deletion was successful.
+
+            '
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

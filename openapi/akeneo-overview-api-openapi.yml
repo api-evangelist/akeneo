@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Overview API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Overview
+  description: 'This API reference provides comprehensive documentation for the Akeneo PIM REST API.
+
+    It describes all available endpoints, request and response formats, authentication methods, and error codes.
+
+    The Akeneo PIM REST API enables you to interact programmatically with your PIM instance, allowing you to manage products, product models, attributes, categories, assets, reference entities, and more.
+
+    You can use the API to integrate Akeneo PIM with other systems, automate data flows, and build custom applications.
+
+    All API endpoints are organized by resource type and support standard HTTP methods (GET, POST, PUT, PATCH, DELETE).
+
+    Authentication is required for all endpoints and is based on OAuth 2.0 or HTTP Basic authentication.
+
+    For more details, please refer to the official Akeneo API documentation.'
+paths:
+  /api/rest/v1:
+    get:
+      operationId: get_endpoints
+      x-visibility: public
+      summary: Get list of all endpoints
+      description: 'This endpoint allows you to get the list of all the available endpoints.
+
+        No need to be authenticated to use this endpoint.'
+      tags:
+      - Overview
+      security:
+      - bearerToken: []
+      x-no-token: true
+      responses:
+        '200':
+          description: Return the list of all available endpoints
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  host:
+                    type: string
+                    description: Host name
+                    example: https://demo.akeneo.com
+                  authentication:
+                    type: object
+                    description: Endpoint to get the authentication token
+                    additionalProperties:
+                      type: object
+                      properties:
+                        route:
+                          type: string
+                          description: Path of the endpoint
+                        methods:
+                          type: array
+                          items:
+                            type: string
+                    example:
+                      fos_oauth_server_token:
+                        route: /api/oauth/v1/token
+                        methods:
+                        - POST
+                  routes:
+                    type: object
+                    description: All the available endpoints
+                    additionalProperties:
+                      type: object
+                      properties:
+                        route:
+                          type: string
+                        methods:
+                          type: array
+                          items:
+                            type: string
+                    example:
+                      pim_api_attribute_list:
+                        route: /api/rest/v1/attributes
+                        methods:
+                        - GET
+              example:
+                host: https://demo.akeneo.com
+                authentication:
+                  fos_oauth_server_token:
+                    route: /api/oauth/v1/token
+                    methods:
+                    - POST
+                routes:
+                  pim_api_attribute_list:
+                    route: /api/rest/v1/attributes
+                    methods:
+                    - GET
+                  pim_api_attribute_create:
+                    route: /api/rest/v1/attributes
+                    methods:
+                    - POST
+                  pim_api_attribute_partial_update:
+                    route: /api/rest/v1/attributes/{code}
+                    methods:
+                    - PATCH
+                  pim_api_attribute_get:
+                    route: /api/rest/v1/attributes/{code}
+                    methods:
+                    - GET
+                  pim_api_attribute_partial_update_list:
+                    route: /api/rest/v1/attributes
+                    methods:
+                    - PATCH
+                  pim_api_category_list:
+                    route: /api/rest/v1/categories
+                    methods:
+                    - GET
+                  pim_api_product_partial_update:
+                    route: /api/rest/v1/products/{code}
+                    methods:
+                    - PATCH
+                  pim_api_product_delete:
+                    route: /api/rest/v1/products/{code}
+                    methods:
+                    - DELETE
+                  pim_api_product_uuid_create:
+                    route: /api/rest/v1/products-uuid
+                    methods:
+                    - POST
+                  pim_api_channel_list:
+                    route: /api/rest/v1/channels
+                    methods:
+                    - GET
+                  akeneo_catalogs_public_get_catalogs:
+                    route: /api/rest/v1/catalogs
+                    methods:
+                    - GET
+                  akeneo_asset_manager_assets_rest_connector_create_or_update:
+                    route: /api/rest/v1/asset-families/{asset_family_code}/assets
+                    methods:
+                    - PATCH
+                  pim_api_locale_list:
+                    route: /api/rest/v1/locales
+                    methods:
+                    - GET
+                  pim_analytics_external_api_system_info_get:
+                    route: /api/rest/v1/system-information
+                    methods:
+                    - GET
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

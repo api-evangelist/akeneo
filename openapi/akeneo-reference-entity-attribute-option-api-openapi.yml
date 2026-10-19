@@ -1,0 +1,543 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Reference entity attribute option API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Reference entity attribute option
+  description: 'A reference entity attribute option is a value that can be associated with a reference entity attribute.
+
+    For example, if you have a reference entity attribute called "Category", the options could be "Electronics", "Clothing", "Books", etc.
+
+    Options are used to provide predefined values for reference entity attributes, making it easier to manage and maintain reference entity data.'
+paths:
+  /api/rest/v1/reference-entities/{reference_entity_code}/attributes/{attribute_code}/options:
+    get:
+      operationId: get_reference_entity_attribute_options
+      x-visibility: public
+      summary: Get a list of attribute options of a given attribute for a given reference…
+      description: This endpoint allows you to get a list of attribute options for a given reference entity
+      tags:
+      - Reference entity attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      responses:
+        '200':
+          description: Return the options of the given attributes of the given reference entity
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - code
+                  properties:
+                    code:
+                      type: string
+                      description: Attribute's option code
+                      example: global_nomad
+                    labels:
+                      type: object
+                      description: Attribute labels for each locale
+                      default: {}
+                      patternProperties:
+                        ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                          description: Attribute label for the specified locale
+                          type:
+                          - string
+                          - 'null'
+                          example: Global Nomad
+                      example:
+                        en_US: Global Nomad
+                        fr_FR: Nomade du Monde
+              example:
+              - code: woodland_retreat
+                labels:
+                  en_US: Woodland Retreat
+                  fr_FR: Retraite dans les Bois
+              - code: new_nordic
+                labels:
+                  en_US: New Nordic
+                  fr_FR: Renouveau Scandinave
+              - code: global_nomad
+                labels:
+                  en_US: Global Nomad
+                  fr_FR: Nomade du Monde
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: The attribute does not support options
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - message
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Attribute "description" does not support options.
+              example:
+                code: 404
+                message: Attribute "description" does not support options.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+  /api/rest/v1/reference-entities/{reference_entity_code}/attributes/{attribute_code}/options/{code}:
+    get:
+      operationId: get_reference_entity_attribute_option_by_code
+      x-visibility: public
+      summary: Get an attribute option for a given attribute of a given reference entity
+      description: This endpoint allows you to get the information about a given attribute option
+      tags:
+      - Reference entity attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      responses:
+        '200':
+          description: Returns the content of the reference entity attribute option in JSON format
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                properties:
+                  code:
+                    type: string
+                    description: Attribute's option code
+                    example: global_nomad
+                  labels:
+                    type: object
+                    description: Attribute labels for each locale
+                    default: {}
+                    patternProperties:
+                      ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                        description: Attribute label for the specified locale
+                        type:
+                        - string
+                        - 'null'
+                        example: Global Nomad
+                    example:
+                      en_US: Global Nomad
+                      fr_FR: Nomade du Monde
+              example:
+                code: global_nomad
+                labels:
+                  en_US: Global Nomad
+                  fr_FR: Nomade du Monde
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_reference_entity_attribute_option_by_code
+      x-visibility: public
+      summary: Update/create a reference entity attribute option
+      description: 'This endpoint allows you to update a given option for a given attribute and a given reference entity.
+
+        Learn more about Update behavior.
+
+        Note that if the option does not already exist for the given attribute of the given reference entity, it creates it.'
+      tags:
+      - Reference entity attribute option
+      security:
+      - bearerToken: []
+      parameters:
+      - in: path
+        name: reference_entity_code
+        description: 'This path parameter is used to specify the unique identifier of the reference entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific reference entity in the API requests.
+
+          Ensure that the reference entity code is correctly formatted and corresponds to an existing reference entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: brands
+      - in: path
+        name: attribute_code
+        description: 'This path parameter is used to specify the unique identifier of the attribute you want to retrieve or manipulate.
+
+          It is essential for identifying the specific attribute in the API requests.
+
+          Ensure that the attribute code is correctly formatted and corresponds to an existing attribute in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: color
+      - in: path
+        name: code
+        description: 'This path parameter is used to specify the unique identifier of the entity you want to retrieve or manipulate.
+
+          It is essential for identifying the specific entity in the API requests.
+
+          Ensure that the code is correctly formatted and corresponds to an existing entity in the system.
+
+          '
+        required: true
+        schema:
+          type: string
+        example: my_entity_code
+      requestBody:
+        description: JSON payload to create or update a reference entity attribute option
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - code
+              properties:
+                code:
+                  type: string
+                  description: Attribute's option code
+                  example: global_nomad
+                labels:
+                  type: object
+                  description: Attribute labels for each locale
+                  default: {}
+                  patternProperties:
+                    ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                      description: Attribute label for the specified locale
+                      type:
+                      - string
+                      - 'null'
+                      example: Global Nomad
+                  example:
+                    en_US: Global Nomad
+                    fr_FR: Nomade du Monde
+            example:
+              code: global_nomad
+              labels:
+                en_US: Global Nomad
+                fr_FR: Nomade du Monde
+        required: true
+      responses:
+        '201':
+          description: 'This response indicates that the entity was successfully created.
+
+            The server has fulfilled the request and created a new resource.
+
+            The response includes a `Location` header that contains the URI of the newly created resource.
+
+            '
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+        '204':
+          description: 'This response indicates that the request was successful and that there is no content to return.
+
+            It is typically used in response to a successful update operation where the server does not need to return any data to the client.
+
+            '
+          headers:
+            Location:
+              description: URI of the updated resource
+              schema:
+                type: string
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the data provided does not meet the required format or constraints defined by the API, and includes a link to the documentation for reference.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Property \"labels\" expects an array as data, \"NULL\" given. Check the API reference documentation.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Property \"labels\" expects an array as data, \"NULL\" given. Check the API reference documentation.
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

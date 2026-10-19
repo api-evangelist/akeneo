@@ -1,0 +1,288 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Workflow executions API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Workflow executions
+  description: The Workflow executions endpoints allow you to start workflows on products and product models.
+paths:
+  /api/rest/v1/workflows/executions:
+    post:
+      operationId: post_workflow_executions
+      x-visibility: public
+      summary: Start several workflow executions
+      description: This endpoint allows you to start workflow executions for products and/or product models
+      tags:
+      - Workflow executions
+      security:
+      - bearerToken: []
+      requestBody:
+        description: An array of objects, each containing workflow information and either a product or a product model to be included in a workflow
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 100
+              items:
+                oneOf:
+                - type: object
+                  required:
+                  - workflow
+                  - product
+                  properties:
+                    workflow:
+                      type: object
+                      description: Workflow UUID
+                      required:
+                      - uuid
+                      properties:
+                        uuid:
+                          type: string
+                          format: uuid
+                          description: Workflow UUID
+                          example: 6f37476a-04c2-46c0-b6d0-e18316959068
+                    product:
+                      type: object
+                      description: Product UUID
+                      required:
+                      - uuid
+                      properties:
+                        uuid:
+                          type: string
+                          format: uuid
+                          description: Product UUID
+                          example: 87654321-4321-4321-4321-210987654321
+                - type: object
+                  required:
+                  - workflow
+                  - product_model
+                  properties:
+                    workflow:
+                      type: object
+                      description: Workflow UUID
+                      required:
+                      - uuid
+                      properties:
+                        uuid:
+                          type: string
+                          format: uuid
+                          description: Workflow UUID
+                          example: 6f37476a-04c2-46c0-b6d0-e18316959068
+                    product_model:
+                      type: object
+                      description: Product model code
+                      required:
+                      - code
+                      properties:
+                        code:
+                          type: string
+                          description: Product model code
+                          example: model_1234
+            examples:
+              mixed_example:
+                summary: Example with both product and product model items
+                value:
+                - workflow:
+                    uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                  product:
+                    uuid: 87654321-4321-4321-4321-210987654321
+                - workflow:
+                    uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                  product_model:
+                    code: model_1234
+              product_example:
+                summary: Example with only one product item
+                value:
+                - workflow:
+                    uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                  product:
+                    uuid: 87654321-4321-4321-4321-210987654321
+              product_model_example:
+                summary: Example with only one product model item
+                value:
+                - workflow:
+                    uuid: 6f37476a-04c2-46c0-b6d0-e18316959068
+                  product_model:
+                    code: model_1234
+      responses:
+        '201':
+          description: 'Workflow execution started successfully.
+
+            All elements have been processed.
+
+            '
+        '207':
+          description: 'Multi-status response.
+
+            Workflow execution started with some errors.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 207
+                  message:
+                    type: string
+                    example: Workflow executions started with some errors
+                  processed:
+                    type: integer
+                    description: Number of successfully processed elements
+                    example: 2
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: Index of the failed element in the request array
+                          example: 3
+                        message:
+                          type: string
+                          description: Error message
+                          example: 'Cannot start workflow execution: Workflow with UUID 4851975c-5100-4f98-9a49-f14b5dd996a8 does not exist or is not enabled.'
+                    example:
+                    - index: 3
+                      message: 'Cannot start workflow execution: Workflow with UUID 4851975c-5100-4f98-9a49-f14b5dd996a8 does not exist or is not enabled.'
+                    - index: 5
+                      message: 'Cannot start workflow execution: Product model with code model_1234 does not exist.'
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

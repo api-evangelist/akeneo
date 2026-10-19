@@ -1,0 +1,561 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Measurement family API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Measurement family
+  description: 'A measurement family is a set of comparable units used to measure a specific physical quantity, such as Area, Weight, or Power.
+
+    For example, the "Weight" measurement family can group units like "Kilogram" and "Pound" together.
+
+    Each family has a standard unit for conversions (e.g., "Kilogram"), and all other units within that family include their conversion formulas.
+
+    These families are used for metric attributes, allowing product data to be entered in one unit and automatically converted for different channels or locales.'
+paths:
+  /api/rest/v1/measurement-families:
+    get:
+      operationId: get_measurement_families
+      x-visibility: public
+      summary: Get list of measurement families
+      description: This endpoint allows you to get a list of measurement families
+      tags:
+      - Measurement family
+      security:
+      - bearerToken: []
+      responses:
+        '200':
+          description: A list of measurement families
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - code
+                  - standard_unit_code
+                  - units
+                  properties:
+                    code:
+                      type: string
+                      description: Measurement family code
+                      readOnly: true
+                    labels:
+                      type: object
+                      description: Measurement family labels for each locale
+                      default: {}
+                      patternProperties:
+                        ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                          description: Measurement family label for the specified locale
+                          type:
+                          - string
+                          - 'null'
+                          example: Area
+                      x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    standard_unit_code:
+                      type: string
+                      description: Unit code used as the standard unit for this measurement family
+                      readOnly: true
+                      x-validation-rules: The unit code exists in the list of the property `units`
+                    units:
+                      type: object
+                      description: 'Measurement units for this family with their conversion operations.
+
+                        More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                        '
+                      additionalProperties:
+                        type: object
+                        properties:
+                          code:
+                            type: string
+                            description: Measurement unit code
+                            readOnly: true
+                          labels:
+                            type: object
+                            description: Unit labels for each locale
+                            default: {}
+                            patternProperties:
+                              ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                                description: Unit label for the specified locale
+                                type:
+                                - string
+                                - 'null'
+                                example: Area
+                            x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                          convert_from_standard:
+                            type: array
+                            description: 'Calculation to convert the unit from the standard unit.
+
+                              More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                              '
+                            items:
+                              type: object
+                              properties:
+                                operator:
+                                  type: string
+                                  description: Operator for the conversion operation
+                                  enum:
+                                  - mul
+                                  - div
+                                  - add
+                                  - sub
+                                  x-validation-rules: The operator is one of the following values
+                                value:
+                                  type: string
+                                  description: Value for the conversion operation.
+                            x-validation-rules: '- The conversion operations can''t be updated when a product attribute is linked to this measurement family.
+
+                              - At least one conversion operation per unit is required.
+
+                              '
+                          symbol:
+                            type: string
+                            description: Measurement unit symbol.
+                      x-validation-rules: A unit can't be added when a product attribute is linked to this measurement family
+              example:
+              - code: AREA
+                labels:
+                  en_US: Area
+                  fr_FR: Surface
+                standard_unit_code: SQUARE_METER
+                units:
+                  SQUARE_MILLIMETER:
+                    code: SQUARE_MILLIMETER
+                    labels:
+                      en_US: Square millimeter
+                      fr_FR: Millimètre carré
+                    convert_from_standard:
+                    - operator: mul
+                      value: '0.000001'
+                    symbol: mm²
+                  SQUARE_CENTIMETER:
+                    code: SQUARE_CENTIMETER
+                    labels:
+                      en_US: Square centimeter
+                      fr_FR: Centimètre carré
+                    convert_from_standard:
+                    - operator: mul
+                      value: '0.0001'
+                    symbol: cm²
+                  SQUARE_METER:
+                    code: SQUARE_METER
+                    labels:
+                      en_US: Square meter
+                      fr_FR: Mètre carré
+                    convert_from_standard:
+                    - operator: mul
+                      value: '1'
+                    symbol: m²
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    patch:
+      operationId: patch_measurement_families
+      x-visibility: public
+      summary: Update/create several measurement families
+      description: This endpoint allows you to update and/or create several measurement families at once
+      tags:
+      - Measurement family
+      security:
+      - bearerToken: []
+      requestBody:
+        description: A list of measurement families to create or update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                anyOf:
+                - type: object
+                  required:
+                  - code
+                  - standard_unit_code
+                  - units
+                  properties:
+                    code:
+                      type: string
+                      description: Measurement family code
+                      readOnly: true
+                    labels:
+                      type: object
+                      description: Measurement family labels for each locale
+                      default: {}
+                      patternProperties:
+                        ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                          description: Measurement family label for the specified locale
+                          type:
+                          - string
+                          - 'null'
+                          example: Area
+                      x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    standard_unit_code:
+                      type: string
+                      description: Unit code used as the standard unit for this measurement family
+                      readOnly: true
+                      x-validation-rules: The unit code exists in the list of the property `units`
+                    units:
+                      type: object
+                      description: 'Measurement units for this family with their conversion operations.
+
+                        More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                        '
+                      additionalProperties:
+                        type: object
+                        properties:
+                          code:
+                            type: string
+                            description: Measurement unit code
+                            readOnly: true
+                          labels:
+                            type: object
+                            description: Unit labels for each locale
+                            default: {}
+                            patternProperties:
+                              ^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$:
+                                description: Unit label for the specified locale
+                                type:
+                                - string
+                                - 'null'
+                                example: Area
+                            x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                          convert_from_standard:
+                            type: array
+                            description: 'Calculation to convert the unit from the standard unit.
+
+                              More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                              '
+                            items:
+                              type: object
+                              properties:
+                                operator:
+                                  type: string
+                                  description: Operator for the conversion operation
+                                  enum:
+                                  - mul
+                                  - div
+                                  - add
+                                  - sub
+                                  x-validation-rules: The operator is one of the following values
+                                value:
+                                  type: string
+                                  description: Value for the conversion operation.
+                            x-validation-rules: '- The conversion operations can''t be updated when a product attribute is linked to this measurement family.
+
+                              - At least one conversion operation per unit is required.
+
+                              '
+                          symbol:
+                            type: string
+                            description: Measurement unit symbol.
+                      x-validation-rules: A unit can't be added when a product attribute is linked to this measurement family
+                - type: object
+                  required:
+                  - code
+                  properties:
+                    code:
+                      type: string
+                      description: Measurement family code
+                      x-immutable: true
+                    labels:
+                      type: object
+                      description: Measurement family labels for each locale
+                      additionalProperties:
+                        type: string
+                        description: Measurement family label for the specified locale
+                      default: {}
+                      x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                    standard_unit_code:
+                      type: string
+                      description: Unit code used as the standard unit for this measurement family
+                      x-immutable: true
+                      x-validation-rules: The unit code exists in the list of the property `units`
+                    units:
+                      type: object
+                      description: 'Measurement units for this family with their conversion operations
+
+                        More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                        '
+                      additionalProperties:
+                        type: object
+                        properties:
+                          code:
+                            type: string
+                            description: Measurement unit code
+                            x-immutable: true
+                          labels:
+                            type: object
+                            description: Unit labels for each locale
+                            additionalProperties:
+                              type: string
+                              description: Unit label for the specified locale
+                            default: {}
+                            x-validation-rules: The `localeCode` is the code of an existing and activated locale
+                          convert_from_standard:
+                            type: array
+                            description: 'Calculation to convert the unit from the standard unit.
+
+                              More details [here](https://api.akeneo.com/concepts/target-market-settings.html#focus-on-the-units)
+
+                              '
+                            items:
+                              type: object
+                              properties:
+                                operator:
+                                  type: string
+                                  description: Operator for the conversion operation
+                                  enum:
+                                  - mul
+                                  - div
+                                  - add
+                                  - sub
+                                  x-validation-rules: The operator is one of the following values
+                                value:
+                                  type: string
+                                  description: Value for the conversion operation
+                            x-validation-rules: '- The conversion operations can''t be updated when a product attribute is linked to this measurement family.
+
+                              - At least one conversion operation per unit is required.
+
+                              '
+                          symbol:
+                            type: string
+                            description: Measurement unit symbol
+                      x-validation-rules: A unit can't be added when a product attribute is linked to this measurement family
+            example:
+            - code: AREA
+              labels:
+                en_US: Area
+                fr_FR: Surface
+              standard_unit_code: SQUARE_METER
+              units:
+                SQUARE_MILLIMETER:
+                  code: SQUARE_MILLIMETER
+                  labels:
+                    en_US: Square millimeter
+                    fr_FR: Millimètre carré
+                  convert_from_standard:
+                  - operator: mul
+                    value: '0.000001'
+                  symbol: mm²
+                SQUARE_CENTIMETER:
+                  code: SQUARE_CENTIMETER
+                  labels:
+                    en_US: Square centimeter
+                    fr_FR: Centimètre carré
+                  convert_from_standard:
+                  - operator: mul
+                    value: '0.0001'
+                  symbol: cm²
+                SQUARE_METER:
+                  code: SQUARE_METER
+                  labels:
+                    en_US: Square meter
+                    fr_FR: Mètre carré
+                  convert_from_standard:
+                  - operator: mul
+                    value: '1'
+                  symbol: m²
+      responses:
+        '200':
+          description: OK. Returns a JSON array containing the status of each update or creation
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: Resource code
+                    status_code:
+                      type: integer
+                      description: HTTP status code. See the documentation for client errors to understand the meaning of each code
+                    message:
+                      type: string
+                      description: Message explaining the error, if any
+                    errors:
+                      type: array
+                      description: List of errors for a given resource
+                      items:
+                        type: object
+                        properties:
+                          property:
+                            type: string
+                          message:
+                            type: string
+              example:
+              - code: Angle
+                status_code: 201
+              - code: Force
+                status_code: 204
+              - code: Area
+                status_code: 422
+                message: The measurement family has data that does not comply with the business rules.
+                errors:
+                - property: standard_unit_code
+                  message: The standard unit code of the "Angle" measurement family cannot be changed
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '413':
+          description: 'This response indicates that the request entity is larger than the server is willing or able to process.
+
+            It can occur when the number of resources in a batch request exceeds the maximum allowed limit.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 413
+                message: Too many resources to process, 100 is the maximum allowed.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

@@ -1,72 +1,247 @@
 openapi: 3.2.0
 info:
-  title: Akeneo PIM REST Authentication API
+  title: Akeneo API REFERENCE Authentication API
   version: 1.0.0
-  description: 'REST API for the Akeneo Product Information Management (PIM) platform.
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
 
-    Manage products, product models, families, attributes, categories,
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
 
-    channels, locales, assets, reference entities, catalogs, workflows,
 
-    and more. Authentication uses OAuth 2.0 client credentials with
-
-    per-tenant base URLs in the SaaS edition.'
-  contact:
-    name: Akeneo
-    url: https://api.akeneo.com
+    For more information, visit the Akeneo PIM documentation.'
   license:
-    name: Documentation Terms
-    url: https://api.akeneo.com
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
 servers:
-- url: https://{tenant}.cloud.akeneo.com
-  description: Akeneo PIM SaaS tenant
+- url: '{your-pim-url}'
   variables:
-    tenant:
-      default: demo
-      description: Tenant subdomain assigned by Akeneo.
-security:
-- BearerAuth: []
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
 tags:
 - name: Authentication
+  description: 'The Authentication endpoints provide methods to authenticate and authorize access to the Akeneo PIM API.
+
+    You can use these endpoints to obtain an access token, which is required for accessing protected resources in the API.
+
+    The authentication process typically involves providing credentials (username and password) or using OAuth 2.0 for secure access.'
 paths:
   /api/oauth/v1/token:
     post:
+      operationId: post_token
+      x-visibility: public
+      summary: Get an authentication token
+      description: 'This endpoint allows you to get an authentication token.
+
+        No need to be authenticated to use this endpoint.
+
+        Want to get your token directly in the API reference?
+
+        Check the Get your API token guide.'
       tags:
       - Authentication
-      summary: Request OAuth 2.0 access token
-      operationId: requestToken
-      requestBody:
+      security:
+      - basicToken: []
+      parameters:
+      - in: header
+        name: Content-Type
+        description: 'This header indicates the media type of the resource being sent to the server.
+
+          It is used to specify the format of the request body, allowing the server to correctly interpret the data being sent.
+
+          Equal to ''application/json'' or ''application/x-www-form-urlencoded'', no other value allowed.
+
+          '
         required: true
+        schema:
+          type: string
+          default: application/json
+        example: application/json
+      - in: header
+        name: Authorization
+        description: "This header is used to authenticate requests to the API.\nEqual to 'Basic xx', where 'xx' is the base 64 encoding of the client id and secret. \nFind out how to generate them in the [Client ID/secret generation](https://api.akeneo.com/documentation/authentication.html#client-idsecret-generation) section.\n"
+        required: true
+        schema:
+          type: string
+      x-no-token: true
+      x-form-data: true
+      requestBody:
+        description: 'Request body for the token generation endpoint.
+
+          This endpoint is used to generate an access token for the Akeneo PIM API.
+
+          '
         content:
           application/json:
             schema:
               type: object
-              properties:
-                grant_type:
-                  type: string
-                  enum:
-                  - password
-                  - refresh_token
-                username:
-                  type: string
-                password:
-                  type: string
-                refresh_token:
-                  type: string
               required:
+              - username
+              - password
               - grant_type
+              properties:
+                username:
+                  description: "Your PIM username, field username in your PIM connection settings. \nSee [here](https://api.akeneo.com/documentation/authentication.html#token-generation) for more details.\n"
+                  type: string
+                  example: my_username_9364
+                password:
+                  description: "Your PIM password, field password in your PIM connection settings. \nSee [here](https://api.akeneo.com/documentation/authentication.html#token-generation) for more details.\n"
+                  type: string
+                  example: 4e88d6350
+                grant_type:
+                  description: Always equal to `password`
+                  type: string
+                  default: password
+                  example: password
+            example:
+              username: admin
+              password: admin
+              grant_type: password
       responses:
         '200':
-          description: Access token.
+          description: Return an authentication token
+          x-no-entity: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Authentication token that should be given in every authenticated request to the API
+                    example: ZTZmYjU4ZmQxZWNmMzk1M2NlYzA5NmFhNmIzVjExMzE4NmJmODBkZGIyYTliYmQyNjk2ZDQwZThmNjdiZDQzOQ
+                  expires_in:
+                    type: integer
+                    description: Validity of the token given in seconds, 3600s = 1h by default
+                    example: 3600
+                  token_type:
+                    type: string
+                    description: Token type, always equal to `bearer`
+                    example: bearer
+                  scope:
+                    type:
+                    - string
+                    - 'null'
+                    description: Unused, always equal to `null`
+                    example: null
+                  refresh_token:
+                    type: string
+                    description: "Use this token when your access token has expired. \n[See](https://api.akeneo.com/documentation/authentication.html#refresh-an-expired-token).\n"
+                    example: M3FlODI0OTE3ODMyNjViMzRiOWE5ODMyNWViMThkNDU5YzJjNjFiZjNkZWFjMzIyYjc4YTgzZWY1MjE5ZTY5Mw
+              example:
+                access_token: ZTZmYjU4ZmQxZWNmMzk1M2NlYzA5NmFhNmIzVjExMzE4NmJmODBkZGIyYTliYmQyNjk2ZDQwZThmNjdiZDQzOQ
+                expires_in: 3600
+                token_type: bearer
+                scope: null
+                refresh_token: M3FlODI0OTE3ODMyNjViMzRiOWE5ODMyNWViMThkNDU5YzJjNjFiZjNkZWFjMzIyYjc4YTgzZWY1MjE5ZTY5Mw
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the data provided does not meet the required format or constraints defined by the API, and includes a link to the documentation for reference.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Property \"labels\" expects an array as data, \"NULL\" given. Check the API reference documentation.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Property \"labels\" expects an array as data, \"NULL\" given. Check the API reference documentation.
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
 components:
   securitySchemes:
-    OAuth2ClientCredentials:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: https://{tenant}.cloud.akeneo.com/api/oauth/v1/token
-          scopes: {}
-    BearerAuth:
+    basicToken:
+      scheme: basic
       type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
       scheme: bearer
-      bearerFormat: JWT
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '

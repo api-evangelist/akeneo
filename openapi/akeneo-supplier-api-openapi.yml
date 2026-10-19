@@ -1,0 +1,1779 @@
+openapi: 3.2.0
+info:
+  title: Akeneo API REFERENCE Supplier API
+  version: 1.0.0
+  description: 'This is the reference documentation for the Akeneo PIM REST API.
+
+    It provides detailed information about the available endpoints, request and response formats, and authentication methods.
+
+
+    For more information, visit the Akeneo PIM documentation.'
+  license:
+    name: Open Software License 3.0
+    url: http://opensource.org/licenses/OSL-3.0
+  contact:
+    name: Akeneo Support
+    url: https://www.akeneo.com/support-help-center/
+    email: contact@akeneo.com
+servers:
+- url: '{your-pim-url}'
+  variables:
+    your-pim-url:
+      default: ''
+      description: 'Set the PIM url you want to target ex: https://my-pim.cloud.akeneo.com or https://localhost:8443'
+tags:
+- name: Supplier
+  description: 'A supplier is an external organization that contributes product data to the PIM through the supplier portal.
+
+    A supplier holds its own users, who sign in to the portal to submit and enrich products on the supplier''s behalf.
+
+    These endpoints let you provision suppliers and their users from your own systems, so supplier onboarding
+
+    and offboarding can be automated instead of being done by hand in the PIM.'
+paths:
+  /api/rest/v1/suppliers:
+    get:
+      operationId: get_suppliers
+      x-visibility: public
+      summary: Get a list of suppliers
+      description: 'This endpoint allows you to get a list of supplier organizations, sorted by name.
+
+
+        A supplier organization groups the users who submit and enrich product data through the
+
+        supplier portal. Its users are read with `GET /api/rest/v1/suppliers/{code}/users`.
+
+
+        The list is not filterable: it returns every supplier organization, paginated. To read one, use `GET /api/rest/v1/suppliers/{code}`.'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - in: query
+        name: page
+        description: 'Specify which page of results to retrieve when using pagination.
+
+          It is useful for navigating through large datasets by breaking them into smaller, manageable pages.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+        example: 1
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: with_count
+        description: 'Return the count of items in the response.
+
+          Be careful with that, on a big catalog, it can decrease performance in a significant way.
+
+          It is useful for understanding the size of the dataset being returned, especially when dealing with large collections.
+
+          Use it judiciously to avoid performance issues.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '200':
+          description: 'Return supplier organizations paginated, sorted by name.
+
+            The response includes links to navigate through the pages.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Suppliers
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    current_page:
+                      type: integer
+                      description: Current page number
+                      example: 1
+                    items_count:
+                      type: integer
+                      description: Total number of items (only if `with_count` parameter is set to true)
+                      example: 2
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471
+                            - type: object
+                              properties:
+                                code:
+                                  type: string
+                                  description: 'Your own reference for this supplier, and what identifies it in every supplier endpoint. Unique across
+
+                                    suppliers, and made of letters, digits, underscores and hyphens only
+
+                                    '
+                                  example: ERP-4471
+                                name:
+                                  type: string
+                                  description: Display name of the supplier organization
+                                  example: Acme Components
+                                portal_uuid:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: uuid
+                                  description: Identifier of the supplier portal this organization signs in through
+                                  example: 9c2d5b7a-1e3f-4c8d-b0a6-5f7e2d4c1b39
+                                default_channel_code:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Channel the supplier's contributions default to
+                                  example: ecommerce
+                                default_locale_code:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Locale the supplier's contributions default to. Must be active on `default_channel_code` when that one is set
+                                  example: en_US
+                                avatar_file_key:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Key of the media file used as the organization logo. Set from the admin screen — there is no public endpoint to upload one
+                                  example: a/b/c/abcdef0123456789_avatar.png
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/suppliers?page=1&limit=10&with_count=true
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/suppliers?page=1&limit=10&with_count=true
+                current_page: 1
+                items_count: 2
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471
+                    code: ERP-4471
+                    name: Acme Components
+                    portal_uuid: 9c2d5b7a-1e3f-4c8d-b0a6-5f7e2d4c1b39
+                    default_channel_code: ecommerce
+                    default_locale_code: en_US
+                    avatar_file_key: a/b/c/abcdef0123456789_avatar.png
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4472
+                    code: ERP-4472
+                    name: Beta Textiles
+                    portal_uuid: 9c2d5b7a-1e3f-4c8d-b0a6-5f7e2d4c1b39
+                    default_channel_code: mobile
+                    default_locale_code: fr_FR
+                    avatar_file_key: d/e/f/9876543210fedcba_avatar.png
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    post:
+      operationId: post_supplier
+      x-visibility: public
+      summary: Create a supplier
+      description: 'This endpoint allows you to create a supplier organization.
+
+
+        `code` must be unique across suppliers, so replaying the call after a timeout
+
+        fails with a `422` instead of creating a second supplier — but the check is not atomic, so two
+
+        replays racing each other can still both succeed. Do not rely on it as a concurrency guard.
+
+
+        A supplier cannot be updated through the API — only created and read. Renaming one or changing
+
+        its defaults is done from the PIM administration screens.
+
+
+        Unknown properties are rejected with a `422` rather than ignored, so a typo in a field name
+
+        surfaces instead of silently doing nothing.'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      requestBody:
+        description: The supplier organization to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - portal_uuid
+              - default_channel_code
+              - default_locale_code
+              - code
+              properties:
+                name:
+                  type: string
+                  description: Display name of the supplier organization
+                  example: Acme Components
+                portal_uuid:
+                  type: string
+                  format: uuid
+                  description: 'Identifier of the supplier portal this organization signs in through. Required: a
+
+                    supplier with no portal cannot authenticate its users and its invitation emails are
+
+                    not sent, so the PIM does not let one be created that way. Read the available
+
+                    portals from the supplier portal administration screen.
+
+                    '
+                  example: 9c2d5b7a-1e3f-4c8d-b0a6-5f7e2d4c1b39
+                default_channel_code:
+                  type: string
+                  description: 'Channel the supplier''s contributions default to. Required, and required together with
+
+                    `default_locale_code`: the contributor portal ignores either one unless both are set,
+
+                    and the supplier portal administration screen asks for both as well.
+
+                    `GET /api/rest/v1/channels` lists the codes you may send here, each with the locales
+
+                    it accepts.
+
+                    '
+                  example: ecommerce
+                default_locale_code:
+                  type: string
+                  description: 'Locale the supplier''s contributions default to. Required, and must be active on
+
+                    `default_channel_code` — read that channel from `GET /api/rest/v1/channels` to see
+
+                    which locales it accepts.
+
+                    '
+                  example: en_US
+                avatar_file_key:
+                  type:
+                  - string
+                  - 'null'
+                  description: 'Key of a media file already stored in the PIM, used as the organization logo.
+
+                    There is no public endpoint to upload one, so this field cannot be used to set a new
+
+                    logo — it is only useful to echo back a key you read from `GET /suppliers/{code}`.
+
+                    Logos are set from the admin screen; leave this out and none is set.
+
+                    '
+                  example: a/b/c/abcdef0123456789_avatar.png
+                code:
+                  type: string
+                  maxLength: 255
+                  pattern: ^[a-zA-Z0-9_-]+$
+                  description: 'Your own reference for this supplier. Must be unique across suppliers, and made of letters,
+
+                    digits, underscores and hyphens only.
+
+                    '
+                  example: ERP-4471
+      responses:
+        '201':
+          description: Supplier created
+          headers:
+            Location:
+              description: URI of the created supplier
+              schema:
+                type: string
+              example: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                properties:
+                  code:
+                    type: string
+                    description: Code of the created supplier organization.
+                    example: ERP-4471
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+  /api/rest/v1/suppliers/{code}:
+    get:
+      operationId: get_supplier
+      x-visibility: public
+      summary: Get a supplier
+      description: This endpoint allows you to get a single supplier organization by its code.
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Code of the supplier organization, the reference you gave it on creation
+        schema:
+          type: string
+        example: ERP-4471
+      responses:
+        '200':
+          description: Return a supplier organization
+          content:
+            application/json:
+              schema:
+                title: Supplier
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: 'Your own reference for this supplier, and what identifies it in every supplier endpoint. Unique across
+
+                      suppliers, and made of letters, digits, underscores and hyphens only
+
+                      '
+                    example: ERP-4471
+                  name:
+                    type: string
+                    description: Display name of the supplier organization
+                    example: Acme Components
+                  portal_uuid:
+                    type:
+                    - string
+                    - 'null'
+                    format: uuid
+                    description: Identifier of the supplier portal this organization signs in through
+                    example: 9c2d5b7a-1e3f-4c8d-b0a6-5f7e2d4c1b39
+                  default_channel_code:
+                    type:
+                    - string
+                    - 'null'
+                    description: Channel the supplier's contributions default to
+                    example: ecommerce
+                  default_locale_code:
+                    type:
+                    - string
+                    - 'null'
+                    description: Locale the supplier's contributions default to. Must be active on `default_channel_code` when that one is set
+                    example: en_US
+                  avatar_file_key:
+                    type:
+                    - string
+                    - 'null'
+                    description: Key of the media file used as the organization logo. Set from the admin screen — there is no public endpoint to upload one
+                    example: a/b/c/abcdef0123456789_avatar.png
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+  /api/rest/v1/suppliers/{code}/users:
+    get:
+      operationId: get_supplier_users
+      x-visibility: public
+      summary: Get the users of a supplier
+      description: 'This endpoint allows you to get the users of a supplier organization, sorted by last name then
+
+        first name.
+
+
+        `created_at` and `last_logged_in` are sent as `null` rather than omitted when unknown, so the
+
+        shape of an item does not change between users — `last_logged_in` is `null` for someone who has
+
+        never signed in to the portal.'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Code of the supplier organization, the reference you gave it on creation
+        schema:
+          type: string
+        example: ERP-4471
+      - in: query
+        name: page
+        description: 'Specify which page of results to retrieve when using pagination.
+
+          It is useful for navigating through large datasets by breaking them into smaller, manageable pages.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 1
+        example: 1
+      - in: query
+        name: limit
+        description: 'Specify the maximum number of results to return per page.
+
+          It is useful for controlling the amount of data returned in a single request, especially when dealing with large datasets.
+
+          See [Pagination](https://api.akeneo.com/documentation/pagination.html) section for more details.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        example: 100
+      - in: query
+        name: with_count
+        description: 'Return the count of items in the response.
+
+          Be careful with that, on a big catalog, it can decrease performance in a significant way.
+
+          It is useful for understanding the size of the dataset being returned, especially when dealing with large collections.
+
+          Use it judiciously to avoid performance issues.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '200':
+          description: 'Return the users of a supplier organization, paginated and sorted by last then first name.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Supplier users
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the current page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=2&limit=5
+                        first:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the first page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        previous:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the previous page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=1&limit=5
+                        next:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              description: URI of the next page of resources
+                              example: https://demo.akeneo.com/api/rest/v1/categories?page=3&limit=5
+                - type: object
+                  properties:
+                    current_page:
+                      type: integer
+                      description: Current page number
+                      example: 1
+                    items_count:
+                      type: integer
+                      description: Total number of items (only if `with_count` parameter is set to true)
+                      example: 2
+                    _embedded:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            allOf:
+                            - type: object
+                              properties:
+                                _links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                                          description: URI of the resource
+                                          example: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471/users/7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+                            - type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                  format: uuid
+                                  description: Identifier of the supplier user
+                                  example: 7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+                                email:
+                                  type: string
+                                  format: email
+                                  description: Email the user signs in with
+                                  example: ada@acme-components.test
+                                first_name:
+                                  type: string
+                                  example: Ada
+                                last_name:
+                                  type: string
+                                  example: Lovelace
+                                created_at:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: When the user was first invited. `null` for users created before this was recorded
+                                  example: '2026-01-15T09:00:00+00:00'
+                                last_logged_in:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Last sign-in on the supplier portal. `null` when the user has never signed in
+                                  example: '2026-09-10T14:30:00+00:00'
+              example:
+                _links:
+                  self:
+                    href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471/users?page=1&limit=10&with_count=true
+                  first:
+                    href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471/users?page=1&limit=10&with_count=true
+                current_page: 1
+                items_count: 2
+                _embedded:
+                  items:
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471/users/7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+                    uuid: 7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+                    email: ada@acme-components.test
+                    first_name: Ada
+                    last_name: Lovelace
+                    created_at: '2026-01-15T09:00:00+00:00'
+                    last_logged_in: '2026-09-10T14:30:00+00:00'
+                  - _links:
+                      self:
+                        href: https://demo.akeneo.com/api/rest/v1/suppliers/ERP-4471/users/9d4e2f1a-6b8c-4d2e-9f3a-1b5c7d9e2f41
+                    uuid: 9d4e2f1a-6b8c-4d2e-9f3a-1b5c7d9e2f41
+                    email: alan@acme-components.test
+                    first_name: Alan
+                    last_name: Turing
+                    created_at: '2026-02-20T11:00:00+00:00'
+                    last_logged_in: '2026-08-01T08:15:00+00:00'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+        '422':
+          description: 'This response indicates that the validation of the entity given in the body of the request failed.
+
+            It occurs when the server understands the request but cannot process it due to validation errors in the provided data.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    description: A list of validation error messages (optional)
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                          description: Name of the invalid property
+                        message:
+                          type: string
+                          description: Human-readable error message
+                        attribute:
+                          type:
+                          - string
+                          - 'null'
+                          description: Attribute code (if the error is on an attribute)
+                        locale:
+                          type:
+                          - string
+                          - 'null'
+                          description: Locale code involved in the error, if any
+                        scope:
+                          type:
+                          - string
+                          - 'null'
+                          description: Channel code involved in the error, if any
+                    example:
+                    - property: family
+                      message: The tshirts family does not exist in your PIM.
+                  _links:
+                    type: object
+                    properties:
+                      documentation:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                    example:
+                      documentation:
+                        href: http://api.akeneo.com/api-reference.html
+              example:
+                code: 422
+                message: Validation failed.
+                errors:
+                - property: family
+                  message: The tshirts family does not exist in your PIM.
+                - property: categories
+                  message: The "tvs_projectors" category does not exist.
+                - property: associations.SUBSTITUTION.groups
+                  message: You should associate existing groups. The "promotion" group does not exist.
+                - property: values
+                  message: The "description" attribute requires a channel.
+                  attribute: description
+                  locale: en_US
+                  scope: null
+                - property: values
+                  message: The "name" attribute requires a locale.
+                  attribute: name
+                  locale: null
+                  scope: null
+                _links:
+                  documentation:
+                    href: http://api.akeneo.com/api-reference.html
+    patch:
+      operationId: patch_supplier_users
+      x-visibility: public
+      summary: Invite or update supplier users
+      description: 'This endpoint allows you to invite users into a supplier organization, and to update the ones
+
+        already known, in a single call. Up to 100 users per call.
+
+
+        A user is identified by their email. An email the PIM does not know yet creates a user and
+
+        returns the identifier it generated for them; an email it already knows attaches that user to
+
+        this supplier if they are not a member yet. Replaying a call is therefore safe: it never invites
+
+        the same person twice.
+
+
+        An entry describes the user in full: `email`, `first_name` and `last_name` are all required, every
+
+        time. A caller never has to know whether the PIM already holds the email, and the names it sends
+
+        are the ones stored — so the system sending them stays the reference for a contributor''s profile.
+
+
+        The response is an array holding one result per user sent, in the same order, so a result is
+
+        matched to its entry by position.
+
+
+        An email sent twice in the same call is refused on its second entry with a `422`, rather than
+
+        letting one entry quietly overwrite the other.
+
+
+        Each user is processed on their own and reported on their own: one failing does not stop the
+
+        others, and the users of the successful entries stay invited. Attaching a member is also written
+
+        to the identity provider, which is why the batch is not rolled back — undoing those attachments
+
+        one by one would be more failure-prone than the failure it is undoing.
+
+
+        Each user invited for the first time into this supplier receives a notification email, so
+
+        inviting 100 new members sends 100 emails. An entry that only updates a name sends none.
+
+
+        **Invitations are queued, not sent while you wait.** A result''s `status_code` is `202` when the
+
+        entry was accepted and will be invited shortly, or `422` for a payload the endpoint refuses —
+
+        a malformed address is still caught immediately. The call itself answers `200`; a body that is
+
+        not a JSON array is refused with `400`, and more than 100 entries with `413`, before any of them
+
+        is processed.
+
+
+        An accepted entry carries no `user_uuid`: the identifier does not exist until the invitation has
+
+        been processed. Read `GET /api/rest/v1/suppliers/{code}/users` to see who has actually been
+
+        invited, and to get their identifiers.
+
+
+        Queuing is what makes a large batch safe. The identity provider caps how many invitations it
+
+        accepts per minute, tenant-wide; sending them inline meant a big batch held the connection open
+
+        for tens of seconds and lost whatever the provider refused.'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Code of the supplier organization, the reference you gave it on creation
+        schema:
+          type: string
+        example: ERP-4471
+      requestBody:
+        description: The supplier users to invite or update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 100
+              items:
+                type: object
+                required:
+                - email
+                - first_name
+                - last_name
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    description: Email the user signs in with, and what identifies them
+                    example: ada@acme-components.test
+                  first_name:
+                    type: string
+                    example: Ada
+                  last_name:
+                    type: string
+                    example: Lovelace
+            example:
+            - email: ada@acme-components.test
+              first_name: Ada
+              last_name: Lovelace
+            - email: grace@acme-components.test
+              first_name: Grace
+              last_name: Hopper
+      responses:
+        '200':
+          description: One result per supplier user sent, in the same order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      description: Email of the supplier user of this entry
+                      example: ada@acme-components.test
+                    status_code:
+                      type: integer
+                      description: HTTP status code, see [Client errors](https://api.akeneo.com/documentation/responses.html#client-errors) to understand the meaning of each code
+                      example: 202
+                    message:
+                      type: string
+                      description: Message explaining the error
+                      example: Validation failed.
+                    errors:
+                      type: array
+                      description: The properties the entry was refused on
+                      items:
+                        type: object
+                        properties:
+                          property:
+                            type: string
+                            example: first_name
+                          message:
+                            type: string
+                            example: first_name is required and must be a string
+              example:
+              - email: ada@acme-components.test
+                status_code: 202
+              - email: grace@acme-components.test
+                status_code: 202
+              - email: turing@acme-components.test
+                status_code: 422
+                message: Validation failed.
+                errors:
+                - property: first_name
+                  message: first_name is required and must be a string
+        '400':
+          description: 'This response indicates that the server cannot process the request due to a client error, such as malformed request syntax, invalid request message framing, or deceptive request routing.
+
+            It is typically used when the server cannot understand the request due to invalid JSON or other client-side issues.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 400
+                message: Invalid JSON message received
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '413':
+          description: 'This response indicates that the request entity is larger than the server is willing or able to process.
+
+            It can occur when the number of resources in a batch request exceeds the maximum allowed limit.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 413
+                message: Too many resources to process, 100 is the maximum allowed.
+        '415':
+          description: 'This response indicates that the `Content-type` header of the request is not supported by the server.
+
+            The server expects the `Content-type` header to be `application/json`, and any other value will result in this error.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 415
+                message: xxx in `Content-type` header is not valid.  Only `application/json` is allowed."
+  /api/rest/v1/suppliers/{code}/users/{user_uuid}:
+    get:
+      operationId: get_supplier_user
+      x-visibility: public
+      summary: Get a supplier user
+      description: 'This endpoint allows you to get a single user of a supplier organization.
+
+
+        A user that exists but belongs to another supplier is reported as absent, so the endpoint never
+
+        confirms that an identifier exists elsewhere in the instance.'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Code of the supplier organization, the reference you gave it on creation
+        schema:
+          type: string
+        example: ERP-4471
+      - name: user_uuid
+        in: path
+        required: true
+        description: Identifier of the supplier user
+        schema:
+          type: string
+          format: uuid
+        example: 7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+      responses:
+        '200':
+          description: Return a supplier user
+          content:
+            application/json:
+              schema:
+                title: Supplier user
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    description: Identifier of the supplier user
+                    example: 7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+                  email:
+                    type: string
+                    format: email
+                    description: Email the user signs in with
+                    example: ada@acme-components.test
+                  first_name:
+                    type: string
+                    example: Ada
+                  last_name:
+                    type: string
+                    example: Lovelace
+                  created_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    description: When the user was first invited. `null` for users created before this was recorded
+                    example: '2026-01-15T09:00:00+00:00'
+                  last_logged_in:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    description: Last sign-in on the supplier portal. `null` when the user has never signed in
+                    example: '2026-09-10T14:30:00+00:00'
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'This response indicates that the requested resource could not be found on the server.
+
+            It can occur when the resource code given in the URI does not correspond to any existing PIM resource.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 404
+                message: Resource `my_resource_code` does not exist.
+        '406':
+          description: 'This response indicates that the server cannot produce a response matching the list of acceptable values defined in the request''s `Accept` header.
+
+            It is typically used when the requested resource is not available in the requested format.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 406
+                message: xxx in `Accept` header is not valid. Only `application/json` is allowed.
+    delete:
+      operationId: delete_supplier_user_access
+      x-visibility: public
+      summary: Revoke a supplier user's access
+      description: 'This endpoint allows you to revoke a user''s access to a supplier organization.
+
+
+        It detaches the user from this supplier only: the user account itself is kept, and its access to
+
+        any other supplier organization it belongs to is left untouched. There is no endpoint to delete a
+
+        supplier user account outright — that is deliberately out of the scope of this API.
+
+
+        The call is not idempotent: once the access is revoked the user is no longer a member of this
+
+        supplier, so calling it again answers 404. Retrying a call that timed out may therefore return a
+
+        404 that means "already revoked" rather than "never existed".'
+      tags:
+      - Supplier
+      security:
+      - bearerToken: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Code of the supplier organization, the reference you gave it on creation
+        schema:
+          type: string
+        example: ERP-4471
+      - name: user_uuid
+        in: path
+        required: true
+        description: Identifier of the supplier user
+        schema:
+          type: string
+          format: uuid
+        example: 7b3c1d9e-2a4f-4b6c-8d1e-3f5a7c9b2d40
+      responses:
+        '204':
+          description: 'No content to return.
+
+            Means that the user no longer has access to this supplier.
+
+            '
+        '401':
+          description: 'This response indicates that authentication is required to access the requested resource.
+
+            It can be caused by a missing or expired token, or if the provided credentials are invalid.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 401
+                message: Full authentication is required to access this resource.
+        '403':
+          description: 'This response indicates that the request is not authorized. This can occur when the user lacks the necessary permissions to access a resource or perform an action, or when the request payload is too large for the platform to process.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP status code
+                    example: 401
+                  message:
+                    type: string
+                    description: Message explaining the error
+                    example: Full authentication is required to access this resource.
+              example:
+                code: 403
+                message: Access forbidden. You are not allowed to list this entity.
+        '404':
+          description: 'Returned when the supplier does not exist, or when the user is not one of its members —
+
+            including when its access has already been revoked by an earlier call.
+
+            '
+components:
+  securitySchemes:
+    basicToken:
+      scheme: basic
+      type: http
+      description: 'HTTP Basic authentication using user credentials.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    bearerToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token obtained via the "Password Grant" flow.
+
+        This token authenticates a user, is valid for one hour, and can be refreshed using a refresh token.
+
+        [More information here](https://api.akeneo.com/documentation/authentication.html)
+
+        '
+    appToken:
+      scheme: bearer
+      type: http
+      description: 'Bearer token for Apps, obtained via the OAuth 2.0 flow.
+
+        This permanent token allows an application to make requests on behalf of a user.
+
+        [More information here](https://api.akeneo.com/apps/authentication-and-authorization.html)
+
+        '
