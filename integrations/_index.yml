@@ -142,6 +142,18 @@
       lapsed: false
   status: not-a-workflow
   arazzo: null
+- slug: akeneo-amazon-selling-partner-appstore
+  label: Amazon Selling Partner Appstore
+  partner: amazon-seller-central
+  partner_name: Amazon Selling Partner Appstore
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.bfa9378f-4997-4589-bdaf-2c31eff438b6
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
 - slug: akeneo-stripe-own
   label: Stripe (own)
   partner: stripe
@@ -193,14 +205,15 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: akeneo-amazon-selling-partner-appstore
-  label: Amazon Selling Partner Appstore
-  partner: amazon-seller-central
-  partner_name: Amazon Selling Partner Appstore
+- slug: akeneo-adobe-commerce-own
+  label: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_name: Adobe Commerce (own)
+  category: Adobe Commerce Marketplace extension
   type: marketplace
   marketplace: own
   channel: partner-built
-  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.bfa9378f-4997-4589-bdaf-2c31eff438b6
+  evidence: https://commercemarketplace.adobe.com/akeneo-module-magento2-connector-community.html
   source: edge
   relationship: platform-app
   status: not-a-workflow

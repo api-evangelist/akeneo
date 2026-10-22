@@ -28,6 +28,7 @@ checked:
 - https://advertising.amazon.com/partners/directory
 - https://sellercentral.amazon.com/gspn
 - https://sellercentral.amazon.com/selling-partner-appstore
+- adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -179,6 +180,21 @@ edges:
       lapsed: false
   detected_by: sweep-mach-headless-commerce.py
   first_seen: '2026-10-20'
+- partner_name: Amazon Selling Partner Appstore
+  partner: amazon-seller-central
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.bfa9378f-4997-4589-bdaf-2c31eff438b6
+  mirror_of: amazon-seller-central/integrations/amazon-seller-central-integration-edges.yml
+  apps:
+  - Akeneo
+  detected: '2026-10-21'
+  detected_by: sweep-amazon-sp-api-appstore.py
 - partner_name: Stripe (own)
   partner: stripe
   partner_match: mirror
@@ -248,8 +264,8 @@ edges:
   detected: '2026-10-20'
   detected_by: mirror-platform-listings.py
   category: productInformationManagement, dataManagement, integration
-- partner_name: Amazon Selling Partner Appstore
-  partner: amazon-seller-central
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
   partner_match: mirror
   mirror_match: domain
   type: marketplace
@@ -257,10 +273,12 @@ edges:
   direction: third-party
   channel: partner-built
   marketplace: own
-  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.bfa9378f-4997-4589-bdaf-2c31eff438b6
-  mirror_of: amazon-seller-central/integrations/amazon-seller-central-integration-edges.yml
+  evidence: https://commercemarketplace.adobe.com/akeneo-module-magento2-connector-community.html
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
   apps:
-  - Akeneo
-  detected: '2026-10-21'
-  detected_by: sweep-amazon-sp-api-appstore.py
+  - Akeneo Connector
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Commerce Marketplace extension
 templates: []
