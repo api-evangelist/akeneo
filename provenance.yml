@@ -13,17 +13,17 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   collections/akeneo-asset-manager-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-asset-manager-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-asset-manager-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-asset-manager-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-attributes-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-attributes-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-attributes-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-attributes-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-authentication-api.opencollection.json:
     method: derived
     evidence: openapi/akeneo-authentication-api
@@ -37,59 +37,59 @@ artifacts:
     method: derived
     evidence: openapi/akeneo-catalogs-api
   collections/akeneo-categories-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-categories-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-categories-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-categories-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-channels-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-channels-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-channels-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-channels-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-currencies-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-currencies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-currencies-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-currencies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-families-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-families-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-families-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-families-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-locales-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-locales-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-locales-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-locales-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-media-files-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-media-files-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-media-files-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-media-files-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-product-models-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-product-models-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-product-models-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-product-models-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-products-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-products-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-products-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-products-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-reference-entities-api.opencollection.json:
-    method: derived
-    evidence: openapi/akeneo-reference-entities-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-reference-entities-api.postman_collection.json:
-    method: derived
-    evidence: openapi/akeneo-reference-entities-api
+    method: unknown
+    evidence: no authorship recorded
   collections/akeneo-system-api.opencollection.json:
     method: derived
     evidence: openapi/akeneo-system-api
@@ -111,127 +111,13 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  integrations/_index.yml:
     method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+    evidence: carries an API Evangelist house phrase
+  integrations/akeneo-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -315,50 +201,146 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   openapi/_original/akeneo-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/akeneo-asset-manager-api-openapi.yml:
+    evidence: byte-identical to https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml
+      (sha256 0fe37b7aad53, fetched 2026-10-19)
+  openapi/akeneo-asset-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-attributes-api-openapi.yml:
+  openapi/akeneo-asset-attribute-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-asset-attribute-option-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-asset-family-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-asset-media-file-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-association-type-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-attribute-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-attribute-group-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-attribute-option-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/akeneo-authentication-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-catalog-products-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/akeneo-catalogs-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-categories-api-openapi.yml:
+  openapi/akeneo-category-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-channels-api-openapi.yml:
+  openapi/akeneo-channel-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-currencies-api-openapi.yml:
+  openapi/akeneo-currency-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-families-api-openapi.yml:
+  openapi/akeneo-data-architect-agent-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-locales-api-openapi.yml:
+  openapi/akeneo-extensions-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-media-files-api-openapi.yml:
+  openapi/akeneo-family-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-product-models-api-openapi.yml:
+  openapi/akeneo-family-variant-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-products-api-openapi.yml:
+  openapi/akeneo-jobs-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/akeneo-reference-entities-api-openapi.yml:
+  openapi/akeneo-locale-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-mapping-schema-for-products-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-measurement-family-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-overview-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-permissions-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-product-identifier-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-product-media-file-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-product-model-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-product-uuid-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-readiness-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-reference-entity-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-reference-entity-attribute-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-reference-entity-attribute-option-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-reference-entity-media-file-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-reference-entity-record-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-rule-definition-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-supplier-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/akeneo-system-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-user-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-workflow-executions-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/akeneo-workflow-tasks-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/akeneo-workflows-api-openapi.yml:
