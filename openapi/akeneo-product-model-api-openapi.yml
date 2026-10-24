@@ -6970,3 +6970,9 @@ x-provenance:
   source: https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml
   note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
     stamped by stamp-openapi-provenance.py (roadmap#793)
+x-provenance:
+  method: harvested
+  publisher: Akeneo
+  source: https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

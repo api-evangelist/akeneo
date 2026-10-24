@@ -308,6 +308,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Catalog Products
+  tags_raw:
   - Catalog products
   properties:
   - type: OpenAPI
@@ -346,6 +348,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Channels
+  tags_raw:
   - Channel
   properties:
   - type: OpenAPI
@@ -460,6 +464,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -885,6 +891,8 @@ apis:
   humanURL: https://api.akeneo.com/api-reference-index.html
   baseURL: https://api.akeneo.com
   tags:
+  - Workflow Tasks
+  tags_raw:
   - Workflow tasks
   properties:
   - type: OpenAPI
